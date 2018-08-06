@@ -58,8 +58,15 @@ exports.addUser = function(req, res){
         if (err) res.json({err:err, message:'sorry, could not update user'});
         res.json({message:'user updated successfully'})
     })
-    }
+}
 
+    exports.deleteUser = function(req, res){
+        var id = {_id:req.params.id}
+        model.remove(id, function(err){
+        if (err) res.json({err:err, message:'could not delete user'});
+        return res.json({message:'user deleted'});
+    });
+}
 
 
 
