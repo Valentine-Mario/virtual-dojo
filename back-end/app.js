@@ -3,6 +3,10 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var mongoose = require('mongoose');
+var session = require('express-session');
+var passport= require('passport');
+var LocalStrategy = require('passport-local').strategy;
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -12,6 +16,13 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+mongoose.Promise= global.Promise;
+mongoose.connect('mongodb://localhost:27017/vd');
+
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -26,6 +37,12 @@ app.use('/users', usersRouter);
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
+app.use(session({
+  secret: 'keyboard cat',
+  resave: true,
+  saveUninitialized: true
+}))
 
 // error handler
 app.use(function(err, req, res, next) {
