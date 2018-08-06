@@ -29,4 +29,12 @@ exports.addUser = function(req, res){
         if (err) res.json({err:err, message:'sorry, could not return all books'});
         res.json(users) 
     });   
-    }
+}
+
+    exports.getUserByid = function(req, res){
+    var id = req.params.id;
+    model.findById(id, '-password', function(err, user){
+        if (err) res.json({err:err, message:'sorry, could not get user by id'});
+        res.json(user);
+    });
+}
