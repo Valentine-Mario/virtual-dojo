@@ -7,7 +7,8 @@ var UserController= require('../controller/user')
 router.post('/register', UserController.addUser);
 router.get('/users', UserController.getUser);
 router.get('/:id', UserController.getUserByid);
-router.post('/search', UserController.searchUser)
+router.post('/search', UserController.searchUser);
+router.post('/edit/:id', UserController.editUser)
 
 
 module.exports = router;

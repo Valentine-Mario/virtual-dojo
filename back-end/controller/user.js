@@ -17,7 +17,7 @@ exports.addUser = function(req, res){
                 if(err){
                     res.json({message:'user not added'});
                 }else{
-                    res.json({message:'Subscriber added successfully.'})
+                    res.json({message:'User added successfully.'})
                 }
                 
             })
@@ -41,11 +41,24 @@ exports.addUser = function(req, res){
 
     exports.searchUser = function(req, res){
 	var value= req.body.value;
-    model.find({"username":{$regex: value, $options: 'i'}}, '-__v', function(err, user){
+    model.find({"username":{$regex: value, $options: 'i'}}, '-__v -password', function(err, user){
         if (err) res.json({err:err, message:'sorry, could not find user'});
         res.json(user)
     });
 }
+
+    exports.editUser = function(req, res){
+         var id = {_id:req.params.id}
+        var data = {
+        name: req.body.name,
+        username:req.body.username,
+        email:req.body.email
+    };
+    model.findByIdAndUpdate(id, data, function(err){
+        if (err) res.json({err:err, message:'sorry, could not update user'});
+        res.json({message:'user updated successfully'})
+    })
+    }
 
 
 
