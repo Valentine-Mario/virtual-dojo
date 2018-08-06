@@ -38,3 +38,15 @@ exports.addUser = function(req, res){
         res.json(user);
     });
 }
+
+    exports.searchUser = function(req, res){
+	var value= req.body.value;
+    model.find({"username":{$regex: value, $options: 'i'}}, '-__v', function(err, user){
+        if (err) res.json({err:err, message:'sorry, could not find user'});
+        res.json(user)
+    });
+}
+
+
+
+
