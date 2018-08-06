@@ -18,6 +18,7 @@ exports.addUser = function(req, res){
                     res.json({message:'user not added'});
                 }else{
                     res.json({message:'User added successfully.'})
+                    res.status(200)
                 }
                 
             })
@@ -26,7 +27,7 @@ exports.addUser = function(req, res){
 
     exports.getUser= function(req, res){
         model.find({}, '-password -_id -__v', function(err, users){
-        if (err) res.json({err:err, message:'sorry, could not return all books'});
+        if (err) res.json({err:err, message:'sorry, could not return all users'});
         res.json(users) 
     });   
 }
