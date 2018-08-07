@@ -59,4 +59,10 @@ router.post('/login', passport.authenticate('local', {successRedirect:'/', failu
     }
 )
 
+router.get('/logout/:id', function(req, res){
+    UserController.getUserByid
+    req.logout();
+    res.json({message:"logged out successful"})
+})
+
 module.exports = router;
