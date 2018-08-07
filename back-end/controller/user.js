@@ -1,7 +1,6 @@
 var model= require('../model/user')
 var bcrypt = require('bcryptjs');
-var passport= require('passport');
-var LocalStrategy = require('passport-local').strategy;
+
 
 exports.addUser = function(req, res){
     var data = {
@@ -77,5 +76,13 @@ exports.addUser = function(req, res){
     });
 }
 
-
-
+    exports.getUserByUsername2= function(username, callback){
+        var query= {username:username}
+        model.findOne(query, callback)
+    }
+    exports.decrypt= function(candidatePassword, hash, cb){
+        bcrypt.compare(candidatePassword, hash, function(err, isMatch){
+            if(err)throw err
+            cb(null, isMatch)
+        })
+    }
