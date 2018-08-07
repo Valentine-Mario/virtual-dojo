@@ -4,7 +4,8 @@ var bcrypt = require('bcryptjs');
 
 exports.addUser = function(req, res){
     var data = {
-        name: req.body.name,
+        FirstName: req.body.FirstName,
+        LastName:req.body.LastName,
         username:req.body.username,
         email:req.body.email,
         comment:[],
@@ -50,7 +51,8 @@ exports.addUser = function(req, res){
     exports.editUser = function(req, res){
          var id = {_id:req.params.id}
         var data = {
-        name: req.body.name,
+        FirstName: req.body.FirstName,
+        LastName:req.body.LastName,
         username:req.body.username,
         email:req.body.email
     };

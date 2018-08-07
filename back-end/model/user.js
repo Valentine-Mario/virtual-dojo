@@ -1,7 +1,8 @@
 var mongoose = require('mongoose');
 
 var UserSchema=mongoose.Schema({
-    name: String,
+    FirstName: String,
+    LastName:String,
     username:{type: String, unique: true},
     email:{type: String, unique: true},
     comment:[{type:mongoose.Schema.Types.ObjectId, ref:'comment'}],
