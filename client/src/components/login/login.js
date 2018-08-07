@@ -93,7 +93,11 @@ class Login extends React.Component {
     const { username, password } = this.state;
 
     /**MAKE A REQUEST TO THE SERVER */
-    fetchGet('account')
+
+    if(username == '' || password == ''){
+      console.log('please input value');
+    }else {
+      fetchGet('account')
       .then(data => {
         data.filter(user => {
           if(user.username == username && user.password == password){
@@ -111,6 +115,26 @@ class Login extends React.Component {
       }).catch(err => {
         console.log(err)
       })
+    }
+
+    // fetchGet('account')
+    //   .then(data => {
+    //     data.filter(user => {
+    //       if(user.username == username && user.password == password){
+    //         this.setState({
+    //           username: '',
+    //           password: '',
+    //           user
+    //         })
+    //         return true;
+    //       }
+    //     })
+
+    //     this.handleLogin(this.state.user);
+
+    //   }).catch(err => {
+    //     console.log(err)
+    //   })
   }
 
   handleLogin = (user) => {
