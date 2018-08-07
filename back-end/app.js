@@ -41,9 +41,9 @@ app.use(function(req, res, next) {
 });
 
 app.use(session({
-  secret: 'keyboard cat',
-  resave: true,
-  saveUninitialized: true
+  secret: 'diversify me',
+  resave: false,
+  saveUninitialized: false
 }))
 
 // error handler

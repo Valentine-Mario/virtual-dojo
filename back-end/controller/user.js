@@ -1,6 +1,7 @@
 var model= require('../model/user')
 var bcrypt = require('bcryptjs');
-
+var passport= require('passport');
+var LocalStrategy = require('passport-local').strategy;
 
 exports.addUser = function(req, res){
     var data = {
@@ -20,7 +21,6 @@ exports.addUser = function(req, res){
                     res.json({message:'User added successfully.'})
                     res.status(200)
                 }
-                
             })
     })
 }
@@ -66,6 +66,14 @@ exports.addUser = function(req, res){
         model.remove(id, function(err){
         if (err) res.json({err:err, message:'could not delete user'});
         return res.json({message:'user deleted'});
+    });
+}
+
+    exports.getUserByUsername = function(req, res){
+	var username= req.body.username;
+    model.findOne({username}, '-__v -password', function(err, user){
+        if (err) res.json({err:err, message:'sorry, could not find user'});
+        res.json(user)
     });
 }
 
