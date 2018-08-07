@@ -59,7 +59,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { TextField, Button } from '@material-ui/core';
-import { fetchPost } from '../../api';
+import { fetchPost, fetchGet } from '../../api';
+import { emailRegx } from '../../config';
 
 const styles = theme => ({
   container: {
@@ -97,27 +98,50 @@ class Signup extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    let user = {...this.state}
-    console.log(user);
+    let user = {...this.state};
+    let err = '';
 
     /** RUN ALL THE REQUIRED VALIDATION HERE
      * BEFORE POSTING TO THE SERVER FOR VERIFICATION AND AUTHENTIFICATION
      */
 
-    const output = fetchPost('account', user);
-    console.log(output);
+    if(emailRegx.test(user.email)){
+      if(user.password === user.passwordConfirm){
 
-    // fetch(`${API_URL}/account`, {
-    //   method: "POST",
-    //   body: JSON.stringify(user),
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   }
-    // }).then((res) => {
-    //   console.log(res);
-    // }, (err) => {
-    //   console.log(err);
-    // })
+        /**GET DATA FROM THE DATABASE FOR VALIDATION */
+        fetchGet('account')
+          .then(data => { 
+            data.filter(currentUser => {
+              if(currentUser.username == user.username || currentUser.email == user.email){
+                
+                err = null;
+                return;
+              }
+            }, err => {
+              console.log(err);
+            });
+            if(err != null){
+
+              /**POST TO THE DATABASE */
+              const output = fetchPost('account', user);
+              console.log(output);
+              this.setState({
+                name: '',
+                username: '',
+                email: '',
+                password: '',
+                passwordConfirm: ''
+              })
+            }else {
+              console.log('email or username already exit');
+            }
+          })
+      }else {
+        console.log('password doesn\'t match');
+      }
+    }else {
+      console.log('invalid email format');
+    }
   }
 
   render() {
@@ -133,6 +157,7 @@ class Signup extends React.Component {
           value={name}
           onChange={this.handleChange}
           margin="normal"
+          required
         />
         <TextField
           id="username"
@@ -141,6 +166,7 @@ class Signup extends React.Component {
           value={username}
           onChange={this.handleChange}
           margin="normal"
+          required
         />
         <TextField
           id="email"
@@ -149,6 +175,7 @@ class Signup extends React.Component {
           value={email}
           onChange={this.handleChange}
           margin="normal"
+          required
         />
         <TextField
           id="password"

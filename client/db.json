@@ -976,6 +976,38 @@
       "password": "bingo",
       "passwordConfirm": "bingo",
       "id": 7
+    },
+    {
+      "name": "bukas emanuel",
+      "username": "bukas",
+      "email": "bu+kas@gmail.com",
+      "password": "bukas",
+      "passwordConfirm": "bukas",
+      "id": 8
+    },
+    {
+      "name": "people china",
+      "username": "people",
+      "email": "comehome@gmail.com",
+      "password": "asd",
+      "passwordConfirm": "asd",
+      "id": 9
+    },
+    {
+      "name": "window user",
+      "username": "window",
+      "email": "window@g.com",
+      "password": "window",
+      "passwordConfirm": "window",
+      "id": 10
+    },
+    {
+      "name": "hello world now",
+      "username": "nowhello",
+      "email": "nowhello@qa.com",
+      "password": "hello",
+      "passwordConfirm": "hello",
+      "id": 11
     }
   ]
 }

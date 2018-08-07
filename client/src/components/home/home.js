@@ -14,7 +14,7 @@ class Home extends React.Component {
   componentDidMount(){
 
     /**HAND ALL REQUEST TO THE SERVER AND POPULATE DATA FROM THE DATABASE */
-    fetchGet('account')
+    fetchGet('articles')
       .then((data) => {
         console.log(data);
         this.setState({
