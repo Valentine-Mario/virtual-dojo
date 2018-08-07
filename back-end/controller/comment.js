@@ -29,3 +29,11 @@ exports.editComments = function(req, res){
         res.json({message:'comment updated successfully'})
     })
 }
+
+exports.deleteComment = function(req, res){
+        var id = {_id:req.params.id}
+        model.remove(id, function(err){
+        if (err) res.json({err:err, message:'could not delete comment'});
+        res.json({message:'comment deleted'});
+    });
+}
