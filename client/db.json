@@ -968,6 +968,14 @@
       "password": "helloworld",
       "passwordConfirm": "helloworld",
       "id": 6
+    },
+    {
+      "name": "bingo",
+      "username": "bingo",
+      "email": "bingo@gmail.com",
+      "password": "bingo",
+      "passwordConfirm": "bingo",
+      "id": 7
     }
   ]
 }

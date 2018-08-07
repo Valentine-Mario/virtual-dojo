@@ -59,7 +59,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { TextField, Button } from '@material-ui/core';
-import { API_URL } from '../../config';
+import { fetchPost } from '../../api';
 
 const styles = theme => ({
   container: {
@@ -104,17 +104,20 @@ class Signup extends React.Component {
      * BEFORE POSTING TO THE SERVER FOR VERIFICATION AND AUTHENTIFICATION
      */
 
-    fetch(`${API_URL}/account`, {
-      method: "POST",
-      body: JSON.stringify(user),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }).then((res) => {
-      console.log(res);
-    }, (err) => {
-      console.log(err);
-    })
+    const output = fetchPost('account', user);
+    console.log(output);
+
+    // fetch(`${API_URL}/account`, {
+    //   method: "POST",
+    //   body: JSON.stringify(user),
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   }
+    // }).then((res) => {
+    //   console.log(res);
+    // }, (err) => {
+    //   console.log(err);
+    // })
   }
 
   render() {

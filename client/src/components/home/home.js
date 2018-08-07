@@ -1,5 +1,5 @@
 import React from 'react';
-import { API_URL } from '../../config';
+import { fetchGet } from '../../api';
 
 class Home extends React.Component {
   constructor(props){
@@ -13,10 +13,8 @@ class Home extends React.Component {
 
   componentDidMount(){
 
-    fetch(`${API_URL}/account`, {
-      method: "GET"
-    })
-      .then(res => res.json())
+    /**HAND ALL REQUEST TO THE SERVER AND POPULATE DATA FROM THE DATABASE */
+    fetchGet('account')
       .then((data) => {
         console.log(data);
         this.setState({
@@ -25,6 +23,9 @@ class Home extends React.Component {
       },
       (errors) => {
         console.log(errors);
+        this.setState({
+          errors
+        })
       })
 
   }

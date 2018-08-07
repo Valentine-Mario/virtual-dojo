@@ -94,7 +94,8 @@ const styles = theme => ({
     marginRight: 0,
   },
   'navlink': {
-      padding: theme.spacing.unit * 2
+      padding: theme.spacing.unit * 2,
+      textDecoration: 'none'
   }
 });
 

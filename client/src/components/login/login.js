@@ -50,6 +50,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { TextField, Button } from '@material-ui/core';
 import { API_URL } from '../../config';
+import { fetchGet } from '../../api';
 
 const styles = theme => ({
   container: {
@@ -91,11 +92,10 @@ class Login extends React.Component {
     e.preventDefault();
     const { username, password } = this.state;
 
-    fetch(`${API_URL}/account`)
-      .then(res => res.json())
+    /**MAKE A REQUEST TO THE SERVER */
+    fetchGet('account')
       .then(data => {
         data.filter(user => {
-          // return user.username == username;
           if(user.username == username && user.password == password){
             this.setState({
               username: '',
@@ -106,8 +106,7 @@ class Login extends React.Component {
           }
         })
 
-        
-        this.handleLogin(this.state.user)
+        this.handleLogin(this.state.user);
 
       }).catch(err => {
         console.log(err)
@@ -115,8 +114,15 @@ class Login extends React.Component {
   }
 
   handleLogin = (user) => {
-    if(user == true){
-      console.log('welcome ', this.state.user)
+    if(user.username != undefined){
+      console.log('welcome ', this.state.user);
+
+      /**RESET THE LOCAL STATE */
+      this.setState({
+        username: '',
+        password: '',
+        user: {}
+      })
 
       /**HANDLE ALL VERIFICATION AND SEND REAL USERS TO SECURE DASHBOARD */
       
