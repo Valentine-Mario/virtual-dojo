@@ -11,3 +11,21 @@ exports.addComment= function(req, res){
         res.json({message:"comment created succesfully"})
     })
 }
+
+exports.getComments= function(req,res){
+    model.find({}, '-_id -__v', function(err, comments){
+        if(err)res.json({message:"comment not found"})
+        res.json(comments)
+    })
+}
+
+exports.editComments = function(req, res){
+         var id = {_id:req.params.id}
+        var data = {
+        comment:req.body.comment
+    };
+    model.findByIdAndUpdate(id, data, function(err){
+        if (err) res.json({err:err, message:'sorry, could not update comment'});
+        res.json({message:'comment updated successfully'})
+    })
+}
