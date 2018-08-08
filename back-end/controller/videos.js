@@ -19,7 +19,6 @@ exports.addVideo = function(req, res, next){
         video:req.file,
         comments:[]
     };
-
             model.create(data, function(err){
                 if(err)res.json({message:"could not create file"})
                 res.json({message:"file uploaded successfully"})
@@ -38,5 +37,13 @@ exports.getvideoByid = function(req, res){
     model.findById(id, function(err, video){
         if (err) res.json({err:err, message:'sorry, could not get category'});
         res.json(video);
+    });
+}
+
+exports.searchVideo = function(req, res){
+	var value= req.params.value;
+    model.find({"description":{$regex: value, $options: 'i'}}, function(err, videos){
+        if (err) res.json({err:err, message:'sorry, could not find video'});
+        res.json(videos)
     });
 }

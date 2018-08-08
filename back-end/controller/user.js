@@ -43,7 +43,7 @@ exports.addUser = function(req, res){
 }
 
     exports.searchUser = function(req, res){
-	var value= req.body.value;
+	var value= req.params.value;
     model.find({"username":{$regex: value, $options: 'i'}}, '-__v -password', function(err, user){
         if (err) res.json({err:err, message:'sorry, could not find user'});
         res.json(user)
