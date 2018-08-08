@@ -9,6 +9,7 @@ exports.addUser = function(req, res){
         username:req.body.username,
         email:req.body.email,
         comment:[],
+        library:req.body.library,
         password:req.body.password,
         password2:req.body.password2
     };
