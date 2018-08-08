@@ -25,3 +25,10 @@ exports.addVideo = function(req, res, next){
                 res.json({message:"file uploaded successfully"})
             })
 }
+
+exports.getvideos= function(req, res){
+        model.find({}, function(err, videos){
+        if (err) res.json({err:err, message:'sorry, could not return videos'});
+        res.json(videos) 
+    });   
+}
