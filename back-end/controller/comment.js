@@ -4,6 +4,7 @@ exports.addComment= function(req, res){
     var data={
         name:req.body.name,
         comment:req.body.comment,
+        time: Date.now(),
         video:req.body.video
     }
     model.create(data, function(err){

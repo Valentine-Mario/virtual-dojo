@@ -5,6 +5,7 @@ var UserSchema=mongoose.Schema({
     LastName:String,
     username:{type: String, unique: true},
     email:{type: String, unique: true},
+    time:Date,
     library:[{type:mongoose.Schema.Types.ObjectId, ref:'videos'}],
     comment:[{type:mongoose.Schema.Types.ObjectId, ref:'comment'}],
     password: String,
