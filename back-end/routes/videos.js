@@ -15,5 +15,7 @@ var storage = multer.diskStorage({
   var upload = multer({ storage: storage })
 
 router.post('/add', upload.array('video'), videoController.addVideo);
-router.get('/get', videoController.getvideos)
+router.get('/get', videoController.getvideos);
+router.get('/get/:id', videoController.getvideoByid)
+
 module.exports = router;

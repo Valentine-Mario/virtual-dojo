@@ -32,3 +32,11 @@ exports.getvideos= function(req, res){
         res.json(videos) 
     });   
 }
+
+exports.getvideoByid = function(req, res){
+    var id = req.params.id;
+    model.findById(id, function(err, video){
+        if (err) res.json({err:err, message:'sorry, could not get category'});
+        res.json(video);
+    });
+}
