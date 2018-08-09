@@ -5,7 +5,12 @@ var model= require('../model/videos');
 const multer = require('multer');
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, './files')
+      if (file.mimetype === 'image/jpeg'||file.mimetype === 'image/png'||file.mimetype === 'image/gif') {
+        cb(null, './files/images/')
+      } else if(file.mimetype==='video/mp4'||file.mimetype==='video/avi'||filename==='video/flv'){
+        cb(null, './files/videos/')
+      }
+      
     },
     filename: function (req, file, cb) {
       cb(null, file.originalname)
@@ -14,9 +19,11 @@ var storage = multer.diskStorage({
    
   var upload = multer({ storage: storage })
 
-router.post('/add', upload.array('video'), videoController.addVideo);
+router.post('/add', upload.any('video'), videoController.addVideo);
 router.get('/get', videoController.getvideos);
 router.get('/get/:id', videoController.getvideoByid)
 router.get('/search/:value', videoController.searchVideo)
+router.post('/edit/:id', videoController.editVideo)
+router.get('/delete/:id', videoController.deleteVideo)
 
 module.exports = router;
