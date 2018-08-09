@@ -23,7 +23,7 @@ exports.addVideo = function(req, res, next){
         description: req.body.description,
         time:Date.now(),
         image:req.files[0].path,
-        video:req.files[1].path,
+        video: req.files[1].path,
         comments:[]
     };
             model.create(data, function(err){
