@@ -23,6 +23,22 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }))
+const multer = require('multer');
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      if (file.mimetype === 'image/jpeg'||file.mimetype === 'image/png'||file.mimetype === 'image/gif') {
+        cb(null, './files/images/')
+      } else {
+        
+      }
+      
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname)
+    }
+  })
+   
+  var upload = multer({ storage: storage })
 
 /* GET users listing. */
 
@@ -33,7 +49,7 @@ router.get('/search/:value', UserController.searchUser);
 router.post('/edit/:id', UserController.editUser);
 router.get('/delete/:id', UserController.deleteUser);
 router.post('/user', UserController.getUserByUsername);
-
+router.post('/update-profile/:id', upload.any('profile_pics'), UserController.editProfilePics);
 passport.use(new LocalStrategy(
   function(username, password, done) {
     UserController.getUserByUsername2(username, function(err, user){
@@ -55,7 +71,7 @@ passport.use(new LocalStrategy(
 ));
 router.post('/login', passport.authenticate('local', {successRedirect:'/', failureRedirect:''}),
     function(req, res){
-        res.json({message:"looged in successful"})
+        res.json({message:"logged in successful"})
     }
 )
 

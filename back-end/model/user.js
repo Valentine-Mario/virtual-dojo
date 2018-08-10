@@ -5,6 +5,7 @@ var UserSchema=mongoose.Schema({
     LastName:String,
     username:{type: String, unique: true},
     email:{type: String, unique: true},
+    profile_pics:String,
     time:Date,
     library:[{type:mongoose.Schema.Types.ObjectId, ref:'videos'}],
     comment:[{type:mongoose.Schema.Types.ObjectId, ref:'comment'}],

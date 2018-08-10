@@ -1,6 +1,22 @@
 var model= require('../model/user')
 var bcrypt = require('bcryptjs');
+const multer = require('multer');
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      if (file.mimetype === 'image/jpeg'||file.mimetype === 'image/png') {
+        cb(null, './files/images/')
+      } else {
 
+      }
+      
+      
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname)
+    }
+  })
+   
+  var upload = multer({ storage: storage })
 
 exports.addUser = function(req, res){
     var data = {
@@ -63,6 +79,16 @@ exports.addUser = function(req, res){
         res.json({message:'user updated successfully'})
     })
 }
+    exports.editProfilePics= function(req,res){
+        var id={_id:req.params.id}
+        var data={
+            profile_pics:req.files[0].path
+        }
+        model.findByIdAndUpdate(id, data, function(err){
+            if(err)res.json({message:"could not upload profile picture"})
+            res.json({message:"profile picture updated successfully"})
+        })
+    }
 
     exports.deleteUser = function(req, res){
         var id = {_id:req.params.id}
@@ -82,7 +108,7 @@ exports.addUser = function(req, res){
 
     exports.getUserByUsername2= function(username, callback){
         var query= {username:username}
-        model.findOne(query, callback)
+        model.findOne(query, callback)  
     }
     exports.decrypt= function(candidatePassword, hash, cb){
         bcrypt.compare(candidatePassword, hash, function(err, isMatch){
