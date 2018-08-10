@@ -1,4 +1,5 @@
-var model= require('../model/user')
+var model= require('../model/user');
+var fs= require('fs');
 var bcrypt = require('bcryptjs');
 const multer = require('multer');
 var storage = multer.diskStorage({
@@ -81,13 +82,32 @@ exports.addUser = function(req, res){
 }
     exports.editProfilePics= function(req,res){
         var id={_id:req.params.id}
-        var data={
+        model.findById(id, function(err, user){
+            if(user.profile_pics==null){
+                var data={
             profile_pics:req.files[0].path
         }
         model.findByIdAndUpdate(id, data, function(err){
             if(err)res.json({message:"could not upload profile picture"})
             res.json({message:"profile picture updated successfully"})
         })
+            }else{
+                fs.unlink(user.profile_pics, function(err){
+                    if(err){
+                        res.json("could not update profile picture")
+                    }else{
+                                var data={
+                                 profile_pics:req.files[0].path
+                }
+                    model.findByIdAndUpdate(id, data, function(err){
+                    if(err)res.json({message:"could not upload profile picture"})
+                    res.json({message:"profile picture updated successfully"})
+        })
+                    }
+                })
+            }
+        })
+        
     }
 
     exports.deleteUser = function(req, res){
