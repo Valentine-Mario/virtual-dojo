@@ -112,10 +112,26 @@ exports.addUser = function(req, res){
 
     exports.deleteUser = function(req, res){
         var id = {_id:req.params.id}
-        model.remove(id, function(err){
-        if (err) res.json({err:err, message:'could not delete user'});
-        return res.json({message:'user deleted'});
+        model.findById(id, function(err, user){
+            if(user.profile_pics!==null){
+                fs.unlink(user.profile_pics, function(err){
+                    if(err){
+                        res.json({message:"could not delete user profile pics"})
+                    }else{
+                       model.remove(id, function(err){
+                        if (err) res.json({err:err, message:'could not delete user'});
+                        return res.json({message:'user deleted'});
+                })  
+                    }
+                })
+               
+            }else{
+                    model.remove(id, function(err){
+                    if (err) res.json({err:err, message:'could not delete user'});
+                    return res.json({message:'user deleted'});
     });
+            }
+        })
 }
 
     exports.getUserByUsername = function(req, res){
