@@ -1,5 +1,7 @@
 var model= require('../model/videos');
+var model2= require('../model/category');
 var fs= require('fs');
+var ObjectID = require('mongoose').Types.ObjectId;
 const multer = require('multer');
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -25,11 +27,31 @@ exports.addVideo = function(req, res, next){
         image:req.files[0].path,
         video: req.files[1].path,
         comments:[]
-    };
-            model.create(data, function(err){
-                if(err)res.json({message:"could not create file"})
-                res.json({message:"file uploaded successfully"})
-            })
+    };      
+  model.create(data, function(err, data){
+    if(err){
+       res.json({message:"could not create file"})
+    }else{
+      let category = new ObjectID(req.body.category);
+      model2.findById({_id: category}, function(err, category){
+        if(err){
+          res.json({message:"category not found"})
+        }else{
+          category.videos.push(data._id);
+          model2.create(category);
+          res.json({message:"aqdded to category"})
+        }
+      })
+    }
+  })
+}
+
+exports.getall= function(req, res){
+  var id={_id: req.params.id}
+  model2.findById(id, function(err, cat){
+    if(err)res.json({message:"category not found"})
+    res.json(cat)
+  })
 }
 
 exports.getvideos= function(req, res){
