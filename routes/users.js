@@ -49,6 +49,7 @@ router.get('/search/:value', UserController.searchUser);
 router.post('/edit/:id', UserController.editUser);
 router.get('/delete/:id', UserController.deleteUser);
 router.post('/user', UserController.getUserByUsername);
+router.post('/buy', UserController.getVideo)
 router.post('/update-profile/:id', upload.any('profile_pics'), UserController.editProfilePics);
 passport.use(new LocalStrategy(
   function(username, password, done) {

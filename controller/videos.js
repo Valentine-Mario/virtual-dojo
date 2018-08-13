@@ -46,14 +46,6 @@ exports.addVideo = function(req, res, next){
   })
 }
 
-exports.getall= function(req, res){
-  var id={_id: req.params.id}
-  model2.findById(id, function(err, cat){
-    if(err)res.json({message:"category not found"})
-    res.json(cat)
-  })
-}
-
 exports.getvideos= function(req, res){
         model.find({}, function(err, videos){
         if (err) res.json({err:err, message:'sorry, could not return videos'});
