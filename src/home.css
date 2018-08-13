@@ -1,0 +1,191 @@
+.search{
+    justify-content: center;
+    text-align: center;
+}
+/* .background{
+    background-image: url('./bg.png');
+} */
+.App{
+    background-color: #E5E5E5;
+}
+.jumbotron{
+    text-align: center;
+    /* top: 60px; */
+    /* position: relative; */
+}
+.student1{
+    border-radius: 50px;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    left: 420px;
+}
+.student2{
+    border-radius: 50px;
+    width: 100px;
+    height: 100px;
+    position: relative;
+    left: 0px;
+}
+.student3{
+    border-radius: 50px;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    left: 560px;
+}
+.video{
+    width: 210px;
+    height: 300px;
+    margin-top: 50px;
+    margin-bottom: 25px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+    position: absolute;
+    justify-content: center;
+}
+.mentor{
+    background: linear-gradient(248.69deg, rgba(33, 152, 203, 0.91) 16.23%, rgba(24, 73, 174, 0.64) 86.39%);;
+    width: 100%;
+    height: 250px;
+    text-align: center;
+    padding-top: 100px;
+} 
+.content{
+    width: 200px;
+    height: 200px;
+    position: relative;
+    bottom: 25px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+.contentWrite{
+    position: relative;
+    bottom: 20px;
+    Font-Family: Roboto;
+   font-size: 23px;
+    Line-Height: 27px;
+    text-align: center;
+}
+.Courses{
+   color: blue;
+  font-size: 20px;
+}
+.seeCourses{
+    text-align: right;
+    padding-right: 150px;
+}
+ion-icon{
+    font-size: 25px;
+    color: #EFD358;
+}
+.play{
+    color: blue;
+    /* background-color: white; */
+    position: absolute;
+width: 75px;
+height: 75px;
+left: 941px;
+    top: 1687px;
+}
+.landing{
+    width: 100%;
+    height: 500px;
+    position: absolute; 
+}
+.landingText{
+    position: relative;
+    color: white;
+    top: 100px;
+    left: 70px;
+    font-size: 20px;
+}
+.getStarted{
+    width: 250px;
+    height: 50px;
+    border-radius: 10px;
+    border: 1px solid #3E8DAF;
+    color: #348BB0;
+    background-color: #FFFFFF;
+}
+.changing{
+    text-align: center;
+    font-size: 20px;
+}
+.change{
+    color: #2198CB;
+    font-size: 27px;
+}
+.hintContent{
+   position: relative;
+   width: 50%;
+   top: 55px;
+   left: 70px;
+}
+.hintContent2{
+    position: relative;
+    width: 50%;
+    left: 70px;
+    bottom: 40px;
+ }
+ .hintContent3{
+    position: relative;
+    width: 50%;
+    left: 70px;
+    bottom: 180px;
+ }
+.laptop{
+    color: #2198CB;
+    width: 72px;
+    height: 72px;
+    position: absolute;
+    top: 25px;
+    left: 25px;
+}
+.hintLaptop{
+    border-radius: 100px;
+    background-color: rgba(0, 0, 0, 0.25);
+    width: 120px;
+    height: 120px;
+    box-shadow: 5px 5px 5px rgba(238, 235, 235, 0.25);
+    justify-content: center;
+}
+.hintVideo{
+    text-align: center;
+    height: 300px;
+    border-radius: 15px;
+    background-color: white;
+   position: relative;
+   left: 530px;
+   width: 40%;
+   bottom: 190px;
+   padding-top: 25px;
+}
+.hintVideo2{
+    text-align: center;
+    height: 300px;
+    border-radius: 15px;
+    background-color: white;
+   position: relative;
+   left: 530px;
+   width: 40%;
+   bottom: 300px;
+   padding-top: 25px;
+}
+.hintVideo3{
+    text-align: center;
+    height: 300px;
+    border-radius: 15px;
+    background-color: white;
+   position: relative;
+   left: 530px;
+   width: 40%;
+   bottom: 450px;
+   padding-top: 25px;
+}
+.Content{
+    width: 80%;
+    height: 220px;
+}
+
+
