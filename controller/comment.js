@@ -1,15 +1,31 @@
 var model= require('../model/comment')
+var model2= require('../model/videos');
+var ObjectID = require('mongoose').Types.ObjectId;
+
 
 exports.addComment= function(req, res){
     var data={
         name:req.body.name,
         comment:req.body.comment,
-        time: Date.now(),
-        video:req.body.video
+        time: Date.now()
     }
-    model.create(data, function(err){
-        if(err)res.json({message:"comment could not be created"})
-        res.json({message:"comment created succesfully"})
+    model.create(data, function(err, data){
+        if(err){
+            res.json({message:"comment could not be created"})
+        }else{
+            let video = new ObjectID(req.body.video);
+            model2.findById({_id: video}, function(err, video){
+        if(err){
+          res.json({message:"comment not found"})
+        }else{
+          video.comment.push(data._id);
+          model2.create(video);
+          res.json({message:"comment created succesfully"})
+        }
+      })
+             
+        }
+       
     })
 }
 

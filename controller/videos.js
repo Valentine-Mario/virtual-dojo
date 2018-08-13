@@ -39,7 +39,7 @@ exports.addVideo = function(req, res, next){
         }else{
           category.videos.push(data._id);
           model2.create(category);
-          res.json({message:"aqdded to category"})
+          res.json({message:"added to category"})
         }
       })
     }
