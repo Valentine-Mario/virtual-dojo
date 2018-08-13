@@ -2,9 +2,10 @@
     justify-content: center;
     text-align: center;
 }
-/* .background{
-    background-image: url('./bg.png');
-} */
+.background{
+    background-image: url('./bg.png'); 
+    width: 100px;
+}
 .App{
     background-color: #E5E5E5;
 }
