@@ -23,10 +23,10 @@ app.set('view engine', 'hbs');
 app.use(passport.initialize());
 app.use(passport.session());
 
-var url="mongodb://valentine:realboy22@ds119422.mlab.com:19422/school-fleep";
-//var url='mongodb://localhost:27017/vd'
+//var url="mongodb://valentine:realboy22@ds119422.mlab.com:19422/school-fleep";
+var url='mongodb://localhost:27017/vd'
 mongoose.Promise= global.Promise;
-mongoose.connect(url);
+mongoose.connect(url, { useNewUrlParser: true });
 
 
 app.use(logger('dev'));

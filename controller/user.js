@@ -1,4 +1,6 @@
 var model= require('../model/user');
+var model2= require('../model/videos');
+var ObjectID = require('mongoose').Types.ObjectId;
 var fs= require('fs');
 var bcrypt = require('bcryptjs');
 const multer = require('multer');
@@ -27,7 +29,6 @@ exports.addUser = function(req, res){
         email:req.body.email,
         comment:[],
         time:Date.now(),
-        library:req.body.library,
         password:req.body.password,
         password2:req.body.password2
     };
@@ -150,5 +151,25 @@ exports.addUser = function(req, res){
         bcrypt.compare(candidatePassword, hash, function(err, isMatch){
             if(err)throw err
             cb(null, isMatch)
+        })
+    }
+
+    exports.getVideo= function(req, res){
+        let user = new ObjectID(req.body.user)
+        model.findById({_id:user}, function(err, user){
+            if(err){
+                res.json({message:"could not find user"})
+            }else{
+                let video = new ObjectID(req.body.video)
+                model2.findById({_id:video}, function(err, video){
+                    if(err){
+                        res.json({message:"could not find video"})
+                    }else{
+                        user.library.push(video._id);
+                        user.save();
+                        res.json({message:"video purchase succesfully"})
+                    }
+                })
+            }
         })
     }
