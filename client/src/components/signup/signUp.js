@@ -1,60 +1,8 @@
-/* import React, {Component} from 'react'
-import { Button, Form, Input } from 'semantic-ui-react'
-
-class SignIn extends Component {
-    render() {
-        return (
-            <Form style={{width: '90%', margin: 'auto', marginTop: '20px'}} >
-                <Form.Group widths='equal' >
-                    <Form.Field
-                        id='form-input-control-first-name'
-                        control={Input}
-                        placeholder='First name'
-                    />
-                    <Form.Field
-                        id='form-input-control-last-name'
-                        control={Input}
-                        placeholder='Last name'
-                    />
-                </Form.Group>
-                <Form.Field
-                    id='form-input-control-username'
-                    control={Input}
-                    placeholder='Username'
-                />
-                <Form.Group widths='equal'  >
-                    <Form.Field
-                        id='form-input-control-password'
-                        control={Input}
-                        placeholder='Password'
-                        type="password"
-                    />
-                    <Form.Field
-                        id='form-input-control-confirm-password'
-                        control={Input}
-                        placeholder='Confirm Password'
-                        type="password"
-                    />
-                </Form.Group>
-                <Form.Field
-                    id='form-button-control-public'
-                    control={Button}
-                    content='Sign Up'
-                    color="blue"
-                    style={{width: '100%'}}
-                />
-            </Form>
-        )
-    }
-}
-
-export default SignIn; */
-
 import React, { PureComponent } from 'react'
 import { Menu, Segment } from 'semantic-ui-react'
 import { Button, Form, Input, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
-import { REG_REQ } from '../../api'
+import { REQ_POST } from '../../api';
 
 class SignUp extends PureComponent {
 
@@ -68,6 +16,7 @@ class SignUp extends PureComponent {
             username: '',
             password: '',
             confirmPassword: '',
+            loading: false,
             errors: {},
             user: {}
         };
@@ -83,6 +32,9 @@ class SignUp extends PureComponent {
     handleSubmit = (e) => {
         e.preventDefault();
         let { firstName, lastName, email, username, password, confirmPassword, errors, user} = this.state;
+        this.setState({
+            loading: true
+        })
         
         
         if(/^([a-z0-9-_.]+\@[a-z0-9-.]+\.[a-z]{2,4})$/g.test(email)){
@@ -93,19 +45,47 @@ class SignUp extends PureComponent {
 
                 let user = { firstName, lastName, email, username, password, confirmPassword };
                 
-                REG_REQ('users/register', user)
+                REQ_POST('users/register', user)
                     .then(res => {
                         console.log(res);
+                        this.setState({
+                            firstName: '',
+                            lastName: '',
+                            email: '',
+                            username: '',
+                            password: '',
+                            confirmPassword: '',
+                            loading: false
+                        })
                     })
+
+                    /*axios.post(`https://virtualserver.herokuapp.com/users/register`, user)
+                        .then(res => {
+                            console.log(res)
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })*/
                 
             }else {
                 errors.password = "password does not match";
                 console.log('password does not match', errors);
+                this.setState({
+                    password: '',
+                    confirmPassword: '',
+                    loading: false
+                })
                 
             }
         }else {
             errors.email = "Invalid email format";
             console.log('invalid email format', errors);
+            this.setState({
+                email: '',
+                password: '',
+                confirmPassword: '',
+                loading: false
+            })
         }
 
     }
@@ -113,6 +93,8 @@ class SignUp extends PureComponent {
 
 
     render() {
+        let { firstName, lastName, email, username, password, confirmPassword, loading } = this.state;
+
         const container = {
             width: '500px',
             margin: 'auto',
@@ -157,13 +139,14 @@ class SignUp extends PureComponent {
                 </Menu>
 
                 <Segment attached='bottom'>
-                    <Form style={formContainer} onSubmit={this.handleSubmit} >
+                    <Form style={formContainer} onSubmit={this.handleSubmit} loading={loading} >
                         <Form.Field
                             id='firstName'
                             control={Input}
                             placeholder='First name'
                             onChange={this.handleChange}
                             required
+                            value={firstName}
                         />
                         <Form.Field
                             id='lastName'
@@ -171,6 +154,7 @@ class SignUp extends PureComponent {
                             placeholder='Last name'
                             onChange={this.handleChange}
                             required
+                            value={lastName}
                         />
                         <Form.Field
                             id='email'
@@ -179,6 +163,7 @@ class SignUp extends PureComponent {
                             type="email"
                             onChange={this.handleChange}
                             required
+                            value={email}
                         />
                         <Form.Field
                             id='username'
@@ -186,6 +171,7 @@ class SignUp extends PureComponent {
                             placeholder='Username'
                             onChange={this.handleChange}
                             required
+                            value={username}
                         />
                         <Form.Group widths='equal'  >
                             <Form.Field
@@ -195,6 +181,7 @@ class SignUp extends PureComponent {
                                 type="password"
                                 onChange={this.handleChange}
                                 required
+                                value={password}
                             />
                             <Form.Field
                                 id='confirmPassword'
@@ -203,6 +190,7 @@ class SignUp extends PureComponent {
                                 type="password"
                                 onChange={this.handleChange}
                                 required
+                                value={confirmPassword}
                             />
                         </Form.Group>
                         <Button basic color='blue' style={btn} animated='vertical'>

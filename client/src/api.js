@@ -1,7 +1,7 @@
 import { API_URL } from './config';
 import axios from 'axios';
 
-export const REG_REQ = (query, data) => {
+export const REQ_POST = (query, data) => {
     return axios.post(`${API_URL}/${query}`, data)
                 .then(res => {
                     return res;
@@ -11,8 +11,8 @@ export const REG_REQ = (query, data) => {
                 })
 }
 
-export const LOG_REQ = (query, data) => {
-    return axios.post(`${API_URL}/${query}`, data)
+export const REQ_GET = (query) => {
+    return axios.get(`${API_URL}/${query}`)
                 .then(res => {
                     return res;
                 })

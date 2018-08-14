@@ -1,8 +1,29 @@
 import React, {PureComponent} from 'react';
 import { Input, Menu, Button, Icon } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
+import axios from 'axios';
 
 class MenuNav extends PureComponent {
+
+    state = {
+        query: ''
+    }
+
+    handleSearch = (e) => {
+        e.preventDefault();
+        this.setState({
+            query: e.target.value
+        }, 
+        () =>  axios.get(`http://localhost:3004/articles?title=${this.state.query}`)
+                    .then(res => {
+                        console.log(res)
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+        )
+    }
+
     render() {
         const btn = {
             display: 'flex',
@@ -29,7 +50,7 @@ class MenuNav extends PureComponent {
                 </Menu.Item>
     
                 <Menu.Item className="container" position='right' >
-                    <Input style={{marginRight: '10px'}} className='icon' icon='search' placeholder='Search...' />
+                    <Input style={{marginRight: '10px'}} className='icon' icon='search' placeholder='Search...' onChange={this.handleSearch} />
 
                     <Button basic color='blue' style={btn} animated='vertical' as={NavLink} to="/category" >
                         <Button.Content hidden>
