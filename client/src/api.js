@@ -1,20 +1,22 @@
 import { API_URL } from './config';
+import axios from 'axios';
 
-export const fetchPost = (query, data) => {
-    return fetch(`${API_URL}/${query}`, {
-                method: "POST",
-                body: JSON.stringify(data),
-                headers: {
-                "Content-Type": "application/json"
-                }
-            }).then((res) => {
-                return res;
-            }, (err) => {
-                return err;
-            })
+export const REG_REQ = (query, data) => {
+    return axios.post(`${API_URL}/${query}`, data)
+                .then(res => {
+                    return res;
+                })
+                .catch(error => {
+                    return error;
+                })
 }
 
-export const fetchGet = (query) => {
-    return fetch(`${API_URL}/${query}`)
-            .then(res => res.json())
+export const LOG_REQ = (query, data) => {
+    return axios.post(`${API_URL}/${query}`, data)
+                .then(res => {
+                    return res;
+                })
+                .catch(error => {
+                    return error;
+                })
 }
