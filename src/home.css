@@ -1,37 +1,45 @@
+.landing{
+    width: 100%;
+}
 .search{
     justify-content: center;
     text-align: center;
 }
 .background{
-    background-image: url('./bg.png'); 
-    width: 100px;
+    background-image: url('./pictures/bg.png'); 
+    background-repeat: no-repeat;
+    background-size: 900px;
 }
 .App{
     background-color: #E5E5E5;
+    height: 400px;
+}
+.star{
+    float: left;
 }
 .jumbotron{
     text-align: center;
-    /* top: 60px; */
-    /* position: relative; */
+    height: 500px;
+    background-color: #E5E5E5 !important;
 }
 .student1{
     border-radius: 50px;
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
     position: absolute;
     left: 420px;
 }
 .student2{
     border-radius: 50px;
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
     position: relative;
     left: 0px;
 }
 .student3{
     border-radius: 50px;
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
     position: absolute;
     left: 560px;
 }
@@ -43,7 +51,8 @@
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
     border-radius: 15px;
     position: absolute;
-    justify-content: center;
+   text-align: center;
+   background-color: white;
 }
 .mentor{
     background: linear-gradient(248.69deg, rgba(33, 152, 203, 0.91) 16.23%, rgba(24, 73, 174, 0.64) 86.39%);;
@@ -87,7 +96,7 @@ ion-icon{
 width: 75px;
 height: 75px;
 left: 941px;
-    top: 1687px;
+    top: 1550px;
 }
 .landing{
     width: 100%;
@@ -121,19 +130,21 @@ left: 941px;
    position: relative;
    width: 50%;
    top: 55px;
-   left: 70px;
+   left: 70px; 
 }
 .hintContent2{
     position: relative;
     width: 50%;
-    left: 70px;
-    bottom: 40px;
+    left: 620px;
+    bottom: 370px;
+    
  }
  .hintContent3{
     position: relative;
     width: 50%;
-    left: 70px;
-    bottom: 180px;
+    left: 85px;
+    bottom: 250px;
+    
  }
 .laptop{
     color: #2198CB;
@@ -161,6 +172,7 @@ left: 941px;
    width: 40%;
    bottom: 190px;
    padding-top: 25px;
+   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.25);
 }
 .hintVideo2{
     text-align: center;
@@ -168,10 +180,11 @@ left: 941px;
     border-radius: 15px;
     background-color: white;
    position: relative;
-   left: 530px;
-   width: 40%;
-   bottom: 300px;
-   padding-top: 25px;
+   left: 75px;
+   width: 35%;
+   bottom: 100px;
+   padding-top: 40px;
+   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.25);
 }
 .hintVideo3{
     text-align: center;
@@ -181,8 +194,9 @@ left: 941px;
    position: relative;
    left: 530px;
    width: 40%;
-   bottom: 450px;
+   bottom: 520px;
    padding-top: 25px;
+   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.25);
 }
 .Content{
     width: 80%;

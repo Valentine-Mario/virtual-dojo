@@ -1,66 +1,64 @@
 import React from 'react';
-import './customNavBar.css';
-// import {Navbar, Nav, NavItem} from 'react-bootstrap';
-// import { BrowserRouter as Link } from 'react-router-dom'
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  Nav,
-  NavItem,
-  NavLink
- } from 'reactstrap';
+import { Nav, NavItem, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, NavLink } from 'reactstrap';
+import { InputGroup, InputGroupAddon, Button, Input } from 'reactstrap';
+import './customNavBar.css'; 
+// import logo from './logo.jpg';
+// import { Button } from 'reactstrap';
 
-export default class Example extends React.Component {
+
+export default class CustomNavBar extends React.Component {
   constructor(props) {
     super(props);
 
     this.toggle = this.toggle.bind(this);
     this.state = {
-      isOpen: false
+      dropdownOpen: false
     };
   }
+
   toggle() {
     this.setState({
-      isOpen: !this.state.isOpen
+      dropdownOpen: !this.state.dropdownOpen
     });
   }
+
   render() {
     return (
-      <div>
-     
-        <Navbar expand="md">
-          
-          <NavbarToggler onClick={this.toggle} />
-          {/* <div> */}
-           
-            <input className="search" value="search courses "/>
-            <ion-icon name="searchIcon"></ion-icon>
+      <div className="body">
+     <Nav pills>
+         
 
-         {/* </div>  */}
+        <InputGroup style={{ width: '590px', paddingLeft: '220px'}}> 
+                <Input/>
+                <InputGroupAddon addonType="append">
+                  <Button color="primary">Submit</Button>
+                </InputGroupAddon>
+              </InputGroup> 
         
-        <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-            
-              <NavItem>
-                <NavLink href="/categories/"><strong>Categories</strong></NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="/contactUs"><strong>Contact us</strong></NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="/signIn/"><strong>Sign in</strong></NavLink>
-              </NavItem>
-              <button className="signUp">Sign up</button>
-              {/* <Button  href="/signUp/" bsStyle="danger" bsSize="small" className="buttton">   
-               <strong> Sign up</strong> 
-              </Button>  */}
-          </Nav>
-          
-          </Collapse>
-      </Navbar> 
-  </div>
-    
+                <NavItem >
+                  <Dropdown nav isOpen={this.state.dropdownOpen} toggle={this.toggle} >
+                    <DropdownToggle nav caret>
+                      Categories
+                    </DropdownToggle>
+                    <DropdownMenu>
+                      <DropdownItem header>Professional</DropdownItem>
+                      <DropdownItem>Formal basic</DropdownItem>
+                      <DropdownItem divider />
+                      <DropdownItem>Job Oppurtunities</DropdownItem>
+                    </DropdownMenu>
+                  </Dropdown></NavItem>
+
+                  <NavItem>
+                    <NavLink href="#">Contact us</NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink href="#">Sign In</NavLink>
+                  </NavItem>
+
+                 <Button outline color="primary" style={{color:'blue', backgroundColor: 'white',
+                 borderWidth: '1px'}}>Sign Up</Button>{' '}
+                </Nav>
+      </div>
     );
   }
 }
