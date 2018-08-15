@@ -7,7 +7,9 @@ import {
   Card,
   Item,
   Image,
-  Responsive
+  Responsive,
+  Dimmer,
+  Loader
 } from 'semantic-ui-react'
 
 import headerImage from '../../images/header.jpg';
@@ -18,10 +20,12 @@ import { REQ_GET } from '../../api'
 export class Home extends PureComponent {
 
   state = {
-    output: []
+    output: [],
+    loading: false
   }
 
   componentDidMount(){
+    this.setState({ loading: true })
     fetch('http://localhost:3004/articles')
       .then(res => {
         return res.json();
@@ -29,7 +33,8 @@ export class Home extends PureComponent {
       .then(res => {
         console.log(res)
         this.setState({
-          output: res
+          output: res,
+          loading: false
         })
       })
 
@@ -42,6 +47,7 @@ export class Home extends PureComponent {
   }
 
   render() {
+    let { loading } = this.state;
 
     const item = {
       display: 'flex',
@@ -110,8 +116,16 @@ export class Home extends PureComponent {
 
           <Card.Group centered style={{marginTop: '20px', marginBottom: '20px'}}>
 
-            {card}
-
+            {
+              loading ? 
+                (
+                  <Dimmer active inverted>
+                    <Loader inverted>Loading</Loader>
+                  </Dimmer>
+                )
+                :
+                card
+            }
             
           </Card.Group>
 

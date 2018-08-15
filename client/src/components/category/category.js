@@ -64,9 +64,11 @@ class Category extends PureComponent {
 
             {
                 loading ? 
-                    (<Dimmer active inverted>
-                        <Loader inverted>Loading</Loader>
-                    </Dimmer>) 
+                    (
+                        <Dimmer active inverted>
+                            <Loader inverted>Loading</Loader>
+                        </Dimmer>
+                    ) 
                     : 
                     card
             }
