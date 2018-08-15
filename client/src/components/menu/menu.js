@@ -1,12 +1,13 @@
 import React, {PureComponent} from 'react';
-import { Input, Menu, Button, Icon, Responsive } from 'semantic-ui-react';
-import { NavLink } from 'react-router-dom';
+import { Input, Menu, Button, Icon, Responsive, Sidebar } from 'semantic-ui-react';
+import { NavLink, Link } from 'react-router-dom';
 import axios from 'axios';
 
 class MenuNav extends PureComponent {
 
     state = {
-        query: ''
+        query: '',
+        sidebarOpened: false
     }
 
     handleSearch = (e) => {
@@ -24,7 +25,11 @@ class MenuNav extends PureComponent {
         )
     }
 
+    handleToggle = () => this.setState({ sidebarOpened: !this.state.sidebarOpened })
+
     render() {
+        let { sidebarOpened } = this.state;
+
         const btn = {
             display: 'flex',
             justifyContent: 'center',
@@ -88,13 +93,22 @@ class MenuNav extends PureComponent {
                 </Responsive>
                 <Responsive maxWidth={Responsive.onlyMobile.maxWidth}>
                     <Menu style={container} >
+                        <Sidebar as={Menu} animation='slide along' inverted vertical visible={sidebarOpened}>
+                            <Menu.Item as={Link} to="/" onClick={this.handleToggle} >Home</Menu.Item>
+                            <Menu.Item as={Link} to="/category" onClick={this.handleToggle}>Category</Menu.Item>
+                            <Menu.Item as={Link} to="/login" onClick={this.handleToggle} >Log in</Menu.Item>
+                            <Menu.Item as={Link} to="/signup" onClick={this.handleToggle} >Sign Up</Menu.Item>
+                        </Sidebar>
+
                         <Menu.Item className="container" as={NavLink} to="/">
                             <h2>Logo</h2>
                         </Menu.Item>
             
-                        <Menu.Item className="container" style={{position: 'fixed', top: '10px', right: '0', width: '70%'}}>
-                            <Input style={{marginRight: '10px', width: '100%'}} className='icon' icon='search' placeholder='Search...' onChange={this.handleSearch} />
-
+                        <Menu.Item className="container" style={{position: 'fixed', top: '2px', right: '0', width: '70%', paddingRight: '0'}}>
+                            <Input style={{marginRight: '0', width: '100%'}} className='icon' icon='search' placeholder='Search...' onChange={this.handleSearch} />
+                            <Menu.Item onClick={this.handleToggle} style={{marginLeft: '0'}}>
+                                <Icon name='sidebar' style={{margin: '0'}} />
+                            </Menu.Item>
                         </Menu.Item>
                     </Menu>
                 </Responsive>

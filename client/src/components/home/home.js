@@ -6,10 +6,11 @@ import {
   Icon,
   Card,
   Item,
-  Image
+  Image,
+  Responsive
 } from 'semantic-ui-react'
 
-import header from '../../images/header.jpg';
+import headerImage from '../../images/header.jpg';
 
 import { REQ_GET } from '../../api'
 
@@ -21,7 +22,6 @@ export class Home extends PureComponent {
   }
 
   componentDidMount(){
-    console.log(header)
     fetch('http://localhost:3004/articles')
       .then(res => {
         return res.json();
@@ -55,14 +55,14 @@ export class Home extends PureComponent {
     }
 
     const headerBackgrd = {
-      backgroundImage: `url(${header})`,
+      backgroundImage: `url(${headerImage})`,
       backgroundPosition: 'center',
       backgroundSize: 'cover',
       backgroundRepeat: 'no-repeat',
       height: '500px'
     }
 
-    let renderMe = this.state.output.map((user) => {
+    let card = this.state.output.map((user) => {
         return (
           <Card raised key={user.id} >
             <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' />
@@ -84,7 +84,7 @@ export class Home extends PureComponent {
     })
 
     return (
-      <div>
+      <Responsive>
         <Grid columns={1} divided style={container}>
           <Grid.Row style={headerBackgrd}>
             <Grid.Column>
@@ -95,7 +95,7 @@ export class Home extends PureComponent {
           </Grid.Row>
         </Grid>
 
-        <Grid columns={1} divided style={{...container, marginTop: '0px'}}>
+        <Grid columns={1} divided style={{marginTop: '0px'}}>
           <Grid.Row style={{background: 'grey', height: '100px'}}>
             <Grid.Column style={{display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
               <Grid.Row>
@@ -110,12 +110,12 @@ export class Home extends PureComponent {
 
           <Card.Group centered style={{marginTop: '20px', marginBottom: '20px'}}>
 
-            {renderMe}
+            {card}
 
             
           </Card.Group>
 
-      </div>
+      </Responsive>
     )
   }
 }
