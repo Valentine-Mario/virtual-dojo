@@ -7,7 +7,6 @@ import SignIn from './signin/signIn';
 import SignUp from './signup/signUp';
 import Home from './home/home';
 import Category from './category/category'
-import ResponsiveContainer from './responsive.js'
 import { Responsive } from 'semantic-ui-react';
 
 const Container = () => {
