@@ -35,9 +35,9 @@ class Category extends PureComponent {
       }
 
     render() {
-        let { loading } = this.state;
+        let { loading, output } = this.state;
 
-        let card = this.state.output.map((user) => {
+        let card = output.map((user) => {
         return (
             <Card raised key={user.id} >
                 <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' />

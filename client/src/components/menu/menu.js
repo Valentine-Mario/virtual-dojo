@@ -1,9 +1,9 @@
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import { Input, Menu, Button, Icon, Responsive, Sidebar } from 'semantic-ui-react';
 import { NavLink, Link } from 'react-router-dom';
 import axios from 'axios';
 
-class MenuNav extends PureComponent {
+class MenuNav extends Component {
 
     state = {
         query: '',

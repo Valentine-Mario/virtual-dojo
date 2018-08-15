@@ -1,10 +1,10 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { Menu, Segment } from 'semantic-ui-react'
 import { Button, Form, Input, Icon, Responsive } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
 import { REQ_POST } from '../../api';
 
-class SignUp extends PureComponent {
+class SignUp extends Component {
 
     constructor(props){
         super(props);
@@ -156,6 +156,7 @@ class SignUp extends PureComponent {
                                 onChange={this.handleChange}
                                 required
                                 value={firstName}
+                                focus
                             />
                             <Form.Field
                                 id='lastName'

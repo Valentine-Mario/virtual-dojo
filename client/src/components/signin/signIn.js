@@ -1,11 +1,11 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { Menu, Segment } from 'semantic-ui-react'
-import { Button, Form, Icon, Responsive } from 'semantic-ui-react'
+import { Button, Form, Icon, Responsive, Input, Message } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
 import { REQ_POST } from '../../api';
 import axios from 'axios';
 
-class SignIn extends PureComponent {
+class SignIn extends Component {
     constructor(props){
         super(props);
     
@@ -14,7 +14,9 @@ class SignIn extends PureComponent {
           password: '',
           user: {},
           activeItem: 'Log In',
-          loading: false
+          loading: false,
+          visible: true,
+          loggedIn: false
         }
       }
     
@@ -22,20 +24,22 @@ class SignIn extends PureComponent {
         this.setState({
           [event.target.id]: event.target.value
         });
+
       };
     
       handleSubmit = (e) => {
         e.preventDefault();
-        const { username, password, user } = this.state;
         this.setState({
           loading: true
         })
     
+        const { username, password, user } = this.state;
+
         /**MAKE A REQUEST TO THE SERVER */
     
         if(username == '' || password == ''){
 
-          console.log('please input value');
+          console.log('Please all input values are required');
 
         }else {
 
@@ -56,8 +60,25 @@ class SignIn extends PureComponent {
 
             REQ_POST(`users/login`, {username,password})
             .then(res => {
+
               //ONLY USE RES FOR SUCCESS AND RES.RESPONSE FOR ERROR HANDLING
-                console.log(res);
+                if(res.response){
+                  console.log(res.response.data);
+                  this.setState({
+                    error: 'Please register an account to login',
+                    visible: false
+                  })
+                }else if(res){
+                  console.log(res.data.passport.user);
+
+                  sessionStorage.setItem('user', res.data.passport.user);
+
+                  this.setState({
+                    loggedIn: true
+                  })
+                }
+
+
                 this.setState({
                   username: '',
                   password: '',
@@ -67,27 +88,15 @@ class SignIn extends PureComponent {
 
         }
       }
-    
-      handleLogin = (user) => {
-        if(user.username !== undefined){
-          console.log('welcome ', this.state.user);
-    
-          /**RESET THE LOCAL STATE */
-          this.setState({
-            username: '',
-            password: '',
-            user: {}
-          })
-    
-          /**HANDLE ALL VERIFICATION AND SEND REAL USERS TO SECURE DASHBOARD */
-          
-        }else {
-          console.log('invalid ', this.state.user)
-        }
+
+      /**   HANDLE ERROR MESSAGE FOR LOGIN   */
+      handleDismiss = () => {
+        this.setState({ visible: true })
       }
 
     render() {
-        const { activeItem, username, password, loading } = this.state;
+        const { activeItem, username, password, loading, error, visible } = this.state;
+
         const container = {
             width: '500px',
             margin: 'auto',
@@ -146,10 +155,10 @@ class SignIn extends PureComponent {
                 <Segment attached='bottom'>
                     <Form loading={loading} style={formContainer} onSubmit={this.handleSubmit} >
                         <Form.Field style={{width: '90%'}} >
-                            <input id="username" placeholder='Username' onChange={this.handleChange} value={username} required />
+                            <Input id="username" placeholder='Username' onChange={this.handleChange} value={username} required />
                         </Form.Field>
                         <Form.Field style={{width: '90%'}} >
-                            <input id="password" placeholder='Password' type="password" onChange={this.handleChange} value={password} required />
+                            <Input id="password" placeholder='Password' type="password" onChange={this.handleChange} value={password} required />
                         </Form.Field>
 
                         <Button basic color='blue' style={btn} animated='vertical'  >
@@ -165,6 +174,14 @@ class SignIn extends PureComponent {
                 </Segment>
               </Responsive>
               <Responsive style={containerMobile} {...Responsive.onlyMobile} >
+                {
+                  error && (
+                    <Message hidden={visible} negative onDismiss={this.handleDismiss}>
+                      <Message.Header>We're sorry you can't log in with this account</Message.Header>
+                      <p>{error}</p>
+                    </Message>
+                  )
+                }
                 <Menu attached='top' tabular>
                     <Menu.Item 
                         style={menu}
@@ -185,10 +202,10 @@ class SignIn extends PureComponent {
                 <Segment attached='bottom'>
                     <Form loading={loading} style={formContainer} onSubmit={this.handleSubmit} >
                         <Form.Field style={{width: '90%'}} >
-                            <input id="username" placeholder='Username' onChange={this.handleChange} value={username} required />
+                            <Input id="username" placeholder='Username' onChange={this.handleChange} value={username} required />
                         </Form.Field>
                         <Form.Field style={{width: '90%'}} >
-                            <input id="password" placeholder='Password' type="password" onChange={this.handleChange} value={password} required />
+                            <Input id="password" placeholder='Password' type="password" onChange={this.handleChange} value={password} required />
                         </Form.Field>
 
                         <Button basic color='blue' style={btn} animated='vertical'  >
