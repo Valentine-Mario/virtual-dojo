@@ -7,18 +7,22 @@ import SignIn from './signin/signIn';
 import SignUp from './signup/signUp';
 import Home from './home/home';
 import Category from './category/category'
+import ResponsiveContainer from './responsive.js'
+import { Responsive } from 'semantic-ui-react';
 
 const Container = () => {
     return (
         <div>
-            <MenuNav />
-            <Switch>
-                <Route path="/category" component={Category} />
-                <Route path="/login" component={SignIn} />
-                <Route path="/signup" component={SignUp} />
-                <Route path="/" component={Home} />
-            </Switch>
-            <Footer />
+            <Responsive>
+                <MenuNav />
+                <Switch>
+                    <Route path="/category" component={Category} />
+                    <Route path="/login" component={SignIn} />
+                    <Route path="/signup" component={SignUp} />
+                    <Route path="/" component={Home} />
+                </Switch>
+                <Footer />
+            </Responsive>
         </div>
     )
 }

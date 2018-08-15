@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { Menu, Segment } from 'semantic-ui-react'
-import { Button, Form, Input, Icon } from 'semantic-ui-react'
+import { Button, Form, Input, Icon, Responsive } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
 import { REQ_POST } from '../../api';
 
@@ -96,17 +96,25 @@ class SignUp extends PureComponent {
         let { firstName, lastName, email, username, password, confirmPassword, loading } = this.state;
 
         const container = {
-            width: '500px',
+            width: '460px',
             margin: 'auto',
             paddingTop: '150px',
             height: '600px'
         };
 
+        const containerMobile = {
+          width: '300px',
+          margin: 'auto',
+          paddingTop: '120px',
+          height: '600px'
+        }
+
         const btn = {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            width: '100%'
+            width: '100%',
+            zIndex: '0'
         };
 
         const formContainer = {
@@ -121,88 +129,173 @@ class SignUp extends PureComponent {
         };
 
         return (
-            <div style={container} >
-                <Menu attached='top' tabular>
-                    <Menu.Item 
-                        style={menu}
-                        name='Log In' 
-                        as={Link}
-                        to="/login"
-                    />
-                    <Menu.Item
-                        style={menu}
-                        name='Sign Up'
-                        active={true}
-                        as={Link}
-                        to="/signup"
-                    />
-                </Menu>
+            <div>
+                <Responsive minWidth={Responsive.onlyTablet.minWidth} style={container} >
+                    <Menu attached='top' tabular>
+                        <Menu.Item 
+                            style={menu}
+                            name='Log In' 
+                            as={Link}
+                            to="/login"
+                        />
+                        <Menu.Item
+                            style={menu}
+                            name='Sign Up'
+                            active={true}
+                            as={Link}
+                            to="/signup"
+                        />
+                    </Menu>
 
-                <Segment attached='bottom'>
-                    <Form style={formContainer} onSubmit={this.handleSubmit} loading={loading} >
-                        <Form.Field
-                            id='firstName'
-                            control={Input}
-                            placeholder='First name'
-                            onChange={this.handleChange}
-                            required
-                            value={firstName}
-                        />
-                        <Form.Field
-                            id='lastName'
-                            control={Input}
-                            placeholder='Last name'
-                            onChange={this.handleChange}
-                            required
-                            value={lastName}
-                        />
-                        <Form.Field
-                            id='email'
-                            control={Input}
-                            placeholder='Email'
-                            type="email"
-                            onChange={this.handleChange}
-                            required
-                            value={email}
-                        />
-                        <Form.Field
-                            id='username'
-                            control={Input}
-                            placeholder='Username'
-                            onChange={this.handleChange}
-                            required
-                            value={username}
-                        />
-                        <Form.Group widths='equal'  >
+                    <Segment attached='bottom'>
+                        <Form style={formContainer} onSubmit={this.handleSubmit} loading={loading} >
                             <Form.Field
-                                id='password'
+                                id='firstName'
                                 control={Input}
-                                placeholder='Password'
-                                type="password"
+                                placeholder='First name'
                                 onChange={this.handleChange}
                                 required
-                                value={password}
+                                value={firstName}
                             />
                             <Form.Field
-                                id='confirmPassword'
+                                id='lastName'
                                 control={Input}
-                                placeholder='Confirm Password'
-                                type="password"
+                                placeholder='Last name'
                                 onChange={this.handleChange}
                                 required
-                                value={confirmPassword}
+                                value={lastName}
                             />
-                        </Form.Group>
-                        <Button basic color='blue' style={btn} animated='vertical'>
-                            <Button.Content hidden>
-                                Sign Up
-                            </Button.Content>
-                            <Button.Content visible>
-                                <Icon name='signup' />
-                            </Button.Content>
-                        </Button>
-                    </Form>
-                </Segment>
+                            <Form.Field
+                                id='email'
+                                control={Input}
+                                placeholder='Email'
+                                type="email"
+                                onChange={this.handleChange}
+                                required
+                                value={email}
+                            />
+                            <Form.Field
+                                id='username'
+                                control={Input}
+                                placeholder='Username'
+                                onChange={this.handleChange}
+                                required
+                                value={username}
+                            />
+                            <Form.Group widths='equal'  >
+                                <Form.Field
+                                    id='password'
+                                    control={Input}
+                                    placeholder='Password'
+                                    type="password"
+                                    onChange={this.handleChange}
+                                    required
+                                    value={password}
+                                />
+                                <Form.Field
+                                    id='confirmPassword'
+                                    control={Input}
+                                    placeholder='Confirm Password'
+                                    type="password"
+                                    onChange={this.handleChange}
+                                    required
+                                    value={confirmPassword}
+                                />
+                            </Form.Group>
+                            <Button basic color='blue' style={btn} animated='vertical'>
+                                <Button.Content hidden>
+                                    Sign Up
+                                </Button.Content>
+                                <Button.Content visible>
+                                    <Icon name='signup' />
+                                </Button.Content>
+                            </Button>
+                        </Form>
+                    </Segment>
+                </Responsive >
+                <Responsive style={containerMobile} {...Responsive.onlyMobile} >
+                    <Menu attached='top' tabular>
+                        <Menu.Item 
+                            style={menu}
+                            name='Log In' 
+                            as={Link}
+                            to="/login"
+                        />
+                        <Menu.Item
+                            style={menu}
+                            name='Sign Up'
+                            active={true}
+                            as={Link}
+                            to="/signup"
+                        />
+                    </Menu>
+
+                    <Segment attached='bottom'>
+                        <Form style={formContainer} onSubmit={this.handleSubmit} loading={loading} >
+                            <Form.Field
+                                id='firstName'
+                                control={Input}
+                                placeholder='First name'
+                                onChange={this.handleChange}
+                                required
+                                value={firstName}
+                            />
+                            <Form.Field
+                                id='lastName'
+                                control={Input}
+                                placeholder='Last name'
+                                onChange={this.handleChange}
+                                required
+                                value={lastName}
+                            />
+                            <Form.Field
+                                id='email'
+                                control={Input}
+                                placeholder='Email'
+                                type="email"
+                                onChange={this.handleChange}
+                                required
+                                value={email}
+                            />
+                            <Form.Field
+                                id='username'
+                                control={Input}
+                                placeholder='Username'
+                                onChange={this.handleChange}
+                                required
+                                value={username}
+                            />
+                            <Form.Group widths='equal'  >
+                                <Form.Field
+                                    id='password'
+                                    control={Input}
+                                    placeholder='Password'
+                                    type="password"
+                                    onChange={this.handleChange}
+                                    required
+                                    value={password}
+                                />
+                                <Form.Field
+                                    id='confirmPassword'
+                                    control={Input}
+                                    placeholder='Confirm Password'
+                                    type="password"
+                                    onChange={this.handleChange}
+                                    required
+                                    value={confirmPassword}
+                                />
+                            </Form.Group>
+                            <Button basic color='blue' style={btn} animated='vertical'>
+                                <Button.Content hidden>
+                                    Sign Up
+                                </Button.Content>
+                                <Button.Content visible>
+                                    <Icon name='signup' />
+                                </Button.Content>
+                            </Button>
+                        </Form>
+                    </Segment>
+                </Responsive >
             </div>
         )
     }

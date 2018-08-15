@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { Menu, Segment } from 'semantic-ui-react'
-import { Button, Form, Icon } from 'semantic-ui-react'
+import { Button, Form, Icon, Responsive } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
 import { REQ_POST } from '../../api';
 import axios from 'axios';
@@ -89,11 +89,18 @@ class SignIn extends PureComponent {
     render() {
         const { activeItem, username, password, loading } = this.state;
         const container = {
-            width: '500px',
+            width: '460px',
             margin: 'auto',
             paddingTop: '150px',
             height: '600px'
         };
+
+        const containerMobile = {
+          width: '300px',
+          margin: 'auto',
+          paddingTop: '150px',
+          height: '600px'
+        }
         const menu = {
             width: '50%'
         };
@@ -102,7 +109,8 @@ class SignIn extends PureComponent {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            width: '90%'
+            width: '90%',
+            zIndex: '0'
         };
 
         const formContainer = {
@@ -116,7 +124,8 @@ class SignIn extends PureComponent {
 
 
         return (
-            <div style={container} >
+            <div>
+              <Responsive style={container}  minWidth={Responsive.onlyTablet.minWidth}>
                 <Menu attached='top' tabular>
                     <Menu.Item 
                         style={menu}
@@ -154,6 +163,46 @@ class SignIn extends PureComponent {
 
                     </Form>
                 </Segment>
+              </Responsive>
+              <Responsive style={containerMobile} {...Responsive.onlyMobile} >
+                <Menu attached='top' tabular>
+                    <Menu.Item 
+                        style={menu}
+                        name='Log In' 
+                        active={activeItem === 'Log In'} 
+                        as={Link}
+                        to="/login"
+                    />
+                    <Menu.Item
+                        style={menu}
+                        name='Sign Up'
+                        active={activeItem === 'Sign Up'}
+                        as={Link}
+                        to="/signup"
+                    />
+                </Menu>
+
+                <Segment attached='bottom'>
+                    <Form loading={loading} style={formContainer} onSubmit={this.handleSubmit} >
+                        <Form.Field style={{width: '90%'}} >
+                            <input id="username" placeholder='Username' onChange={this.handleChange} value={username} required />
+                        </Form.Field>
+                        <Form.Field style={{width: '90%'}} >
+                            <input id="password" placeholder='Password' type="password" onChange={this.handleChange} value={password} required />
+                        </Form.Field>
+
+                        <Button basic color='blue' style={btn} animated='vertical'  >
+                          <Button.Content hidden>
+                              Log In
+                          </Button.Content>
+                          <Button.Content visible>
+                              <Icon name='sign in' />
+                          </Button.Content>
+                        </Button>
+
+                    </Form>
+                </Segment>
+            </Responsive>
             </div>
         )
     }

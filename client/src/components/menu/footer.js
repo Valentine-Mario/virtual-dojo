@@ -5,12 +5,13 @@ import {
   Header,
   List,
   Segment,
-  Item
-} from 'semantic-ui-react'
+  Item,
+  Responsive
+} from 'semantic-ui-react';
 
 const Footer = (props) => {
   return (
-    <div>
+    <Responsive>
     	<Segment vertical style={{ padding: '5em 0em', backgroundColor: "grey" }}>
             <Container>
               <Grid divided inverted stackable>
@@ -45,7 +46,7 @@ const Footer = (props) => {
               </Grid>
             </Container>
           </Segment>
-    </div>
+    </Responsive>
   )
 }
 
