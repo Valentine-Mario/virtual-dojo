@@ -86,7 +86,7 @@ class MenuNav extends PureComponent {
                         </Menu.Item>
                     </Menu>
                 </Responsive>
-                <Responsive minWidth={Responsive.onlyMobile.minWidth}>
+                <Responsive maxWidth={Responsive.onlyMobile.maxWidth}>
                     <Menu style={container} >
                         <Menu.Item className="container" as={NavLink} to="/">
                             <h2>Logo</h2>

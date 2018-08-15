@@ -89,14 +89,14 @@ class SignIn extends PureComponent {
     render() {
         const { activeItem, username, password, loading } = this.state;
         const container = {
-            width: '460px',
+            width: '500px',
             margin: 'auto',
             paddingTop: '150px',
             height: '600px'
         };
 
         const containerMobile = {
-          width: '300px',
+          width: '350px',
           margin: 'auto',
           paddingTop: '150px',
           height: '600px'

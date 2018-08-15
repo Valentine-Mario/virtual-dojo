@@ -96,14 +96,14 @@ class SignUp extends PureComponent {
         let { firstName, lastName, email, username, password, confirmPassword, loading } = this.state;
 
         const container = {
-            width: '460px',
+            width: '500px',
             margin: 'auto',
             paddingTop: '150px',
             height: '600px'
         };
 
         const containerMobile = {
-          width: '300px',
+          width: '350px',
           margin: 'auto',
           paddingTop: '120px',
           height: '600px'
@@ -213,7 +213,7 @@ class SignUp extends PureComponent {
                         </Form>
                     </Segment>
                 </Responsive >
-                <Responsive style={containerMobile} {...Responsive.onlyMobile} >
+                <Responsive style={containerMobile} maxWidth={Responsive.onlyMobile.maxWidth} >
                     <Menu attached='top' tabular>
                         <Menu.Item 
                             style={menu}
