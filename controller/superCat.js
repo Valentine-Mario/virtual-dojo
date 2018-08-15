@@ -75,6 +75,26 @@ exports.addcategory = function(req, res, next){
         }
         
     })
-    
-        
 }
+    exports.deleteCtegory= function(req, res){
+        var id={_id:req.params.id}
+        model.findById(id, function(err, data){
+            if(data.cover_image){
+                fs.unlink(data.cover_image, function(err){
+                    if(err){
+                        res.json({message:"could not delete cover image"})
+                    }else{
+                        model.remove(id, function(err){
+                            if(err)res.json({message:"could not delete category"})
+                            res.json({message:"categtgory deleted successfully"})
+                        })
+                    }
+                })
+            }else{
+                model.remove(id, function(err){
+                    if(err)res.json({message:"could not delete category"})
+                    res.json({message:"categtgory deleted successfully"})
+                })  
+            }
+        })
+    }
