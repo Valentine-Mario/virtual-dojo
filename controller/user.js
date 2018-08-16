@@ -173,9 +173,20 @@ exports.addUser = function(req, res){
                     if(err){
                         res.json({message:"could not find video"})
                     }else{
-                        user.library.push(video._id);
-                        user.save();
-                        res.json({message:"video purchase succesfully"})
+                        console.log(user.library)
+                        console.log(JSON.stringify(video._id))
+                    
+                            
+                        if(JSON.stringify(user.library).includes(JSON.stringify(video._id))){
+                            res.json({message:"this video already exist in your library"})
+                            //console.log("item found")
+                        }else{
+                            user.library.push(video._id);
+                            user.save();
+                            res.json({message:"video purchase succesfully"})
+                            //console.log("item not found")
+                        }
+                        
                     }
                 })
             }

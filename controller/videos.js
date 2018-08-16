@@ -24,9 +24,8 @@ exports.addVideo = function(req, res, next){
         name: req.body.name,
         description: req.body.description,
         time:Date.now(),
-        video: req.files[1].path,
-        comments:[]
-    };      
+        video: req.files[0].path
+    };
   model.create(data, function(err, data){
     if(err){
        res.json({message:"could not create file"})
