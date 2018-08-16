@@ -7,6 +7,7 @@ import SignIn from './signIn';
 import SignUp from './signUp';
 import Categories from './categories';
 // import CustomNavbar from './customNavBar';
+// import Footer from './footer';
 
 class App extends Component {
   render() {
@@ -14,16 +15,18 @@ class App extends Component {
       
       <BrowserRouter>
           <div> 
-            <Switch>
-              {/* <CustomNavbar /> */}
-                
+          
+            <Switch> 
                 <Route exact path="/" component={Home} />
                 <Route path="/categories" component={Categories} />
                 <Route path="/contactUs" component={ContactUs} />
                 <Route path="/signIn" component={SignIn} />
                 <Route path="/signUp" component={SignUp} />
+                
               </Switch> 
-          </div> 
+
+         </div> 
+         
       </BrowserRouter>
       
     );

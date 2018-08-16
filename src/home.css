@@ -6,9 +6,13 @@
     text-align: center;
 }
 .background{
-    background-image: url('./pictures/bg.png'); 
+    background-image: url('./pictures/bg-gradient.png'); 
     background-repeat: no-repeat;
     background-size: 900px;
+    width: 100%;
+}
+.landingText{
+    width: 40%;
 }
 .App{
     background-color: #E5E5E5;
@@ -44,7 +48,7 @@
     left: 560px;
 }
 .video{
-    width: 210px;
+    width: 90%;
     height: 300px;
     margin-top: 50px;
     margin-bottom: 25px;
@@ -73,9 +77,9 @@
     position: relative;
     bottom: 20px;
     Font-Family: Roboto;
-   font-size: 23px;
+   font-size: 18px;
     Line-Height: 27px;
-    text-align: center;
+    text-align: left;
 }
 .Courses{
    color: blue;
@@ -91,12 +95,11 @@ ion-icon{
 }
 .play{
     color: blue;
-    /* background-color: white; */
-    position: absolute;
-width: 75px;
-height: 75px;
-left: 941px;
-    top: 1550px;
+   position: absolute;
+    width: 75px;
+    height: 75px;
+    left: 941px;
+    top: 1554px;
 }
 .landing{
     width: 100%;
@@ -114,7 +117,7 @@ left: 941px;
     width: 250px;
     height: 50px;
     border-radius: 10px;
-    border: 1px solid #3E8DAF;
+    border: 2px solid #358FB6;
     color: #348BB0;
     background-color: #FFFFFF;
 }
@@ -126,33 +129,21 @@ left: 941px;
     color: #2198CB;
     font-size: 27px;
 }
-.hintContent{
-   position: relative;
-   width: 50%;
-   top: 55px;
-   left: 70px; 
+.text{
+    margin-left: 40px;
+    margin-top: 40px;
 }
-.hintContent2{
-    position: relative;
-    width: 50%;
-    left: 620px;
-    bottom: 370px;
-    
- }
- .hintContent3{
-    position: relative;
-    width: 50%;
-    left: 85px;
-    bottom: 250px;
-    
- }
+.text2{
+    margin-left: 120px;
+    margin-top: 40px;
+}
 .laptop{
-    color: #2198CB;
-    width: 72px;
-    height: 72px;
-    position: absolute;
-    top: 25px;
-    left: 25px;
+    margin-left: 20px;
+    margin-top: 15px;
+}
+.laptop1{
+    margin-left: 20px;
+    margin-top: 25px;
 }
 .hintLaptop{
     border-radius: 100px;
@@ -160,47 +151,51 @@ left: 941px;
     width: 120px;
     height: 120px;
     box-shadow: 5px 5px 5px rgba(238, 235, 235, 0.25);
-    justify-content: center;
+   /* margin-left: 60px; */
 }
 .hintVideo{
     text-align: center;
     height: 300px;
     border-radius: 15px;
     background-color: white;
-   position: relative;
-   left: 530px;
-   width: 40%;
-   bottom: 190px;
-   padding-top: 25px;
-   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.25);
+   
+   width: 65%; 
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.25);
+   border: 1px solid black;
 }
-.hintVideo2{
-    text-align: center;
+.tint{
+   margin-top: 50px;
+    margin-bottom: 35px;
     height: 300px;
+    margin-left: 80px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
     border-radius: 15px;
+    padding: 30px; 
+    text-align: center;
     background-color: white;
-   position: relative;
-   left: 75px;
-   width: 35%;
-   bottom: 100px;
-   padding-top: 40px;
-   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.25);
 }
-.hintVideo3{
-    text-align: center;
-    height: 300px;
-    border-radius: 15px;
-    background-color: white;
-   position: relative;
-   left: 530px;
-   width: 40%;
-   bottom: 520px;
-   padding-top: 25px;
-   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.25);
+.tint2{
+    margin-top: 50px;
+     margin-bottom: 30px;
+     height: 320px;
+     margin-left: 20px;
+     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
+     border-radius: 15px;
+     padding: 30px; 
+     text-align: center;
+     background-color: white;
 }
 .Content{
-    width: 80%;
-    height: 220px;
+    width: 90%;
+    height: 240px;
 }
+.Content2{
+    width: 90%;
+    height: 250px;
+}
+.tentWrite{
+    padding-left: 160px;
+}
+
 
 

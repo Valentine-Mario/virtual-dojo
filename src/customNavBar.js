@@ -1,9 +1,8 @@
 import React from 'react';
-import { Nav, NavItem, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, NavLink } from 'reactstrap';
-import { InputGroup, InputGroupAddon, Button, Input } from 'reactstrap';
+import { Nav, NavItem, NavLink } from 'reactstrap';
+import { InputGroup, Button, Input } from 'reactstrap';
 import './customNavBar.css'; 
-// import logo from './logo.jpg';
-// import { Button } from 'reactstrap';
+import {Link} from 'react-router-dom';
 
 
 export default class CustomNavBar extends React.Component {
@@ -28,35 +27,25 @@ export default class CustomNavBar extends React.Component {
      <Nav pills>
          
 
-        <InputGroup style={{ width: '590px', paddingLeft: '220px'}}> 
-                <Input/>
-                <InputGroupAddon addonType="append">
-                  <Button color="primary">Submit</Button>
-                </InputGroupAddon>
-              </InputGroup> 
-        
-                <NavItem >
-                  <Dropdown nav isOpen={this.state.dropdownOpen} toggle={this.toggle} >
-                    <DropdownToggle nav caret>
-                      Categories
-                    </DropdownToggle>
-                    <DropdownMenu>
-                      <DropdownItem header>Professional</DropdownItem>
-                      <DropdownItem>Formal basic</DropdownItem>
-                      <DropdownItem divider />
-                      <DropdownItem>Job Oppurtunities</DropdownItem>
-                    </DropdownMenu>
-                  </Dropdown></NavItem>
+        <InputGroup style={{ width: '590px', paddingLeft: '220px', }}>
+                
+                <Input style={{backgroundColor: "rgba(255, 255, 255, 0.7)"}} 
+                placeholder= "search courses"/> 
+                
+          </InputGroup> 
 
-                  <NavItem>
+                <NavItem style={{marginTop:'8px', marginLeft: "8px"}}> 
+                    <Link to="/categories">Categories</Link>
+                  </NavItem>
+               <NavItem>
                     <NavLink href="#">Contact us</NavLink>
                   </NavItem>
-                  <NavItem>
-                    <NavLink href="#">Sign In</NavLink>
+                  <NavItem  style={{marginTop:'8px'}}> 
+                    <Link to="/signIn">Sign In</Link>
                   </NavItem>
 
-                 <Button outline color="primary" style={{color:'blue', backgroundColor: 'white',
-                 borderWidth: '1px'}}>Sign Up</Button>{' '}
+                 <Button outline color="primary" style={{color:'#358FB6', backgroundColor: 'white',
+                 borderWidth: '1.5px', borderRadius:"10px", marginLeft:"40px"}}><Link to="/signUp">Sign Up</Link></Button>{' '}
                 </Nav>
       </div>
     );
