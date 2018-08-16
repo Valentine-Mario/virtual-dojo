@@ -1,8 +1,16 @@
 var model= require('../model/user');
 var model2= require('../model/videos');
+var session = require('express-session');
 var ObjectID = require('mongoose').Types.ObjectId;
 var fs= require('fs');
+var express = require('express');
+var app = express();
 var bcrypt = require('bcryptjs');
+app.use(session({
+    secret: 'diversify me',
+    resave: false,
+    saveUninitialized: true
+  }))
 const multer = require('multer');
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -172,4 +180,12 @@ exports.addUser = function(req, res){
                 })
             }
         })
+    }
+
+    exports.ensureAuthentication= function(req, res, next){
+        if(req.session){
+            return next()
+        }else{
+            res.json({message:"not logged in yet"})
+        }
     }
