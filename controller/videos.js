@@ -24,7 +24,6 @@ exports.addVideo = function(req, res, next){
         name: req.body.name,
         description: req.body.description,
         time:Date.now(),
-        image:req.files[0].path,
         video: req.files[1].path,
         comments:[]
     };      
@@ -91,10 +90,6 @@ exports.deleteVideo= function(req,res){
         if(err){
           res.json({message:"could not delete this video"})
         }
-        fs.unlink(vid.image, function(err){
-          if(err){
-            res.json({message:"could not download image"})
-          }
           else{
           model.remove(id, function(err){
             console.log(err)
@@ -102,7 +97,6 @@ exports.deleteVideo= function(req,res){
             res.json({message:"video deleted successfully"});
           })
         }
-        })
       })
     }
   })
