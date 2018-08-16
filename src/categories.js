@@ -22,7 +22,7 @@ class Categories extends Component {
                 <p className="categoryName">Basic Education</p>
             </div> 
             <div className="category2">
-                <img src={category2pic} className="category2pic" alt="category2"/>
+                <img src={category2apic} className="category2pic" alt="category2"/>
                 <p className="categoryName">Business</p>
             </div>
             <div className="category3">
