@@ -13,6 +13,10 @@ import { Responsive } from 'semantic-ui-react';
 import PrivateRoute from './privateRoute';
 
 
+const SecureRender = (props) => {
+    return sessionStorage.getItem('user') ? props.truthy : props.falsy
+}
+
 class Container extends Component {
 
     state = {
@@ -21,15 +25,17 @@ class Container extends Component {
 
     componentWillMount() {
         let storage = sessionStorage.getItem('user');
-        if(storage) {
-            this.setState({
-                authed: true
-            })
-        }
+        
     }
 
     render() {
-        const authState = this.state.authed;
+
+        let secureRender = sessionStorage.getItem('user') ? 
+                    (<PrivateRoute authed={true} path='/auth/user' component={User} />)
+                    :
+                    (<PrivateRoute authed={false} path='/auth/user' component={User} />)
+
+        
         return (
             <div>
                 <Responsive>
@@ -39,7 +45,7 @@ class Container extends Component {
                         <Route exact path="/login" component={SignIn} />
                         <Route exact path="/signup" component={SignUp} />
 
-                        <PrivateRoute authed={authState} path='/user' component={User} />
+                        {secureRender}
 
                         <Route exact path="/" component={Home} />
                         <Route component={NotFound} />

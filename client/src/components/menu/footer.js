@@ -10,8 +10,11 @@ import {
 } from 'semantic-ui-react';
 
 const Footer = (props) => {
+  const container = {
+    marginTop: '50px'
+  }
   return (
-    <Responsive>
+    <Responsive style={container}>
     	<Segment vertical style={{ padding: '5em 0em', backgroundColor: "grey" }}>
             <Container>
               <Grid divided inverted stackable>

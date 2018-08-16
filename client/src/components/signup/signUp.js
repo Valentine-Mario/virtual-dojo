@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { Menu, Segment } from 'semantic-ui-react'
-import { Button, Form, Input, Icon, Responsive } from 'semantic-ui-react'
-import { Link } from 'react-router-dom';
+import { Button, Form, Input, Icon, Responsive, Message } from 'semantic-ui-react'
+import { Link, withRouter } from 'react-router-dom';
 import { REQ_POST } from '../../api';
+import { isLoggedIn } from '../../config';
 
 class SignUp extends Component {
 
@@ -18,7 +19,8 @@ class SignUp extends Component {
             confirmPassword: '',
             loading: false,
             errors: {},
-            user: {}
+            user: {},
+            visible: true
         };
     }
 
@@ -31,7 +33,9 @@ class SignUp extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
+
         let { firstName, lastName, email, username, password, confirmPassword, errors, user} = this.state;
+
         this.setState({
             loading: true
         })
@@ -47,7 +51,18 @@ class SignUp extends Component {
                 
                 REQ_POST('users/register', user)
                     .then(res => {
-                        console.log(res);
+                        if(res.data.code == 1) {
+                            errors.newUser = "Email or Username already in use";
+                            this.setState({
+                                visible: false
+                            })
+                        }else {
+                            
+                            /** HANDLE ALL ROUTING WHEN USER REGISERS SUCCESSFULLY*/
+                            sessionStorage.setItem('user', res.data.user);
+                            this.props.history.push("/auth/user");
+                        }
+
                         this.setState({
                             firstName: '',
                             lastName: '',
@@ -58,18 +73,13 @@ class SignUp extends Component {
                             loading: false
                         })
                     })
-
-                    /*axios.post(`https://virtualserver.herokuapp.com/users/register`, user)
-                        .then(res => {
-                            console.log(res)
-                        })
-                        .catch(err => {
-                            console.log(err)
-                        })*/
                 
             }else {
+
                 errors.password = "password does not match";
+
                 console.log('password does not match', errors);
+
                 this.setState({
                     password: '',
                     confirmPassword: '',
@@ -79,7 +89,9 @@ class SignUp extends Component {
             }
         }else {
             errors.email = "Invalid email format";
+
             console.log('invalid email format', errors);
+
             this.setState({
                 email: '',
                 password: '',
@@ -89,11 +101,20 @@ class SignUp extends Component {
         }
 
     }
+
+    /**   HANDLE ERROR MESSAGE FOR LOGIN   */
+      handleDismiss = () => {
+        this.setState({ visible: true })
+      }
     
 
 
     render() {
-        let { firstName, lastName, email, username, password, confirmPassword, loading } = this.state;
+        let { firstName, lastName, email, username, password, confirmPassword, loading, errors, visible } = this.state;
+
+        if(isLoggedIn('user')){
+          this.props.history.push('/auth/user');
+        }
 
         const container = {
             width: '500px',
@@ -131,6 +152,14 @@ class SignUp extends Component {
         return (
             <div>
                 <Responsive minWidth={Responsive.onlyTablet.minWidth} style={container} >
+                    {
+                      errors && (
+                        <Message hidden={visible} negative onDismiss={this.handleDismiss}>
+                          <Message.Header>We're sorry you can't register this account</Message.Header>
+                          <p>{errors.newUser}</p>
+                        </Message>
+                      )
+                    }
                     <Menu attached='top' tabular>
                         <Menu.Item 
                             style={menu}
@@ -174,6 +203,7 @@ class SignUp extends Component {
                                 onChange={this.handleChange}
                                 required
                                 value={email}
+                                error={errors.email}
                             />
                             <Form.Field
                                 id='username'
@@ -192,6 +222,7 @@ class SignUp extends Component {
                                     onChange={this.handleChange}
                                     required
                                     value={password}
+                                    error={errors.password}
                                 />
                                 <Form.Field
                                     id='confirmPassword'
@@ -201,6 +232,7 @@ class SignUp extends Component {
                                     onChange={this.handleChange}
                                     required
                                     value={confirmPassword}
+                                    error={errors.password}
                                 />
                             </Form.Group>
                             <Button basic color='blue' style={btn} animated='vertical'>
@@ -215,6 +247,14 @@ class SignUp extends Component {
                     </Segment>
                 </Responsive >
                 <Responsive style={containerMobile} maxWidth={Responsive.onlyMobile.maxWidth} >
+                    {
+                      errors && (
+                        <Message hidden={visible} negative onDismiss={this.handleDismiss}>
+                          <Message.Header>We're sorry you can't register this account</Message.Header>
+                          <p>{errors.newUser}</p>
+                        </Message>
+                      )
+                    }
                     <Menu attached='top' tabular>
                         <Menu.Item 
                             style={menu}
@@ -257,6 +297,7 @@ class SignUp extends Component {
                                 onChange={this.handleChange}
                                 required
                                 value={email}
+                                error={errors.email}
                             />
                             <Form.Field
                                 id='username'
@@ -275,6 +316,7 @@ class SignUp extends Component {
                                     onChange={this.handleChange}
                                     required
                                     value={password}
+                                    error={errors.password}
                                 />
                                 <Form.Field
                                     id='confirmPassword'
@@ -284,6 +326,7 @@ class SignUp extends Component {
                                     onChange={this.handleChange}
                                     required
                                     value={confirmPassword}
+                                    error={errors.password}
                                 />
                             </Form.Group>
                             <Button basic color='blue' style={btn} animated='vertical'>
@@ -302,4 +345,4 @@ class SignUp extends Component {
     }
 }
 
-export default SignUp;
+export default withRouter(SignUp);

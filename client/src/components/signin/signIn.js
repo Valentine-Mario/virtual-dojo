@@ -1,24 +1,25 @@
 import React, { Component } from 'react'
 import { Menu, Segment } from 'semantic-ui-react'
 import { Button, Form, Icon, Responsive, Input, Message } from 'semantic-ui-react'
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { REQ_POST } from '../../api';
 import axios from 'axios';
+import { isLoggedIn } from '../../config';
 
 class SignIn extends Component {
     constructor(props){
-        super(props);
-    
-        this.state = {
-          username: '',
-          password: '',
-          user: {},
-          activeItem: 'Log In',
-          loading: false,
-          visible: true,
-          loggedIn: false
-        }
+      super(props);
+  
+      this.state = {
+        username: '',
+        password: '',
+        user: {},
+        activeItem: 'Log In',
+        loading: false,
+        visible: true,
+        loggedIn: false
       }
+    }
     
       handleChange = event => {
         this.setState({
@@ -29,11 +30,13 @@ class SignIn extends Component {
     
       handleSubmit = (e) => {
         e.preventDefault();
+
+        const { username, password, user } = this.state;
+        
         this.setState({
           loading: true
         })
     
-        const { username, password, user } = this.state;
 
         /**MAKE A REQUEST TO THE SERVER */
     
@@ -69,13 +72,15 @@ class SignIn extends Component {
                     visible: false
                   })
                 }else if(res){
-                  console.log(res.data.passport.user);
+                  // console.log(res.data.passport.user);
 
                   sessionStorage.setItem('user', res.data.passport.user);
 
                   this.setState({
                     loggedIn: true
-                  })
+                  });
+
+                  this.props.history.push("/auth/user");
                 }
 
 
@@ -96,6 +101,10 @@ class SignIn extends Component {
 
     render() {
         const { activeItem, username, password, loading, error, visible } = this.state;
+
+        if(isLoggedIn('user')){
+          this.props.history.push('/auth/user');
+        }
 
         const container = {
             width: '500px',
@@ -135,6 +144,14 @@ class SignIn extends Component {
         return (
             <div>
               <Responsive style={container}  minWidth={Responsive.onlyTablet.minWidth}>
+                {
+                  error && (
+                    <Message hidden={visible} negative onDismiss={this.handleDismiss}>
+                      <Message.Header>We're sorry you can't log in with this account</Message.Header>
+                      <p>{error}</p>
+                    </Message>
+                  )
+                }
                 <Menu attached='top' tabular>
                     <Menu.Item 
                         style={menu}
@@ -225,4 +242,4 @@ class SignIn extends Component {
     }
 }
 
-export default SignIn;
+export default withRouter(SignIn);
