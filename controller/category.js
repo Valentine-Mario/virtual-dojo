@@ -47,7 +47,15 @@ exports.getCategory= function(req, res){
         model.find({}, function(err, category){
         if (err) res.json({err:err, message:'sorry, could not return category'});
         res.json(category) 
-    });   
+    }).populate('videos')  
+}
+
+exports.searchCourse = function(req, res){
+  var value= req.params.value;
+    model.find({"description":{$regex: value, $options: 'i'}}, function(err, course){
+        if (err) res.json({err:err, message:'sorry, could not find video'});
+        res.json(course)
+    }).populate('videos')
 }
 
 exports.getCategoryByid = function(req, res){
@@ -55,7 +63,7 @@ exports.getCategoryByid = function(req, res){
     model.findById(id, function(err, category){
         if (err) res.json({err:err, message:'sorry, could not get category'});
         res.json(category);
-    });
+    }).populate('videos')
 }
 
 exports.editCategory = function(req, res){

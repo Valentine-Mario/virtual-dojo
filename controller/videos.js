@@ -48,7 +48,7 @@ exports.getvideos= function(req, res){
         model.find({}, function(err, videos){
         if (err) res.json({err:err, message:'sorry, could not return videos'});
         res.json(videos) 
-    });   
+    }).populate('comment')
 }
 
 exports.getvideoByid = function(req, res){
@@ -56,7 +56,7 @@ exports.getvideoByid = function(req, res){
     model.findById(id, function(err, video){
         if (err) res.json({err:err, message:'sorry, could not get category'});
         res.json(video);
-    });
+    }).populate('comment')
 }
 
 exports.searchVideo = function(req, res){
@@ -64,7 +64,7 @@ exports.searchVideo = function(req, res){
     model.find({"description":{$regex: value, $options: 'i'}}, function(err, videos){
         if (err) res.json({err:err, message:'sorry, could not find video'});
         res.json(videos)
-    });
+    }).populate('comment')
 }
 
 exports.editVideo = function(req, res){

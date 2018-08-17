@@ -4,6 +4,6 @@ var SuperCategorySchema=mongoose.Schema({
     name: String,
     description: String,
     cover_image:String,
-    courses:[{type:mongoose.Schema.Types.ObjectId, ref:'courses'}]
+    courses:[{type:mongoose.Schema.Types.ObjectId, ref:'category'}]
 })
 module.exports= mongoose.model('superCategory', SuperCategorySchema);

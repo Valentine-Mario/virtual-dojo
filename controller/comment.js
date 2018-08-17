@@ -20,7 +20,7 @@ exports.addComment= function(req, res){
         }else{
           video.comment.push(data._id);
           model2.create(video);
-          res.json({message:"comment created succesfully"})
+          res.json({message:"comment created succesfully"});
         }
       })
              
@@ -33,7 +33,7 @@ exports.getComments= function(req,res){
     model.find({}, '-_id -__v', function(err, comments){
         if(err)res.json({message:"comment not found"})
         res.json(comments)
-    })
+    }).populate('name')
 }
 
 exports.editComments = function(req, res){
