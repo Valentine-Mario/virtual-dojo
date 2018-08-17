@@ -36,6 +36,7 @@ exports.addCategory = function(req, res){
               Supercategory.courses.push(data._id);
               model2.create(Supercategory);
               res.json({message:"added to category"})
+              model2.findByIdAndUpdate(Supercategory, {$inc : {content : 1} }, function(err){})
             }
           })
         }

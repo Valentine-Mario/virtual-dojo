@@ -38,6 +38,7 @@ exports.addVideo = function(req, res, next){
           category.videos.push(data._id);
           model2.create(category);
           res.json({message:"added to category"})
+          model2.findByIdAndUpdate(category, {$inc : {content : 1} }, function(err){})
         }
       })
     }
