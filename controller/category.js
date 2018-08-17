@@ -47,8 +47,16 @@ exports.getCategory= function(req, res){
         model.find({}, function(err, category){
         if (err) res.json({err:err, message:'sorry, could not return category'});
         res.json(category) 
-    }).populate('videos')  
+    }).populate('videos').sort({'_id':-1}).exec() 
 }
+
+exports.getLatest= function(req, res){
+  model.find({}, function(err, data){
+    if(err)res.json({message:"an error occured sorting videos"})
+    res.json(data)
+  }).sort({'_id':-1}).limit(5).exec()
+}
+
 
 exports.searchCourse = function(req, res){
   var value= req.params.value;
