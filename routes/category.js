@@ -24,7 +24,7 @@ router.get('/get/:id', CategoryController.getCategoryByid);
 router.post('/edit/:id', CategoryController.editCategory);
 router.get('/delete/:id', CategoryController.deleteCategory);
 router.get('/search/:value', CategoryController.searchCourse);
-router.get('/getlatest', CategoryController.getLatest)
+router.get('/getlatest/:value', CategoryController.getLatest)
 
 
 module.exports = router;

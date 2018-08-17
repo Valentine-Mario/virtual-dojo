@@ -33,7 +33,7 @@ exports.getComments= function(req,res){
     model.find({}, '-_id -__v', function(err, comments){
         if(err)res.json({message:"comment not found"})
         res.json(comments)
-    }).populate('name')
+    }).populate('name', 'name')
 }
 
 exports.editComments = function(req, res){

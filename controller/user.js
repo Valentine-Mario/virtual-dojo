@@ -177,15 +177,16 @@ exports.addUser = function(req, res){
                             res.json({message:"this video already exist in your library"})
                             
                         }else{
-                            model2.findByIdAndUpdate(video, {$inc:{views:1}}, {new:true}, function(err){
+                            
                                 if(err){
                                     res.json({message:"could not update views"})
                                 }else{
                                     user.library.push(video._id);
                                     user.save();
                                     res.json({message:"video purchase succesfully"})
+                                    model2.findByIdAndUpdate(video, {$inc : {purchase : 1} }, function(err){})
                                 }
-                            })
+                       
                         }
                         
                     }

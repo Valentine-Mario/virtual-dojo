@@ -51,10 +51,11 @@ exports.getCategory= function(req, res){
 }
 
 exports.getLatest= function(req, res){
+  value=parseInt(req.params.value)
   model.find({}, function(err, data){
     if(err)res.json({message:"an error occured sorting videos"})
     res.json(data)
-  }).sort({'_id':-1}).limit(5).exec()
+  }).populate('videos').sort({'_id':-1}).limit(value).exec()
 }
 
 
