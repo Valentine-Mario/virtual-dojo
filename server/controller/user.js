@@ -20,15 +20,15 @@ app.use(session({
   }))
 const multer = require('multer');
 var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      if (file.mimetype === 'image/jpeg'||file.mimetype === 'image/png') {
-        cb(null, './files/images/')
-      } else {
+    // destination: function (req, file, cb) {
+    //   if (file.mimetype === 'image/jpeg'||file.mimetype === 'image/png') {
+    //     cb(null, './files/images/')
+    //   } else {
 
-      }
+    //   }
       
       
-    },
+    // },
     filename: function (req, file, cb) {
       cb(null, file.originalname)
     }
@@ -127,31 +127,19 @@ exports.addUser = function(req, res){
 }
     exports.editProfilePics= function(req,res){
         var id={_id:req.params.id}
-        model.findById(id, function(err, user){
-            if(user.profile_pics==null){
-                var data={
-            profile_pics:req.files[0].path
-        }
-        model.findByIdAndUpdate(id, data, function(err){
-            if(err)res.json({message:"could not upload profile picture"})
-            res.json({message:"profile picture updated successfully"})
-        })
-            }else{
-                fs.unlink(user.profile_pics, function(err){
-                    if(err){
-                        res.json("could not update profile picture")
-                    }else{
+        
                                 var data={
-                                 profile_pics:req.files[0].path
-                }
-                    model.findByIdAndUpdate(id, data, function(err){
-                    if(err)res.json({message:"could not upload profile picture"})
-                    res.json({message:"profile picture updated successfully"})
-        })
-                    }
+                                 profile_pics:req.files[0].path}
+                
+                cloudinary.uploader.upload(data.profile_pics).then(function(result){
+                    console.log(result)
+                    data.profile_pics= result.url;
+                        model.findByIdAndUpdate(id, data, function(err){
+                        if(err)res.json({message:"could not upload profile picture"})
+                        res.json({message:"profile picture updated successfully"})
+                    })
                 })
-            }
-        })
+                    
         
     }
 
