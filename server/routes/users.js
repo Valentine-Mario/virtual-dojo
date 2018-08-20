@@ -41,17 +41,23 @@ var storage = multer.diskStorage({
    
   var upload = multer({ storage: storage })
 
+  router.post('/login', passport.authenticate('local'),
+    function(req, res){
+       res.json(req.session)
+    }
+)
+
 /* GET users listing. */
 
 router.post('/register', UserController.addUser);
-router.get('/users', UserController.ensureAuthentication, UserController.getUser);
-router.get('/:id', UserController.getUserByid);
+router.get('/users', UserController.getUser);
 router.get('/search/:value', UserController.searchUser);
 router.post('/edit/:id', UserController.editUser);
 router.get('/delete/:id', UserController.deleteUser);
-router.post('/user', UserController.getUserByUsername);
+//router.post('/user', UserController.getUserByUsername);
 router.post('/buy', UserController.getVideo)
 router.post('/update-profile/:id', upload.any('profile_pics'), UserController.editProfilePics);
+router.get('/:id', UserController.getUserByid);
 
     passport.use(new LocalStrategy(
         function(username, password, done) {
@@ -74,11 +80,7 @@ router.post('/update-profile/:id', upload.any('profile_pics'), UserController.ed
       ));
 
 
-router.post('/login', passport.authenticate('local'),
-    function(req, res){
-       res.json(req.session)
-    }
-)
+
 
 router.get('/logout/:id', function(req, res){
     UserController.getUserByid

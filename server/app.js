@@ -7,6 +7,14 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var passport= require('passport');
 var LocalStrategy = require('passport-local').strategy;
+var app = express();
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Methods: POST, GET");
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -16,15 +24,9 @@ var videoRouter = require('./routes/videos')
 var SuperCatRouter = require('./routes/superCat')
 
 
-var app = express();
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Methods",  "POST, GET");
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-  });
 
-var app = express();
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

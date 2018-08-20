@@ -1,4 +1,5 @@
 var model= require('../model/superCat');
+var model2= require('../model/category')
 var fs= require('fs');
 const multer = require('multer');
 var storage = multer.diskStorage({
@@ -37,7 +38,7 @@ exports.addcategory = function(req, res, next){
      model.find({}, function(err, data){
          if(err)res.json(err)
          res.json(data)
-     })
+     }).populate('courses')
  }
 
  exports.getCategoryById= function(req, res){
@@ -45,7 +46,7 @@ exports.addcategory = function(req, res, next){
     model.findById(id, function(err, data){
         if(err)res.json({message:"could not get category"})
         res.json(data)
-    })
+    }).populate('courses')
  }
 
  exports.editCategory= function(req,res){

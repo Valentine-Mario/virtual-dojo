@@ -24,9 +24,8 @@ exports.addVideo = function(req, res, next){
         name: req.body.name,
         description: req.body.description,
         time:Date.now(),
-        video: req.files[1].path,
-        comments:[]
-    };      
+        video: req.files[0].path
+    };
   model.create(data, function(err, data){
     if(err){
        res.json({message:"could not create file"})
@@ -39,6 +38,7 @@ exports.addVideo = function(req, res, next){
           category.videos.push(data._id);
           model2.create(category);
           res.json({message:"added to category"})
+          model2.findByIdAndUpdate(category, {$inc : {content : 1} }, function(err){})
         }
       })
     }
@@ -49,7 +49,7 @@ exports.getvideos= function(req, res){
         model.find({}, function(err, videos){
         if (err) res.json({err:err, message:'sorry, could not return videos'});
         res.json(videos) 
-    });   
+    }).populate('comment')
 }
 
 exports.getvideoByid = function(req, res){
@@ -57,7 +57,7 @@ exports.getvideoByid = function(req, res){
     model.findById(id, function(err, video){
         if (err) res.json({err:err, message:'sorry, could not get category'});
         res.json(video);
-    });
+    }).populate('comment')
 }
 
 exports.searchVideo = function(req, res){
@@ -65,7 +65,7 @@ exports.searchVideo = function(req, res){
     model.find({"description":{$regex: value, $options: 'i'}}, function(err, videos){
         if (err) res.json({err:err, message:'sorry, could not find video'});
         res.json(videos)
-    });
+    }).populate('comment')
 }
 
 exports.editVideo = function(req, res){
@@ -82,6 +82,7 @@ exports.editVideo = function(req, res){
 
 exports.deleteVideo= function(req,res){
     var id = {_id:req.params.id}
+    let category = new ObjectID(req.body.category);
   model.findById(id, function(err, vid){
     if(err){
       res.json({message:"video could not be deleted"})
@@ -95,6 +96,8 @@ exports.deleteVideo= function(req,res){
             console.log(err)
             if(err)res.json({message:"could not delete"})
             res.json({message:"video deleted successfully"});
+            
+            model2.findByIdAndUpdate(category, {$inc : {content : -1} }, function(err){})
           })
         }
       })

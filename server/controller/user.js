@@ -1,11 +1,18 @@
 var model= require('../model/user');
-var model2= require('../model/videos');
+var model2= require('../model/category');
 var session = require('express-session');
 var ObjectID = require('mongoose').Types.ObjectId;
+var cloudinary = require('cloudinary');
 var fs= require('fs');
+const Joi = require('joi');
 var express = require('express');
 var app = express();
 var bcrypt = require('bcryptjs');
+cloudinary.config({ 
+    cloud_name: 'school-fleep', 
+    api_key: '913188349489292', 
+    api_secret: 'CDafSvspukpNVWRh0ib3gd1Dsz0' 
+  });
 app.use(session({
     secret: 'diversify me',
     resave: false,
@@ -29,65 +36,94 @@ var storage = multer.diskStorage({
    
   var upload = multer({ storage: storage })
 
+  const schema= Joi.object().keys({
+      firstName:Joi.string().required(),
+      lastName:Joi.string().required(),
+      username:Joi.string().alphanum().min(3).max(15).required(),
+      email:Joi.string().email().required(),
+      password:Joi.string().regex(/^[a-zA-Z0-9]{6,30}$/),
+  })
+  
+  const schema2= Joi.object().keys({
+    firstName:Joi.string().required(),
+    lastName:Joi.string().required(),
+    email:Joi.string().email().required(),
+  })
 exports.addUser = function(req, res){
     var data = {
-        FirstName: req.body.FirstName,
-        LastName:req.body.LastName,
+        firstName: req.body.firstName,
+        lastName:req.body.lastName,
         username:req.body.username,
         email:req.body.email,
-        comment:[],
         time:Date.now(),
         password:req.body.password,
-        password2:req.body.password2
+        confirmPassword:req.body.confirmPassword
     };
-    bcrypt.hash(data.password, 15, function(err, hash){
-        data.password=hash;
-         model.create(data, function(err){
-                if(err){
-                    res.json({message:'user not added'});
-                }else{
-                    res.json({message:'User added successfully.'})
-                    res.status(200)
-                }
-            })
-    })
+    
+
+        Joi.validate({firstName:data.firstName, lastName:data.lastName, username:data.username, email:data.email, password:data.password}, schema, function(err,value){
+            if(err){
+                res.json(err.message)
+            }else{
+                bcrypt.hash(data.password, 15, function(err, hash){
+                    data.password=hash;
+                model.create(data, function(err, user){
+                    if(err){
+                        res.json({message:'user not added', code: 1});
+                    }else{
+                        res.json({user:user._id, code:2})
+                        res.status(200)
+                    }
+                })
+                })
+            }
+            
+        })
+         
+   
 }
 
     exports.getUser= function(req, res){
         model.find({}, '-password -_id -__v', function(err, users){
-        if (err) res.json({err:err, message:'sorry, could not return all users'});
-        res.json(users) 
-    });   
+        if (err) res.json({err:err, message:'sorry, could not return all users', code:3});
+        res.json({message:users, code:4}) 
+    }).populate('library')
 }
 
     exports.getUserByid = function(req, res){
     var id = req.params.id;
     model.findById(id, '-password', function(err, user){
-        if (err) res.json({err:err, message:'sorry, could not get user by id'});
+        if (err) res.json({err:err, message:'sorry, could not get user by id', code:5});
         res.json(user);
-    });
+    }).populate('library')
 }
 
     exports.searchUser = function(req, res){
 	var value= req.params.value;
     model.find({"username":{$regex: value, $options: 'i'}}, '-__v -password', function(err, user){
-        if (err) res.json({err:err, message:'sorry, could not find user'});
-        res.json(user)
-    });
+        if (err) res.json({err:err, message:`could not find user due to error in connection`, code:7});
+        res.json({message:user, code:8})
+    }).populate('library')
 }
 
     exports.editUser = function(req, res){
          var id = {_id:req.params.id}
         var data = {
-        FirstName: req.body.FirstName,
-        LastName:req.body.LastName,
-        username:req.body.username,
+        firstName: req.body.firstName,
+        lastName:req.body.lastName,
         email:req.body.email
     };
-    model.findByIdAndUpdate(id, data, function(err){
-        if (err) res.json({err:err, message:'sorry, could not update user'});
-        res.json({message:'user updated successfully'})
+    Joi.validate({firstName:data.firstName,  lastName:data.lastName, email:data.email}, schema2, function(err,  value){
+        if(err){
+            res.json(err.message)
+        }else{
+            model.findByIdAndUpdate(id, data, function(err){
+                if (err) res.json({err:err, message:'sorry, could not update user', code:9});
+                res.json({message:'user updated successfully', code:10})
+            })
+        }
     })
+    
 }
     exports.editProfilePics= function(req,res){
         var id={_id:req.params.id}
@@ -143,13 +179,13 @@ exports.addUser = function(req, res){
         })
 }
 
-    exports.getUserByUsername = function(req, res){
-	var username= req.body.username;
-    model.findOne({username}, '-__v -password', function(err, user){
-        if (err) res.json({err:err, message:'sorry, could not find user'});
-        res.json(user)
-    });
-}
+//     exports.getUserByUsername = function(req, res){
+// 	var username= req.body.username;
+//     model.findOne({username}, '-__v -password', function(err, user){
+//         if (err) res.json({err:err, message:'sorry, could not find user'});
+//         res.json({message:user})
+//     });
+// }
 
     exports.getUserByUsername2= function(username, callback){
         var query= {username:username}
@@ -173,9 +209,22 @@ exports.addUser = function(req, res){
                     if(err){
                         res.json({message:"could not find video"})
                     }else{
-                        user.library.push(video._id);
-                        user.save();
-                        res.json({message:"video purchase succesfully"})
+                        if(JSON.stringify(user.library).includes(JSON.stringify(video._id))){
+                            res.json({message:"this video already exist in your library"})
+                            
+                        }else{
+                            
+                                if(err){
+                                    res.json({message:"could not update views"})
+                                }else{
+                                    user.library.push(video._id);
+                                    user.save();
+                                    res.json({message:"video purchase succesfully"})
+                                    model2.findByIdAndUpdate(video, {$inc : {purchase : 1} }, function(err){})
+                                }
+                       
+                        }
+                        
                     }
                 })
             }
