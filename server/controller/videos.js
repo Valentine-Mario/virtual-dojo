@@ -1,17 +1,15 @@
 var model= require('../model/videos');
 var model2= require('../model/category');
+var cloudinary = require('cloudinary');
 var fs= require('fs');
 var ObjectID = require('mongoose').Types.ObjectId;
 const multer = require('multer');
+cloudinary.config({ 
+  cloud_name: 'school-fleep', 
+  api_key: '913188349489292', 
+  api_secret: 'CDafSvspukpNVWRh0ib3gd1Dsz0' 
+});
 var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      if (file.mimetype === 'image/jpeg'||file.mimetype === 'image/png'||file.mimetype === 'image/gif') {
-        cb(null, './files/images/')
-      } else if(file.mimetype==='video/mp4'||file.mimetype==='video/avi'||filename==='video/flv'){
-        cb(null, './files/videos/')
-      }
-      
-    },
     filename: function (req, file, cb) {
       cb(null, file.originalname)
     }
@@ -26,23 +24,28 @@ exports.addVideo = function(req, res, next){
         time:Date.now(),
         video: req.files[0].path
     };
-  model.create(data, function(err, data){
-    if(err){
-       res.json({message:"could not create file"})
-    }else{
-      let category = new ObjectID(req.body.category);
-      model2.findById({_id: category}, function(err, category){
+
+    cloudinary.uploader.upload(data.video).then(function(result){
+      data.video= result.url;
+      model.create(data, function(err, data){
         if(err){
-          res.json({message:"category not found"})
+           res.json({message:"could not create file"})
         }else{
-          category.videos.push(data._id);
-          model2.create(category);
-          res.json({message:"added to category"})
-          model2.findByIdAndUpdate(category, {$inc : {content : 1} }, function(err){})
+          let category = new ObjectID(req.body.category);
+          model2.findById({_id: category}, function(err, category){
+            if(err){
+              res.json({message:"category not found"})
+            }else{
+              category.videos.push(data._id);
+              model2.create(category);
+              res.json({message:"added to category"})
+              model2.findByIdAndUpdate(category, {$inc : {content : 1} }, function(err){})
+            }
+          })
         }
       })
-    }
-  })
+    })
+  
 }
 
 exports.getvideos= function(req, res){
@@ -83,24 +86,11 @@ exports.editVideo = function(req, res){
 exports.deleteVideo= function(req,res){
     var id = {_id:req.params.id}
     let category = new ObjectID(req.body.category);
-  model.findById(id, function(err, vid){
-    if(err){
-      res.json({message:"video could not be deleted"})
-    }else{
-      fs.unlink(vid.video, function(err){
-        if(err){
-          res.json({message:"could not delete this video"})
-        }
-          else{
+  
           model.remove(id, function(err){
-            console.log(err)
             if(err)res.json({message:"could not delete"})
             res.json({message:"video deleted successfully"});
             
             model2.findByIdAndUpdate(category, {$inc : {content : -1} }, function(err){})
           })
-        }
-      })
-    }
-  })
 }

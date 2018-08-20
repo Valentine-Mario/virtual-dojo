@@ -132,7 +132,6 @@ exports.addUser = function(req, res){
                                  profile_pics:req.files[0].path}
                 
                 cloudinary.uploader.upload(data.profile_pics).then(function(result){
-                    console.log(result)
                     data.profile_pics= result.url;
                         model.findByIdAndUpdate(id, data, function(err){
                         if(err)res.json({message:"could not upload profile picture"})

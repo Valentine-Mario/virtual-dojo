@@ -1,16 +1,15 @@
 var model= require('../model/category');
 var model2= require('../model/superCat');
-var multer= require('multer')
+var multer= require('multer');
+var cloudinary = require('cloudinary');
+cloudinary.config({ 
+    cloud_name: 'school-fleep', 
+    api_key: '913188349489292', 
+    api_secret: 'CDafSvspukpNVWRh0ib3gd1Dsz0' 
+  });
 var ObjectID = require('mongoose').Types.ObjectId;
 var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      if (file.mimetype === 'image/jpeg'||file.mimetype === 'image/png'||file.mimetype === 'image/gif') {
-        cb(null, './files/images/')
-      } else if(file.mimetype==='video/mp4'||file.mimetype==='video/avi'||filename==='video/flv'){
-        cb(null, './files/videos/')
-      }
-      
-    },
+    
     filename: function (req, file, cb) {
       cb(null, file.originalname)
     }
@@ -25,7 +24,9 @@ exports.addCategory = function(req, res){
         price:req.body.price,
         image:req.files[0].path
     };
-    model.create(data, function(err, data){
+    cloudinary.uploader.upload(data.image).then(function(result){
+      data.image=result.url
+      model.create(data, function(err, data){
         if(err){
            res.json({message:"could not create file"})
         }else{
@@ -42,7 +43,7 @@ exports.addCategory = function(req, res){
           })
         }
       })
-    
+    })
 }
 
 exports.getCategory= function(req, res){
@@ -82,11 +83,15 @@ exports.editCategory = function(req, res){
         var data = {
         name: req.body.name,
         description: req.body.description,
-        price:req.body.price
+        price:req.body.price,
+        image:req.files[0].path
     };
-    model.findByIdAndUpdate(id, data, function(err){
+    cloudinary.uploader.upload(data.image).then(function(result){
+      data.image=result.url
+      model.findByIdAndUpdate(id, data, function(err){
         if (err) res.json({err:err, message:'sorry, could not update category'});
         res.json({message:'category updated successfully'})
+    })
     })
 }
 
