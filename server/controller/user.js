@@ -2,11 +2,17 @@ var model= require('../model/user');
 var model2= require('../model/category');
 var session = require('express-session');
 var ObjectID = require('mongoose').Types.ObjectId;
+var cloudinary = require('cloudinary');
 var fs= require('fs');
 const Joi = require('joi');
 var express = require('express');
 var app = express();
 var bcrypt = require('bcryptjs');
+cloudinary.config({ 
+    cloud_name: 'school-fleep', 
+    api_key: '913188349489292', 
+    api_secret: 'CDafSvspukpNVWRh0ib3gd1Dsz0' 
+  });
 app.use(session({
     secret: 'diversify me',
     resave: false,
