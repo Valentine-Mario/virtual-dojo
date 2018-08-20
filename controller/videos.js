@@ -82,6 +82,7 @@ exports.editVideo = function(req, res){
 
 exports.deleteVideo= function(req,res){
     var id = {_id:req.params.id}
+    let category = new ObjectID(req.body.category);
   model.findById(id, function(err, vid){
     if(err){
       res.json({message:"video could not be deleted"})
@@ -95,6 +96,8 @@ exports.deleteVideo= function(req,res){
             console.log(err)
             if(err)res.json({message:"could not delete"})
             res.json({message:"video deleted successfully"});
+            
+            model2.findByIdAndUpdate(category, {$inc : {content : -1} }, function(err){})
           })
         }
       })

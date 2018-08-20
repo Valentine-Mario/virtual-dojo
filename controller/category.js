@@ -22,6 +22,7 @@ exports.addCategory = function(req, res){
     var data = {
         name: req.body.name,
         description: req.body.description,
+        price:req.body.price,
         image:req.files[0].path
     };
     model.create(data, function(err, data){
@@ -80,7 +81,8 @@ exports.editCategory = function(req, res){
          var id = {_id:req.params.id}
         var data = {
         name: req.body.name,
-        description: req.body.description
+        description: req.body.description,
+        price:req.body.price
     };
     model.findByIdAndUpdate(id, data, function(err){
         if (err) res.json({err:err, message:'sorry, could not update category'});
@@ -90,8 +92,14 @@ exports.editCategory = function(req, res){
 
 exports.deleteCategory = function(req, res){
         var id = {_id:req.params.id}
+        let Supercategory = new ObjectID(req.body.Supercategory);
         model.remove(id, function(err){
-        if (err) res.json({err:err, message:'could not delete category'});
-        return res.json({message:'category deleted'});
+        if (err) {
+          res.json({err:err, message:'could not delete category'});
+        }else{
+          res.json({message:'category deleted'});
+          model2.findByIdAndUpdate(Supercategory, {$inc : {content : -1} }, function(err){})
+        }
+        
     });
 }

@@ -3,6 +3,7 @@ var model2= require('../model/category');
 var session = require('express-session');
 var ObjectID = require('mongoose').Types.ObjectId;
 var fs= require('fs');
+const Joi = require('joi');
 var express = require('express');
 var app = express();
 var bcrypt = require('bcryptjs');
@@ -29,28 +30,51 @@ var storage = multer.diskStorage({
    
   var upload = multer({ storage: storage })
 
+  const schema= Joi.object().keys({
+      firstName:Joi.string().required(),
+      lastName:Joi.string().required(),
+      username:Joi.string().alphanum().min(3).max(15).required(),
+      email:Joi.string().email().required(),
+      password:Joi.string().regex(/^[a-zA-Z0-9]{6,30}$/),
+  })
+  
+  const schema2= Joi.object().keys({
+    firstName:Joi.string().required(),
+    lastName:Joi.string().required(),
+    email:Joi.string().email().required(),
+  })
 exports.addUser = function(req, res){
     var data = {
         firstName: req.body.firstName,
         lastName:req.body.lastName,
         username:req.body.username,
         email:req.body.email,
-        comment:[],
         time:Date.now(),
         password:req.body.password,
         confirmPassword:req.body.confirmPassword
     };
-    bcrypt.hash(data.password, 15, function(err, hash){
-        data.password=hash;
-         model.create(data, function(err, user){
-                if(err){
-                    res.json({message:'user not added', code: 1});
-                }else{
-                    res.json({user:user._id, code:2})
-                    res.status(200)
-                }
-            })
-    })
+    
+
+        Joi.validate({firstName:data.firstName, lastName:data.lastName, username:data.username, email:data.email, password:data.password}, schema, function(err,value){
+            if(err){
+                res.json(err.message)
+            }else{
+                bcrypt.hash(data.password, 15, function(err, hash){
+                    data.password=hash;
+                model.create(data, function(err, user){
+                    if(err){
+                        res.json({message:'user not added', code: 1});
+                    }else{
+                        res.json({user:user._id, code:2})
+                        res.status(200)
+                    }
+                })
+                })
+            }
+            
+        })
+         
+   
 }
 
     exports.getUser= function(req, res){
@@ -79,15 +103,21 @@ exports.addUser = function(req, res){
     exports.editUser = function(req, res){
          var id = {_id:req.params.id}
         var data = {
-        FirstName: req.body.FirstName,
-        LastName:req.body.LastName,
-        username:req.body.username,
+        firstName: req.body.firstName,
+        lastName:req.body.lastName,
         email:req.body.email
     };
-    model.findByIdAndUpdate(id, data, function(err){
-        if (err) res.json({err:err, message:'sorry, could not update user', code:9});
-        res.json({message:'user updated successfully', code:10})
+    Joi.validate({firstName:data.firstName,  lastName:data.lastName, email:data.email}, schema2, function(err,  value){
+        if(err){
+            res.json(err.message)
+        }else{
+            model.findByIdAndUpdate(id, data, function(err){
+                if (err) res.json({err:err, message:'sorry, could not update user', code:9});
+                res.json({message:'user updated successfully', code:10})
+            })
+        }
     })
+    
 }
     exports.editProfilePics= function(req,res){
         var id={_id:req.params.id}
