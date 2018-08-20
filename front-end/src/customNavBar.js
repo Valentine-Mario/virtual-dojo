@@ -43,10 +43,12 @@ export default class CustomNavBar extends React.Component {
                   <NavItem  style={{marginTop:'8px'}}> 
                     <Link to="/signIn">Sign In</Link>
                   </NavItem>
-
-                 <Button outline color="primary" style={{color:'#358FB6', backgroundColor: 'white',
-                 borderWidth: '1.5px', borderRadius:"10px", marginLeft:"40px"}}><Link to="/signUp">Sign Up</Link></Button>{' '}
-                </Nav>
+                
+                 <Button outline color="primary" style={{ backgroundColor: 'white', position: "absolute",
+                  top: "5px", right: "90px", borderWidth: '1.5px', borderRadius:"10px"}}><Link to="/signUp">Sign Up</Link>
+                 </Button> 
+              </Nav>
+                
       </div>
     );
   }

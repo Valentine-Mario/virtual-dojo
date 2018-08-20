@@ -5,6 +5,7 @@ import Footer from './footer';
 import category1pic from './pictures/category1.png'; 
 import category2pic from './pictures/category2.png';
 import category3pic from './pictures/category3.png'; 
+import {Link} from 'react-router-dom';
 
 class Categories extends Component { 
   render() {
@@ -25,9 +26,11 @@ class Categories extends Component {
                 <img src={category2pic} className="category2apic" alt="category2"/>
                 <p className="categoryName">Business</p>
             </div>
+            
+            
             <div className="category3">
-                <img src={category3pic} className="category3pic" alt="category3"/>
-                <p className="categoryName">Technology</p>   
+                <Link to="./course"><img src={category3pic} className="category3pic" alt="category3"/></Link>
+                <Link to="./course"> <p className="categoryName">Technology</p></Link>
             </div>
             
           </div> 

@@ -28,8 +28,8 @@ class Footer extends React.Component{
                         </Col>
                         <Col className="row3col5">
                             <p>SUBSCRIBE<br/>Enter your e-mail to get<br/>notification about your course<br/></p>
-                            <input placeholder="E-MAIL" style={{backgroundColor: 'white', color: 'white'}}/>
-                            <button style={{backgroundColor: 'blue', color: 'white'}}>Submit</button>
+                            <input placeholder="E-MAIL"/>
+                            <button style={{backgroundColor: 'blue', border: '1px solid blue', color: 'white'}}>Submit</button>
                         </Col> 
                     </Row>
                 

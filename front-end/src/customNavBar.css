@@ -7,15 +7,10 @@
     height: 40px;
 }
 
-.signUp{
-   border: 1px solod rgb(38, 163, 216);
-   background-color: white;
-   border-radius: 10px;
-   width: 110px;
-}
-
 .body{
     background-color: rgba(53, 143, 182, 0.38);
     height: 60px; 
     padding-top: 5px;
+    color:#358FB6;
+    
 }

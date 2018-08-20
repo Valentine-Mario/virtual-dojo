@@ -6,7 +6,7 @@ class ContactUs extends Component {
   render() {
     return (
       <div className="contactUs">
-        <h1>Contact Us</h1>
+        <h1>Contact</h1>
       </div>
     );
   }

@@ -6,6 +6,10 @@ import ContactUs from './contactUs';
 import SignIn from './signIn';
 import SignUp from './signUp';
 import Categories from './categories';
+import Course from './course';
+import AdminDash from './adminDash';
+import AdminCourse from './adminCourse';
+import AdminUser from './adminUser';
 // import CustomNavbar from './customNavBar';
 // import Footer from './footer';
 
@@ -19,10 +23,13 @@ class App extends Component {
             <Switch> 
                 <Route exact path="/" component={Home} />
                 <Route path="/categories" component={Categories} />
+                <Route path="/course" component={Course} />
                 <Route path="/contactUs" component={ContactUs} />
                 <Route path="/signIn" component={SignIn} />
                 <Route path="/signUp" component={SignUp} />
-                
+                <Route path="/adminDash" component={AdminDash} />
+                <Route path="/adminCourse" component={AdminCourse} />
+                <Route path="/adminUser" component={AdminUser} />
               </Switch> 
 
          </div> 

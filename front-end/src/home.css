@@ -8,8 +8,15 @@
 .background{
     background-image: url('./pictures/bg-gradient.png'); 
     background-repeat: no-repeat;
-    background-size: 900px;
+    background-size: 950px;
     width: 100%;
+    position: relative;
+    right: 120px;
+    bottom: 33px;
+    /* display: block; */
+    padding-left: 110px;
+    padding-top: 20px;
+   display:inline-block;
 }
 .landingText{
     width: 40%;
@@ -25,6 +32,7 @@
     text-align: center;
     height: 500px;
     background-color: #E5E5E5 !important;
+    /* padding-bottom: 50px; */
 }
 .student1{
     border-radius: 50px;
@@ -52,6 +60,7 @@
     height: 300px;
     margin-top: 50px;
     margin-bottom: 25px;
+    margin-left: 130px;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
     border-radius: 15px;
     position: absolute;
@@ -61,10 +70,14 @@
 .mentor{
     background: linear-gradient(248.69deg, rgba(33, 152, 203, 0.91) 16.23%, rgba(24, 73, 174, 0.64) 86.39%);;
     width: 100%;
-    height: 250px;
-    text-align: center;
-    padding-top: 100px;
-} 
+    height: 150px;
+    /* text-align: center; */
+    /* padding: 60px; */
+}  
+/* .mentor>div{
+    width: 800px;
+    height: 10px;
+} */
 .content{
     width: 200px;
     height: 200px;
@@ -130,12 +143,13 @@ ion-icon{
     font-size: 27px;
 }
 .text{
-    margin-left: 40px;
+    margin-left: 45px;
     margin-top: 40px;
 }
 .text2{
-    margin-left: 120px;
+    margin-left: 190px;
     margin-top: 40px;
+    
 }
 .laptop{
     margin-left: 20px;
@@ -167,7 +181,7 @@ ion-icon{
    margin-top: 50px;
     margin-bottom: 35px;
     height: 300px;
-    margin-left: 80px;
+    margin-left: 120px;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
     border-radius: 15px;
     padding: 30px; 
@@ -196,6 +210,8 @@ ion-icon{
 .tentWrite{
     padding-left: 160px;
 }
-
+img:hover{
+    box-shadow: none;
+}
 
 
