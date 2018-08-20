@@ -44,51 +44,78 @@ class SignUp extends Component {
         if(/^([a-z0-9-_.]+\@[a-z0-9-.]+\.[a-z]{2,4})$/g.test(email)){
             console.log(email)
 
-            if(password === confirmPassword){
-                /**HANDLE REQUEST TO SIGN UP */
+            if(username.length >= 3 && username.length <= 15){
+                if(password.length >= 6){
+                    if(password === confirmPassword){
+                        /**HANDLE REQUEST TO SIGN UP */
 
-                let user = { firstName, lastName, email, username, password, confirmPassword };
-                
-                REQ_POST('users/register', user)
-                    .then(res => {
-                        if(res.data.code == 1) {
-                            errors.newUser = "Email or Username already in use";
-                            this.setState({
-                                visible: false
+                        let user = { firstName, lastName, email, username, password, confirmPassword };
+                        
+                        REQ_POST('users/register', user)
+                            .then(res => {
+                                if(res.data.code == 1) {
+                                    errors.message = "Email or Username already in use";
+                                    this.setState({
+                                        visible: false
+                                    })
+                                }else {
+                                    
+                                    /** HANDLE ALL ROUTING WHEN USER REGISERS SUCCESSFULLY*/
+                                    sessionStorage.setItem('user', res.data.user);
+                                    this.props.history.push("/auth/user");
+                                }
+
+                                this.setState({
+                                    firstName: '',
+                                    lastName: '',
+                                    email: '',
+                                    username: '',
+                                    password: '',
+                                    confirmPassword: '',
+                                    loading: false
+                                })
                             })
-                        }else {
-                            
-                            /** HANDLE ALL ROUTING WHEN USER REGISERS SUCCESSFULLY*/
-                            sessionStorage.setItem('user', res.data.user);
-                            this.props.history.push("/auth/user");
-                        }
+                        
+                    }else {
+
+                        errors.message = "password does not match";
+
+                        console.log('password does not match', errors);
 
                         this.setState({
-                            firstName: '',
-                            lastName: '',
-                            email: '',
-                            username: '',
                             password: '',
                             confirmPassword: '',
-                            loading: false
+                            loading: false,
+                            visible: false
                         })
+                        
+                    }
+                }else {
+                    console.log('Min length for password is 6 characters');
+                    errors.message = 'Minimum length for password is 6 characters';
+
+                    this.setState({
+                        password: '',
+                        confirmPassword: '',
+                        loading: false,
+                        visible: false
                     })
-                
+                }
             }else {
-
-                errors.password = "password does not match";
-
-                console.log('password does not match', errors);
+                console.log('Mininum length for username is 3 and maximum is 15');
+                errors.message = 'Minimum length for username is 3 and maximum is 15';
 
                 this.setState({
                     password: '',
                     confirmPassword: '',
-                    loading: false
+                    username: '',
+                    loading: false,
+                    visible: false
                 })
-                
             }
+
         }else {
-            errors.email = "Invalid email format";
+            errors.message = "Invalid email format";
 
             console.log('invalid email format', errors);
 
@@ -96,7 +123,8 @@ class SignUp extends Component {
                 email: '',
                 password: '',
                 confirmPassword: '',
-                loading: false
+                loading: false,
+                visible: false
             })
         }
 
@@ -156,7 +184,7 @@ class SignUp extends Component {
                       errors && (
                         <Message hidden={visible} negative onDismiss={this.handleDismiss}>
                           <Message.Header>We're sorry you can't register this account</Message.Header>
-                          <p>{errors.newUser}</p>
+                          <p>{errors.message}</p>
                         </Message>
                       )
                     }
@@ -203,7 +231,6 @@ class SignUp extends Component {
                                 onChange={this.handleChange}
                                 required
                                 value={email}
-                                error={errors.email}
                             />
                             <Form.Field
                                 id='username'
@@ -222,7 +249,7 @@ class SignUp extends Component {
                                     onChange={this.handleChange}
                                     required
                                     value={password}
-                                    error={errors.password}
+
                                 />
                                 <Form.Field
                                     id='confirmPassword'
@@ -232,7 +259,7 @@ class SignUp extends Component {
                                     onChange={this.handleChange}
                                     required
                                     value={confirmPassword}
-                                    error={errors.password}
+
                                 />
                             </Form.Group>
                             <Button basic color='blue' style={btn} animated='vertical'>
@@ -251,10 +278,11 @@ class SignUp extends Component {
                       errors && (
                         <Message hidden={visible} negative onDismiss={this.handleDismiss}>
                           <Message.Header>We're sorry you can't register this account</Message.Header>
-                          <p>{errors.newUser}</p>
+                          <p>{errors.message}</p>
                         </Message>
                       )
                     }
+
                     <Menu attached='top' tabular>
                         <Menu.Item 
                             style={menu}
@@ -297,7 +325,6 @@ class SignUp extends Component {
                                 onChange={this.handleChange}
                                 required
                                 value={email}
-                                error={errors.email}
                             />
                             <Form.Field
                                 id='username'
@@ -316,7 +343,7 @@ class SignUp extends Component {
                                     onChange={this.handleChange}
                                     required
                                     value={password}
-                                    error={errors.password}
+
                                 />
                                 <Form.Field
                                     id='confirmPassword'
@@ -326,7 +353,7 @@ class SignUp extends Component {
                                     onChange={this.handleChange}
                                     required
                                     value={confirmPassword}
-                                    error={errors.password}
+
                                 />
                             </Form.Group>
                             <Button basic color='blue' style={btn} animated='vertical'>

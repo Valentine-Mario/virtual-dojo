@@ -4,6 +4,7 @@ import { NavLink, Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { isLoggedIn } from '../../config';
 import { REQ_GET } from '../../api';
+import { isEmpty } from 'lodash';
 
 class UnAuthMenu extends Component {
     constructor(props){
@@ -12,28 +13,62 @@ class UnAuthMenu extends Component {
         this.state = {
             query: '',
             sidebarOpened: false,
+            searching: false,
+            output: []
         }
     }
 
 
+     /**HANDLE ALL REQUEST FOR THE SEARCH AND PERFORM REDIRECTIONS*/
     handleSearch = (e) => {
-        e.preventDefault();
+        // e.preventDefault();
+        if(e.target.value == ''){
+            this.setState({
+                searching: false
+            })
+        }
+
         this.setState({
             query: e.target.value
-        }, 
-        () =>  REQ_GET(`users/search/${this.state.query}`)
+        }, () => /*REQ_GET(`autocomplete?searchQuery=${this.state.query.trim()}`)
                 .then(res => {
-                    console.log(res)
-                })
+                    this.showSearch(res.data)
+                })*/
 
-                /*axios.get(`http://localhost:3004/articles?title=${this.state.query}`)
-                    .then(res => {
-                        console.log(res)
+                  fetch(`https://api.udilia.com/coins/v1/autocomplete?searchQuery=${this.state.query}`)
+                    .then(response => {
+                      return response.json().then(json => {
+                        return response.ok ? json : Promise.reject(json);
+                      });
                     })
-                    .catch(err => {
-                        console.log(err)
-                    })*/
+                    .then((data) => {
+                      console.log('Success', data);
+
+
+                      this.showSearch(data);
+                    })
+                    .catch((error) => {
+                      console.log('Error', error);
+                    })
         )
+    }
+
+     showSearch = (output) => {
+        this.setState({
+            output,
+            searching: true
+        })
+
+        /**USE THIS FOR TOGGLING OF SEARCH RESULT AREA*/
+        if(isEmpty(output)){
+            console.log('empty')
+            this.setState({
+                searching: false,
+                output: []
+            })
+        }
+
+
     }
 
     handleToggle = () => this.setState({ sidebarOpened: !this.state.sidebarOpened })
@@ -44,7 +79,18 @@ class UnAuthMenu extends Component {
     }
 
     render() {
-        let { sidebarOpened } = this.state;
+        let { sidebarOpened, output, searching } = this.state;
+
+        let nowOutput = !isEmpty(output) ? 
+                            this.state.output.map((value) => {
+                            return (
+                                <div key={value.id} style={{padding: '5px', paddingLeft: '15px'}}>
+                                    <p>{value.name}</p>
+                                </div>
+                            )
+                        })
+                        :
+                        (<div>No results found</div>)
 
         const btn = {
             display: 'flex',
@@ -64,7 +110,8 @@ class UnAuthMenu extends Component {
             top: '0',
             borderRadius: '0',
             display: 'flex',
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
+            backgroundColor: 'rgb(173, 215, 232)'
         }
         
         return (
@@ -76,7 +123,10 @@ class UnAuthMenu extends Component {
                         </Menu.Item>
             
                         <Menu.Item className="container" position='right' >
-                            <Input style={{marginRight: '10px'}} className='icon' icon='search' placeholder='Search...' onChange={this.handleSearch} />
+                            <Input style={{marginRight: '10px', backgroundColor: '#f0f8fb', borderRadius: '6px'}} className='icon' icon='search' placeholder='Search...' onChange={this.handleSearch} />
+                            
+                            { searching && 
+                                <div style={{borderRadius: '5px', position: 'absolute', top: '70px', backgroundColor: '#f0f8fb', overflowY: 'scroll', maxHeight: '100px', width: '53%'}}>{nowOutput}</div>}
 
                             <Button basic color='blue' style={btn} animated='vertical' as={NavLink} to="/category" >
                                 <Button.Content hidden>
@@ -119,7 +169,11 @@ class UnAuthMenu extends Component {
                         </Menu.Item>
             
                         <Menu.Item className="container" style={{position: 'fixed', top: '2px', right: '0', width: '70%', paddingRight: '0'}}>
-                            <Input style={{marginRight: '0', width: '100%'}} className='icon' icon='search' placeholder='Search...' onChange={this.handleSearch} />
+                            <Input style={{marginRight: '0', width: '100%', backgroundColor: '#f0f8fb', borderRadius: '6px'}} className='icon' icon='search' placeholder='Search...' onChange={this.handleSearch} />
+
+                            { searching && 
+                                <div style={{borderRadius: '5px', position: 'absolute', top: '70px', backgroundColor: '#f0f8fb', overflowY: 'scroll', maxHeight: '100px', width: '53%'}}>{nowOutput}</div>}
+                            
                             <Menu.Item onClick={this.handleToggle} style={{marginLeft: '0'}}>
                                 <Icon name='sidebar' style={{margin: '0'}} />
                             </Menu.Item>

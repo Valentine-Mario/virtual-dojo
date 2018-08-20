@@ -19,7 +19,6 @@ class Category extends PureComponent {
             return res.json();
           })
           .then(res => {
-            console.log(res)
             this.setState({
               output: res,
               loading: false
@@ -27,10 +26,10 @@ class Category extends PureComponent {
           })
 
 
-          REQ_GET('users/users')
+          /*REQ_GET('cryptocurrencies?page=1&perPage=20')
             .then(res => {
               console.log(res);
-            })
+            })*/
 
       }
 

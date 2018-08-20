@@ -15,7 +15,7 @@ const Footer = (props) => {
   }
   return (
     <Responsive style={container}>
-    	<Segment vertical style={{ padding: '5em 0em', backgroundColor: "grey" }}>
+    	<Segment vertical style={{ padding: '5em 0em', backgroundColor: "rgba(185, 178, 178, 0.91)" }}>
             <Container>
               <Grid divided inverted stackable>
                 <Grid.Row>

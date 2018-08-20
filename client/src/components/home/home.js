@@ -1,4 +1,5 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent } from 'react';
+import { withRouter } from 'react-router-dom';
 import {
   Container,
   Grid,
@@ -9,7 +10,8 @@ import {
   Image,
   Responsive,
   Dimmer,
-  Loader
+  Loader,
+  Button
 } from 'semantic-ui-react'
 
 import headerImage from '../../images/header.jpg';
@@ -46,6 +48,8 @@ export class Home extends PureComponent {
 
   }
 
+  handleSubmit = () => this.props.history.push('/login')
+
   render() {
     let { loading, output } = this.state;
 
@@ -65,7 +69,7 @@ export class Home extends PureComponent {
       backgroundPosition: 'center',
       backgroundSize: 'cover',
       backgroundRepeat: 'no-repeat',
-      height: '500px'
+      height: '620px'
     }
 
     let card = output.map((user) => {
@@ -90,25 +94,43 @@ export class Home extends PureComponent {
     })
 
     return (
-      <Responsive>
+      <Responsive style={{fontFamily: 'Roboto'}}>
         <Grid columns={1} divided style={container}>
           <Grid.Row style={headerBackgrd}>
-            <Grid.Column>
+            <Grid.Column style={{display: 'flex', alignItems: 'center'}}>
               <Grid.Row>
-                <Grid.Column>This is for info</Grid.Column>
+                <Grid.Column >
+                  <Header as='h2' style={{color: 'white', marginLeft: '60px', fontSize: '50px', fontWeight: '500'}}>
+                    Learn All You Can
+                    <Header.Subheader style={{fontSize: '25px', color: 'white', fontWeight: '400'}}>SchoolFlip Offers A Unique Opportunity</Header.Subheader>
+                    <Header.Subheader style={{fontSize: '25px', color: 'white', fontWeight: '400'}}>For You To Learn At Your Own Pace</Header.Subheader>
+                    <Header.Subheader style={{fontSize: '25px', color: 'white', fontWeight: '400'}}>Our Courses are Made For Everyone</Header.Subheader>
+                    <Button inverted color='blue' onClick={this.handleSubmit} style={{width: '35%', height: '50px'}} >
+                      Get Started
+                    </Button>
+                  </Header>
+                </Grid.Column>
               </Grid.Row>
             </Grid.Column>
           </Grid.Row>
         </Grid>
 
         <Grid columns={1} divided style={{marginTop: '0px'}}>
-          <Grid.Row style={{background: 'grey', height: '100px'}}>
+          <Grid.Row style={{backgroundColor: 'rgb(255, 255, 255)', height: '100px'}}>
             <Grid.Column style={{display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
               <Grid.Row>
-                <Grid.Column>This is for info</Grid.Column>
+                <Grid.Column>
+                  <Header as='h3' textAlign='center' style={{fontWeight: '500'}}>
+                    Testimonial
+                  </Header>
+                </Grid.Column>
               </Grid.Row>
               <Grid.Row>
-                <Grid.Column>This is for image</Grid.Column>
+                <Grid.Column>
+                  <Header as='h4' textAlign='center' style={{fontWeight: '300'}}>
+                    &quot;I'm constantly amazed by te quality of content provided by this&quot;
+                  </Header>
+                </Grid.Column>
               </Grid.Row>
             </Grid.Column>
           </Grid.Row>
@@ -134,6 +156,6 @@ export class Home extends PureComponent {
   }
 }
 
-export default Home
+export default withRouter(Home);
 
 
