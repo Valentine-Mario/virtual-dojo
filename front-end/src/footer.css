@@ -1,0 +1,54 @@
+.footer{
+    width: 100%;
+    height: 500px;
+    /* position: relative; 
+    bottom:  300px;   */
+    /* margin-top: 10px; */
+    background-color: rgba(185, 178, 178, 0.91);
+}
+.learnMore{
+    width: 150px;
+    height: 50px;
+    color: #348BB0;
+    background: #FFFFFF;
+    border: 2px solid #358FB6;
+    box-sizing: border-box;
+    border-radius: 10px;
+    position: absolute;
+    left: 32.07%;
+    /* right: 55.21%; */
+    top: 21%;
+    bottom: 68.33%
+} 
+.signUp{
+    width: 150px;
+    height: 50px;
+    color: #348BB0;
+    background: #FFFFFF;
+    border: 2px solid #358FB6;
+    box-sizing: border-box;
+    border-radius: 10px;
+    position: absolute;
+    right: 52.07%;
+    top: 21%;
+    bottom: 68.33%;
+}
+.row1{
+    width: 100%;
+    height: 100px;
+    text-align: center;
+    padding: 30px;
+    Font-Family: Roboto;
+    Font-Style: Regular;
+    Font-Size: 18px; 
+}
+.row2{
+    width: 100%;
+    height: 100px;
+}
+.row3 {
+    width: 100%;
+    height: 200px;
+    Font-Family: Roboto;
+    Font-Style: Regular;
+}

@@ -1,0 +1,16 @@
+.search{
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.7);
+    position: relative;
+    left: 110px;
+    width: 300px;
+    height: 40px;
+}
+
+.body{
+    background-color: rgba(53, 143, 182, 0.38);
+    height: 60px; 
+    padding-top: 5px;
+    color:#358FB6;
+    
+}
