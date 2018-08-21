@@ -1,62 +1,11 @@
-/* import React, {Component} from 'react'
-import { Button, Form, Input } from 'semantic-ui-react'
-
-class SignIn extends Component {
-    render() {
-        return (
-            <Form style={{width: '90%', margin: 'auto', marginTop: '20px'}} >
-                <Form.Group widths='equal' >
-                    <Form.Field
-                        id='form-input-control-first-name'
-                        control={Input}
-                        placeholder='First name'
-                    />
-                    <Form.Field
-                        id='form-input-control-last-name'
-                        control={Input}
-                        placeholder='Last name'
-                    />
-                </Form.Group>
-                <Form.Field
-                    id='form-input-control-username'
-                    control={Input}
-                    placeholder='Username'
-                />
-                <Form.Group widths='equal'  >
-                    <Form.Field
-                        id='form-input-control-password'
-                        control={Input}
-                        placeholder='Password'
-                        type="password"
-                    />
-                    <Form.Field
-                        id='form-input-control-confirm-password'
-                        control={Input}
-                        placeholder='Confirm Password'
-                        type="password"
-                    />
-                </Form.Group>
-                <Form.Field
-                    id='form-button-control-public'
-                    control={Button}
-                    content='Sign Up'
-                    color="blue"
-                    style={{width: '100%'}}
-                />
-            </Form>
-        )
-    }
-}
-
-export default SignIn; */
-
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { Menu, Segment } from 'semantic-ui-react'
-import { Button, Form, Input, Icon } from 'semantic-ui-react'
-import { Link } from 'react-router-dom';
-import { REG_REQ } from '../../api'
+import { Button, Form, Input, Icon, Responsive, Message } from 'semantic-ui-react'
+import { Link, withRouter } from 'react-router-dom';
+import { REQ_POST } from '../../api';
+import { isLoggedIn } from '../../config';
 
-class SignUp extends PureComponent {
+class SignUp extends Component {
 
     constructor(props){
         super(props);
@@ -68,8 +17,10 @@ class SignUp extends PureComponent {
             username: '',
             password: '',
             confirmPassword: '',
+            loading: false,
             errors: {},
-            user: {}
+            user: {},
+            visible: true
         };
     }
 
@@ -82,37 +33,117 @@ class SignUp extends PureComponent {
 
     handleSubmit = (e) => {
         e.preventDefault();
+
         let { firstName, lastName, email, username, password, confirmPassword, errors, user} = this.state;
+
+        this.setState({
+            loading: true
+        })
         
         
         if(/^([a-z0-9-_.]+\@[a-z0-9-.]+\.[a-z]{2,4})$/g.test(email)){
             console.log(email)
 
-            if(password === confirmPassword){
-                /**HANDLE REQUEST TO SIGN UP */
+            if(username.length >= 3 && username.length <= 15){
+                if(password.length >= 6){
+                    if(password === confirmPassword){
+                        /**HANDLE REQUEST TO SIGN UP */
 
-                let user = { firstName, lastName, email, username, password, confirmPassword };
-                
-                REG_REQ('users/register', user)
-                    .then(res => {
-                        console.log(res);
+                        let user = { firstName, lastName, email, username, password, confirmPassword };
+                        
+                        REQ_POST('users/register', user)
+                            .then(res => {
+                                if(res.data.code == 1) {
+                                    errors.message = "Email or Username already in use";
+                                    this.setState({
+                                        visible: false
+                                    })
+                                }else {
+                                    
+                                    /** HANDLE ALL ROUTING WHEN USER REGISERS SUCCESSFULLY*/
+                                    sessionStorage.setItem('user', res.data.user);
+                                    this.props.history.push("/auth/user");
+                                }
+
+                                this.setState({
+                                    firstName: '',
+                                    lastName: '',
+                                    email: '',
+                                    username: '',
+                                    password: '',
+                                    confirmPassword: '',
+                                    loading: false
+                                })
+                            })
+                        
+                    }else {
+
+                        errors.message = "password does not match";
+
+                        console.log('password does not match', errors);
+
+                        this.setState({
+                            password: '',
+                            confirmPassword: '',
+                            loading: false,
+                            visible: false
+                        })
+                        
+                    }
+                }else {
+                    console.log('Min length for password is 6 characters');
+                    errors.message = 'Minimum length for password is 6 characters';
+
+                    this.setState({
+                        password: '',
+                        confirmPassword: '',
+                        loading: false,
+                        visible: false
                     })
-                
+                }
             }else {
-                errors.password = "password does not match";
-                console.log('password does not match', errors);
-                
+                console.log('Mininum length for username is 3 and maximum is 15');
+                errors.message = 'Minimum length for username is 3 and maximum is 15';
+
+                this.setState({
+                    password: '',
+                    confirmPassword: '',
+                    username: '',
+                    loading: false,
+                    visible: false
+                })
             }
+
         }else {
-            errors.email = "Invalid email format";
+            errors.message = "Invalid email format";
+
             console.log('invalid email format', errors);
+
+            this.setState({
+                email: '',
+                password: '',
+                confirmPassword: '',
+                loading: false,
+                visible: false
+            })
         }
 
     }
+
+    /**   HANDLE ERROR MESSAGE FOR LOGIN   */
+      handleDismiss = () => {
+        this.setState({ visible: true })
+      }
     
 
 
     render() {
+        let { firstName, lastName, email, username, password, confirmPassword, loading, errors, visible } = this.state;
+
+        if(isLoggedIn('user')){
+          this.props.history.push('/auth/user');
+        }
+
         const container = {
             width: '500px',
             margin: 'auto',
@@ -120,11 +151,19 @@ class SignUp extends PureComponent {
             height: '600px'
         };
 
+        const containerMobile = {
+          width: '350px',
+          margin: 'auto',
+          paddingTop: '120px',
+          height: '600px'
+        }
+
         const btn = {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            width: '100%'
+            width: '100%',
+            zIndex: '0'
         };
 
         const formContainer = {
@@ -139,85 +178,198 @@ class SignUp extends PureComponent {
         };
 
         return (
-            <div style={container} >
-                <Menu attached='top' tabular>
-                    <Menu.Item 
-                        style={menu}
-                        name='Log In' 
-                        as={Link}
-                        to="/login"
-                    />
-                    <Menu.Item
-                        style={menu}
-                        name='Sign Up'
-                        active={true}
-                        as={Link}
-                        to="/signup"
-                    />
-                </Menu>
+            <div>
+                <Responsive minWidth={Responsive.onlyTablet.minWidth} style={container} >
+                    {
+                      errors && (
+                        <Message hidden={visible} negative onDismiss={this.handleDismiss}>
+                          <Message.Header>We're sorry you can't register this account</Message.Header>
+                          <p>{errors.message}</p>
+                        </Message>
+                      )
+                    }
+                    <Menu attached='top' tabular>
+                        <Menu.Item 
+                            style={menu}
+                            name='Log In' 
+                            as={Link}
+                            to="/login"
+                        />
+                        <Menu.Item
+                            style={menu}
+                            name='Sign Up'
+                            active={true}
+                            as={Link}
+                            to="/signup"
+                        />
+                    </Menu>
 
-                <Segment attached='bottom'>
-                    <Form style={formContainer} onSubmit={this.handleSubmit} >
-                        <Form.Field
-                            id='firstName'
-                            control={Input}
-                            placeholder='First name'
-                            onChange={this.handleChange}
-                            required
-                        />
-                        <Form.Field
-                            id='lastName'
-                            control={Input}
-                            placeholder='Last name'
-                            onChange={this.handleChange}
-                            required
-                        />
-                        <Form.Field
-                            id='email'
-                            control={Input}
-                            placeholder='Email'
-                            type="email"
-                            onChange={this.handleChange}
-                            required
-                        />
-                        <Form.Field
-                            id='username'
-                            control={Input}
-                            placeholder='Username'
-                            onChange={this.handleChange}
-                            required
-                        />
-                        <Form.Group widths='equal'  >
+                    <Segment attached='bottom'>
+                        <Form style={formContainer} onSubmit={this.handleSubmit} loading={loading} >
                             <Form.Field
-                                id='password'
+                                id='firstName'
                                 control={Input}
-                                placeholder='Password'
-                                type="password"
+                                placeholder='First name'
                                 onChange={this.handleChange}
                                 required
+                                value={firstName}
+                                focus
                             />
                             <Form.Field
-                                id='confirmPassword'
+                                id='lastName'
                                 control={Input}
-                                placeholder='Confirm Password'
-                                type="password"
+                                placeholder='Last name'
                                 onChange={this.handleChange}
                                 required
+                                value={lastName}
                             />
-                        </Form.Group>
-                        <Button basic color='blue' style={btn} animated='vertical'>
-                            <Button.Content hidden>
-                                Sign Up
-                            </Button.Content>
-                            <Button.Content visible>
-                                <Icon name='signup' />
-                            </Button.Content>
-                        </Button>
-                    </Form>
-                </Segment>
+                            <Form.Field
+                                id='email'
+                                control={Input}
+                                placeholder='Email'
+                                type="email"
+                                onChange={this.handleChange}
+                                required
+                                value={email}
+                            />
+                            <Form.Field
+                                id='username'
+                                control={Input}
+                                placeholder='Username'
+                                onChange={this.handleChange}
+                                required
+                                value={username}
+                            />
+                            <Form.Group widths='equal'  >
+                                <Form.Field
+                                    id='password'
+                                    control={Input}
+                                    placeholder='Password'
+                                    type="password"
+                                    onChange={this.handleChange}
+                                    required
+                                    value={password}
+
+                                />
+                                <Form.Field
+                                    id='confirmPassword'
+                                    control={Input}
+                                    placeholder='Confirm Password'
+                                    type="password"
+                                    onChange={this.handleChange}
+                                    required
+                                    value={confirmPassword}
+
+                                />
+                            </Form.Group>
+                            <Button basic color='blue' style={btn} animated='vertical'>
+                                <Button.Content hidden>
+                                    Sign Up
+                                </Button.Content>
+                                <Button.Content visible>
+                                    <Icon name='signup' />
+                                </Button.Content>
+                            </Button>
+                        </Form>
+                    </Segment>
+                </Responsive >
+                <Responsive style={containerMobile} maxWidth={Responsive.onlyMobile.maxWidth} >
+                    {
+                      errors && (
+                        <Message hidden={visible} negative onDismiss={this.handleDismiss}>
+                          <Message.Header>We're sorry you can't register this account</Message.Header>
+                          <p>{errors.message}</p>
+                        </Message>
+                      )
+                    }
+
+                    <Menu attached='top' tabular>
+                        <Menu.Item 
+                            style={menu}
+                            name='Log In' 
+                            as={Link}
+                            to="/login"
+                        />
+                        <Menu.Item
+                            style={menu}
+                            name='Sign Up'
+                            active={true}
+                            as={Link}
+                            to="/signup"
+                        />
+                    </Menu>
+
+                    <Segment attached='bottom'>
+                        <Form style={formContainer} onSubmit={this.handleSubmit} loading={loading} >
+                            <Form.Field
+                                id='firstName'
+                                control={Input}
+                                placeholder='First name'
+                                onChange={this.handleChange}
+                                required
+                                value={firstName}
+                            />
+                            <Form.Field
+                                id='lastName'
+                                control={Input}
+                                placeholder='Last name'
+                                onChange={this.handleChange}
+                                required
+                                value={lastName}
+                            />
+                            <Form.Field
+                                id='email'
+                                control={Input}
+                                placeholder='Email'
+                                type="email"
+                                onChange={this.handleChange}
+                                required
+                                value={email}
+                            />
+                            <Form.Field
+                                id='username'
+                                control={Input}
+                                placeholder='Username'
+                                onChange={this.handleChange}
+                                required
+                                value={username}
+                            />
+                            <Form.Group widths='equal'  >
+                                <Form.Field
+                                    id='password'
+                                    control={Input}
+                                    placeholder='Password'
+                                    type="password"
+                                    onChange={this.handleChange}
+                                    required
+                                    value={password}
+
+                                />
+                                <Form.Field
+                                    id='confirmPassword'
+                                    control={Input}
+                                    placeholder='Confirm Password'
+                                    type="password"
+                                    onChange={this.handleChange}
+                                    required
+                                    value={confirmPassword}
+
+                                />
+                            </Form.Group>
+                            <Button basic color='blue' style={btn} animated='vertical'>
+                                <Button.Content hidden>
+                                    Sign Up
+                                </Button.Content>
+                                <Button.Content visible>
+                                    <Icon name='signup' />
+                                </Button.Content>
+                            </Button>
+                        </Form>
+                    </Segment>
+                </Responsive >
             </div>
         )
     }
 }
 
-export default SignUp;
+export default withRouter(SignUp);
