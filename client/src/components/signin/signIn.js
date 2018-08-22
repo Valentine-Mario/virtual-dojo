@@ -41,39 +41,21 @@ class SignIn extends Component {
         /**MAKE A REQUEST TO THE SERVER */
     
         if(username == '' || password == ''){
-
-          console.log('Please all input values are required');
-
+          console.log('username or password is required');
         }else {
 
             /**REVIEW THIS TO HANDLE EVERY LOGIN REQUEST */
-
-          /*axios.post(`https://virtualserver.herokuapp.com/users/login`, {username,password})
-            .then(res => {
-                console.log(res);
-                this.setState({
-                  username: '',
-                  password: '',
-                  loading: false
-                })
-            })
-            .catch(err => {
-                console.log(err)
-            })*/
 
             REQ_POST(`users/login`, {username,password})
             .then(res => {
 
               //ONLY USE RES FOR SUCCESS AND RES.RESPONSE FOR ERROR HANDLING
                 if(res.response){
-                  console.log(res.response.data);
                   this.setState({
                     error: 'Please register an account to login',
                     visible: false
                   })
                 }else if(res){
-                  // console.log(res.data.passport.user);
-
                   sessionStorage.setItem('user', res.data.passport.user);
 
                   this.setState({

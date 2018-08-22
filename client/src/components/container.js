@@ -8,6 +8,7 @@ import SignUp from './signup/signUp';
 import Home from './home/home';
 import Category from './category/category';
 import User from './user/user';
+import Course from './course/course';
 import NotFound from './notFound';
 import { Responsive } from 'semantic-ui-react';
 import PrivateRoute from './privateRoute';
@@ -44,6 +45,7 @@ class Container extends Component {
                         <Route exact path="/category" component={Category} />
                         <Route exact path="/login" component={SignIn} />
                         <Route exact path="/signup" component={SignUp} />
+                        <Route exact path="/auth/course" component={Course} />
 
                         {secureRender}
 
