@@ -42,7 +42,7 @@ class SignUp extends Component {
         
         
         if(/^([a-z0-9-_.]+\@[a-z0-9-.]+\.[a-z]{2,4})$/g.test(email)){
-            console.log(email)
+            
 
             if(username.length >= 3 && username.length <= 15){
                 if(password.length >= 6){
@@ -80,7 +80,7 @@ class SignUp extends Component {
 
                         errors.message = "password does not match";
 
-                        console.log('password does not match', errors);
+                        
 
                         this.setState({
                             password: '',
@@ -91,7 +91,7 @@ class SignUp extends Component {
                         
                     }
                 }else {
-                    console.log('Min length for password is 6 characters');
+                    
                     errors.message = 'Minimum length for password is 6 characters';
 
                     this.setState({
@@ -102,7 +102,7 @@ class SignUp extends Component {
                     })
                 }
             }else {
-                console.log('Mininum length for username is 3 and maximum is 15');
+                
                 errors.message = 'Minimum length for username is 3 and maximum is 15';
 
                 this.setState({
@@ -117,7 +117,7 @@ class SignUp extends Component {
         }else {
             errors.message = "Invalid email format";
 
-            console.log('invalid email format', errors);
+            
 
             this.setState({
                 email: '',
