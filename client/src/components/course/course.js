@@ -1,10 +1,11 @@
 import React from 'react';
 import Video from './video';
 
-const Course = () => {
+const Course = (props) => {
+	
 	return (
         <div>
-        	<Video />
+        	<Video {...props} />
         </div>
     );
 }

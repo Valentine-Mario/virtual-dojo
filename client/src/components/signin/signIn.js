@@ -55,7 +55,7 @@ class SignIn extends Component {
                     error: 'Please register an account to login',
                     visible: false
                   })
-                }else if(res){
+                }else if(res.data){
                   sessionStorage.setItem('user', res.data.passport.user);
 
                   this.setState({

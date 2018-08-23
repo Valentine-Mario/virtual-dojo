@@ -137,6 +137,14 @@ class AuthMenu extends Component {
                                     <Icon name='list alternate outline' />
                                 </Button.Content>
                             </Button>
+                            <Button basic color='blue' style={btn} animated='vertical' as={NavLink} to="/auth/course" >
+                                <Button.Content hidden>
+                                    Courses
+                                </Button.Content>
+                                <Button.Content visible>
+                                    <Icon name='video play' />
+                                </Button.Content>
+                            </Button>
                             <Button basic color='blue' style={btn} animated='vertical' as={NavLink} to="/auth/user">
                                 <Button.Content hidden>
                                     Dashboard
@@ -161,6 +169,7 @@ class AuthMenu extends Component {
                         <Sidebar as={Menu} animation='slide along' inverted vertical visible={sidebarOpened}>
                             <Menu.Item as={Link} to="/" onClick={this.handleToggle} >Home</Menu.Item>
                             <Menu.Item as={Link} to="/category" onClick={this.handleToggle}>Category</Menu.Item>
+                            <Menu.Item as={Link} to="/auth/course" onClick={this.handleToggle}>Course</Menu.Item>
                             <Menu.Item as={Link} to="/auth/user" onClick={this.handleToggle} >Dashboard</Menu.Item>   
                             <Menu.Item onClick={() => {this.handleLogOut(); this.handleToggle()}} >Log Out</Menu.Item>
                         </Sidebar>

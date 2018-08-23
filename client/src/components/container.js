@@ -9,6 +9,7 @@ import Home from './home/home';
 import Category from './category/category';
 import User from './user/user';
 import Course from './course/course';
+import AllCourses from './course/allCourses';
 import NotFound from './notFound';
 import { Responsive } from 'semantic-ui-react';
 import PrivateRoute from './privateRoute';
@@ -36,17 +37,28 @@ class Container extends Component {
                     :
                     (<PrivateRoute authed={false} path='/auth/user' component={User} />)
 
+        let secureCourse = sessionStorage.getItem('user') ? 
+                    (<PrivateRoute authed={true} path='/auth/course' component={AllCourses} />)
+                    :
+                    (<PrivateRoute authed={false} path='/auth/course' component={AllCourses} />)
+
+        let secureCourseVideo = sessionStorage.getItem('user') ? 
+                    (<PrivateRoute authed={true} path='/auth/course/:id' component={Course} />)
+                    :
+                    (<PrivateRoute authed={false} path='/auth/course/:id' component={Course} />)
+
         
         return (
-            <div>
+            <div style={{fontFamily: 'Roboto'}}>
                 <Responsive>
                     <MenuNav />
                     <Switch>
                         <Route exact path="/category" component={Category} />
                         <Route exact path="/login" component={SignIn} />
                         <Route exact path="/signup" component={SignUp} />
-                        <Route exact path="/auth/course" component={Course} />
+                        {secureCourseVideo}
 
+                        {secureCourse}
                         {secureRender}
 
                         <Route exact path="/" component={Home} />

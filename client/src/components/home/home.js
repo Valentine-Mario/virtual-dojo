@@ -12,7 +12,8 @@ import {
   Dimmer,
   Loader,
   Button
-} from 'semantic-ui-react'
+} from 'semantic-ui-react';
+import AllCourses from '../course/allCourses';
 
 import headerImage from '../../images/header.jpg';
 
@@ -69,7 +70,10 @@ export class Home extends PureComponent {
       backgroundPosition: 'center',
       backgroundSize: 'cover',
       backgroundRepeat: 'no-repeat',
-      height: '620px'
+      height: '620px',
+      width: '100%',
+      display: 'flex', 
+      alignItems: 'center'
     }
 
     let card = output.map((user) => {
@@ -97,27 +101,45 @@ export class Home extends PureComponent {
       <Responsive style={{fontFamily: 'Roboto'}}>
         <Grid columns={1} divided style={container}>
           <Grid.Row style={headerBackgrd}>
-            <Grid.Column style={{display: 'flex', alignItems: 'center'}}>
-              <Grid.Row>
-                <Grid.Column >
-                  <Header as='h2' style={{color: 'white', marginLeft: '60px', fontSize: '50px', fontWeight: '500'}}>
-                    Learn All You Can
-                    <Header.Subheader style={{fontSize: '25px', color: 'white', fontWeight: '400'}}>SchoolFlip Offers A Unique Opportunity</Header.Subheader>
-                    <Header.Subheader style={{fontSize: '25px', color: 'white', fontWeight: '400'}}>For You To Learn At Your Own Pace</Header.Subheader>
-                    <Header.Subheader style={{fontSize: '25px', color: 'white', fontWeight: '400'}}>Our Courses are Made For Everyone</Header.Subheader>
-                    <Button inverted color='blue' onClick={this.handleSubmit} style={{width: '35%', height: '50px'}} >
-                      Get Started
-                    </Button>
-                  </Header>
-                </Grid.Column>
-              </Grid.Row>
-            </Grid.Column>
+
+            <Responsive minWidth={Responsive.onlyTablet.minWidth}>
+              <Grid.Column >
+                <Grid.Row>
+                  <Grid.Column >
+                    <Header as='h2' style={{color: 'white', marginLeft: '40px', fontSize: '3em', fontWeight: '500', width: '50%'}}>
+                      Learn All You Can
+                      <Header.Subheader style={{fontSize: '0.5em', color: 'white', fontWeight: '400'}}>SchoolFlip Offers A Unique Opportunity For You To Learn At Your Own Pace Our Courses are Made For Everyone</Header.Subheader>
+                      <Button inverted color='blue' onClick={this.handleSubmit} style={{width: '38%', height: '50px'}} >
+                        Get Started
+                      </Button>
+                    </Header>
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid.Column>
+            </Responsive>
+
+            <Responsive maxWidth={Responsive.onlyMobile.maxWidth}>
+              <Grid.Column >
+                <Grid.Row>
+                  <Grid.Column >
+                    <Header as='h2' style={{color: 'white', marginLeft: '40px', fontSize: '2em', fontWeight: '500', width: '75%'}}>
+                      Learn All You Can
+                      <Header.Subheader style={{fontSize: '0.5em', color: 'white', fontWeight: '400'}}>SchoolFlip Offers A Unique Opportunity For You To Learn At Your Own Pace Our Courses are Made For Everyone</Header.Subheader>
+                      <Button color='blue' onClick={this.handleSubmit} style={{width: '38%', height: '50px', marginTop: '10px'}} >
+                        Get Started
+                      </Button>
+                    </Header>
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid.Column>
+            </Responsive>
+
           </Grid.Row>
         </Grid>
 
         <Grid columns={1} divided style={{marginTop: '0px'}}>
           <Grid.Row style={{backgroundColor: 'rgb(255, 255, 255)', height: '100px'}}>
-            <Grid.Column style={{display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
+            <Grid.Column style={{display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', width: '100%'}}>
               <Grid.Row>
                 <Grid.Column>
                   <Header as='h3' textAlign='center' style={{fontWeight: '500'}}>
@@ -136,7 +158,7 @@ export class Home extends PureComponent {
           </Grid.Row>
         </Grid>
 
-          <Card.Group centered style={{marginTop: '20px', marginBottom: '20px'}}>
+          <Card.Group centered style={{marginTop: '0px', marginBottom: '20px'}}>
 
             {
               loading ? 
@@ -146,10 +168,21 @@ export class Home extends PureComponent {
                   </Dimmer>
                 )
                 :
-                card
+                <AllCourses />
             }
             
           </Card.Group>
+
+            <Grid divided='vertically' style={{padding: '20px', margin: '10px'}} >
+              <Grid.Row columns={2}>
+                <Grid.Column>
+                  <Image src='https://react.semantic-ui.com/images/wireframe/paragraph.png' />
+                </Grid.Column>
+                <Grid.Column>
+                  <Image src='https://react.semantic-ui.com/images/wireframe/paragraph.png' />
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
 
       </Responsive>
     )
