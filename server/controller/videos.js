@@ -22,17 +22,19 @@ exports.addVideo = function(req, res, next){
         name: req.body.name,
         description: req.body.description,
         time:Date.now(),
+        videoID:'',
         video: req.files[0].path
     };
 
-    cloudinary.uploader.upload(data.video).then(function(result){
+    cloudinary.uploader.upload(data.video, function(result){console.log(result)}, {resource_type:"video"}).then(function(result){
       data.video= result.url;
+      data.videoID= result.public_id
       model.create(data, function(err, data){
         if(err){
            res.json({message:"could not create file"})
         }else{
-          let category = new ObjectID(req.body.category);
-          model2.findById({_id: category}, function(err, category){
+          let course = new ObjectID(req.body.course);
+          model2.findById({_id: course}, function(err, category){
             if(err){
               res.json({message:"category not found"})
             }else{
@@ -85,12 +87,16 @@ exports.editVideo = function(req, res){
 
 exports.deleteVideo= function(req,res){
     var id = {_id:req.params.id}
-    let category = new ObjectID(req.body.category);
-  
-          model.remove(id, function(err){
-            if(err)res.json({message:"could not delete"})
-            res.json({message:"video deleted successfully"});
-            
-            model2.findByIdAndUpdate(category, {$inc : {content : -1} }, function(err){})
-          })
+    let course = new ObjectID(req.body.course);
+    model.findById(id, function(err, value){
+      cloudinary.uploader.destroy(value.videoID, function(result){console.log(result)}, {resource_type:"video"}).then(function(result){
+        value.video= result.url;
+        model.remove(id, function(err){
+          if(err)res.json({message:"could not delete"})
+          res.json({message:"video deleted successfully"});
+          
+          model2.findByIdAndUpdate(course, {$inc : {content : -1} }, function(err){})
+        })
+      })
+    })
 }

@@ -5,6 +5,7 @@ var VideoSchema=mongoose.Schema({
     description:String,
     video:String,
     time:Date,
+    videoID:String,
     comment:[{type:mongoose.Schema.Types.ObjectId, ref:'comment'}]
 })
 module.exports= mongoose.model('video', VideoSchema);
