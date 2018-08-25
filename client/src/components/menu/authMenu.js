@@ -107,7 +107,7 @@ class AuthMenu extends Component {
             width: '100%',
             border: 'none',
             position: 'fixed',
-            zIndex: '1',
+            zIndex: '10',
             top: '0',
             borderRadius: '0',
             display: 'flex',
@@ -116,7 +116,7 @@ class AuthMenu extends Component {
         }
         
         return (
-            <div>
+            <div style={{zIndex: '10'}}>
                 <Responsive minWidth={Responsive.onlyTablet.minWidth}>
                     <Menu style={container} >
                         <Menu.Item className="container" as={NavLink} to="/">

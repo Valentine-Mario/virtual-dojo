@@ -20,6 +20,8 @@ import content from '../../images/content.jpg';
 import job from '../../images/job.jpg';
 import mentor from '../../images/mentor.jpg';
 import student from '../../images/student.png';
+import MenuNav from '../menu/menu';
+import Footer from '../menu/footer';
 
 
 
@@ -87,6 +89,8 @@ export class Home extends PureComponent {
     }
 
     return (
+      <div>
+      <MenuNav />
       <Responsive style={{fontFamily: 'Roboto'}}>
         <Grid columns={1} divided style={container}>
           <Grid.Row style={headerBackgrd}>
@@ -256,6 +260,8 @@ export class Home extends PureComponent {
 
 
       </Responsive>
+      <Footer />
+      </div>
     )
   }
 }

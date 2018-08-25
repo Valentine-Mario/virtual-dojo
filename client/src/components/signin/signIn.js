@@ -5,6 +5,8 @@ import { Link, withRouter } from 'react-router-dom';
 import { REQ_POST } from '../../api';
 import axios from 'axios';
 import { isLoggedIn } from '../../config';
+import MenuNav from '../menu/menu';
+import Footer from '../menu/footer';
 
 class SignIn extends Component {
     constructor(props){
@@ -125,6 +127,7 @@ class SignIn extends Component {
 
         return (
             <div>
+              <MenuNav />
               <Responsive style={container}  minWidth={Responsive.onlyTablet.minWidth}>
                 {
                   error && (
@@ -219,7 +222,8 @@ class SignIn extends Component {
                     </Form>
                 </Segment>
             </Responsive>
-            </div>
+            <Footer />
+          </div>
         )
     }
 }

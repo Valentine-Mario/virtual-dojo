@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import './container.css';
-import MenuNav from './menu/menu';
-import Footer from './menu/footer'
 import { Switch, Route, Redirect } from 'react-router-dom';
 import SignIn from './signin/signIn';
 import SignUp from './signup/signUp';
@@ -13,6 +11,8 @@ import AllCourses from './course/allCourses';
 import NotFound from './notFound';
 import { Responsive } from 'semantic-ui-react';
 import PrivateRoute from './privateRoute';
+import AdminLogin from './admin/adminLogin';
+import AdminDashboard from './admin/dash/adminDashboard';
 
 
 const SecureRender = (props) => {
@@ -51,11 +51,12 @@ class Container extends Component {
         return (
             <div style={{fontFamily: 'Roboto'}}>
                 <Responsive>
-                    <MenuNav />
                     <Switch>
-                        <Route exact path="/category" component={Category} />
-                        <Route exact path="/login" component={SignIn} />
-                        <Route exact path="/signup" component={SignUp} />
+                        <Route path="/admin/dashboard" component={AdminDashboard} />
+                        <Route path="/admin" component={AdminLogin} />
+                        <Route path="/category" component={Category} />
+                        <Route path="/login" component={SignIn} />
+                        <Route path="/signup" component={SignUp} />
                         {secureCourseVideo}
 
                         {secureCourse}
@@ -64,7 +65,6 @@ class Container extends Component {
                         <Route exact path="/" component={Home} />
                         <Route component={NotFound} />
                     </Switch>
-                    <Footer />
                 </Responsive>
             </div>
         )
