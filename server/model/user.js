@@ -8,6 +8,7 @@ var UserSchema=mongoose.Schema({
     profile_pics:String,
     profile_pics_id:String,
     time:Date,
+    isAdmin:{type:Number, default:0},
     library:[{type:mongoose.Schema.Types.ObjectId, ref:'category'}],
     password: String,
 })

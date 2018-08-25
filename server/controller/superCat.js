@@ -21,8 +21,7 @@ exports.addcategory = function(req, res, next){
     var data = {
         name: req.body.name,
         description: req.body.description,
-        cover_image:req.files[0].path,
-        courses:[]
+        cover_image:req.files[0].path
     };  
     
     cloudinary.uploader.upload(data.cover_image).then(function(result){

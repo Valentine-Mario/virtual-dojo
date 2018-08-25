@@ -21,7 +21,6 @@ exports.addCategory = function(req, res){
     var data = {
         name: req.body.name,
         description: req.body.description,
-        price:req.body.price,
         image:req.files[0].path
     };
     cloudinary.uploader.upload(data.image).then(function(result){
