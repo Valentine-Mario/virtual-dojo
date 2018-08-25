@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { List, Image, Loader, Card } from 'semantic-ui-react';
-
+import course from '../../images/course.jpg';
+import MenuNav from '../menu/menu';
+import Footer from '../menu/footer';
 
 class AllCourses extends Component {
 
@@ -35,22 +37,27 @@ class AllCourses extends Component {
     	let { videoListing, loading } = this.state;
 
         return (
-            <Card.Group style={{display: 'flex', justifyContent: 'center', zIndex: '0', marginTop: '70px'}}>
-			    { loading ? 
-			    	<Loader active inline='centered' />
-			    	:
-			    	videoListing.map((video) => {
-				    	return (
-				    		<Card
-					    	  as={Link}
-						      header={video.title}
-						      meta={video.date}
-						      description='Jenny is a student studying Media Management at the New School'
-						      to={`/auth/course/${video.id}`}
-						    />
-				    	)
-				    })}
-		    </Card.Group>
+            <div>
+                <MenuNav />
+                <Card.Group style={{display: 'flex', justifyContent: 'center', zIndex: '0', marginTop: '70px'}}>
+    			    { loading ? 
+    			    	<Loader active inline='centered' />
+    			    	:
+    			    	videoListing.map((video) => {
+    				    	return (
+    				    		<Card
+                                  image={course}
+    					    	  as={Link}
+    						      header={video.title}
+    						      description='Jenny is a student studying Media Management at the New School'
+                                  meta={video.date}
+    						      to={`/auth/course/${video.id}`}
+    						    />
+    				    	)
+    				    })}
+    		    </Card.Group>
+                <Footer />
+            </div>
         );
     }
 }
