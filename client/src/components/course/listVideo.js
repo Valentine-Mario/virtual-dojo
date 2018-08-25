@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { List, Image, Loader } from 'semantic-ui-react';
 
 
@@ -40,11 +41,11 @@ class ListVideo extends Component {
 			    	:
 			    	videoListing.map((video) => {
 				    	return (
-				    		<List.Item as='a' key={video.id} style={{padding: '10px'}}>
+				    		<List.Item key={video.id} style={{padding: '10px'}} as={Link} to={`/auth/course/${video.id}`} >
 						      	<List.Icon name='github' size='big' verticalAlign='top' />
 						      	<List.Content>
-						        	<List.Header>{video.url}</List.Header>
-						        	<List.Description>{video.title}</List.Description>
+						        	<List.Header>{video.title}</List.Header>
+						        	<List.Description></List.Description>
 						      	</List.Content>
 						    </List.Item>
 				    	)

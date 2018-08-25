@@ -1,19 +1,47 @@
 import React, { Component } from 'react';
 import ReactPlayer from 'react-player';
-import { Responsive, Container, Header, Grid, Divider } from 'semantic-ui-react';
+import { Responsive, Container, Header, Grid, Divider, Loader } from 'semantic-ui-react';
 import Commenting from './comment';
 import ListVideo from './listVideo';
 import './course.css';
 
 class Video extends Component {
+
+	state = {
+		video: []
+	}
+
+	componentWillMount() {
+		fetch(`http://localhost:3004/videos/${this.props.match.params.id}`)
+			.then(res => res.json())
+			.then(data => {
+				console.log(data);
+				this.setState({
+					video: data
+				})
+			})
+			.catch(err => {
+				console.log(err);
+			})
+	}
+
+	componentDidUpdate(prevProps) {
+		if(prevProps.match.url !== this.props.match.url){
+			window.location.reload();
+		}
+	}
+
     render () {
+    	console.log(this.props);
+    	let { video } = this.state;
+
 	    return (
 	    	<div>
 		    	<Responsive minWidth={Responsive.onlyTablet.minWidth} >
 			      <div className='player-wrapper'>
 			        <ReactPlayer
 			          className='react-player'
-			          url='https://www.youtube.com/watch?v=ysz5S6PUM-U'
+			          url={video.url}
 			          width='100%'
 			          height='100%'
 			          loop={true}
@@ -30,12 +58,7 @@ class Video extends Component {
 									      	Video Title
 									      	<Divider />
 									      	<Header.Subheader>
-										        Domestic dogs inherited complex behaviors, such as bite inhibition, from their wolf
-										        ancestors, which would have been pack hunters with complex body language. These
-										        sophisticated forms of social cognition and communication may account for their
-										        trainability, playfulness, and ability to fit into human households and social situations,
-										        and these attributes have given dogs a relationship with humans that has enabled them to
-										        become one of the most successful species on the planet today.
+										        {video.title}
 											</Header.Subheader>
 									    </Header.Content>
 								    </Header>
@@ -59,7 +82,7 @@ class Video extends Component {
 				    <div className='player-wrapper'>
 				        <ReactPlayer
 				          className='react-player'
-				          url='https://www.youtube.com/watch?v=ysz5S6PUM-U'
+				          url={video.url}
 				          width='100%'
 				          height='100%'
 				          loop={true}
@@ -77,12 +100,7 @@ class Video extends Component {
 									      	Video Title
 									      	<Divider />
 									      	<Header.Subheader>
-										        Domestic dogs inherited complex behaviors, such as bite inhibition, from their wolf
-										        ancestors, which would have been pack hunters with complex body language. These
-										        sophisticated forms of social cognition and communication may account for their
-										        trainability, playfulness, and ability to fit into human households and social situations,
-										        and these attributes have given dogs a relationship with humans that has enabled them to
-										        become one of the most successful species on the planet today.
+										        {video.title}
 											</Header.Subheader>
 									    </Header.Content>
 								    </Header>

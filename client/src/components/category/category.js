@@ -1,6 +1,8 @@
 import React, { PureComponent, PropTypes } from 'react';
 import { REQ_GET } from '../../api';
 import { Card, Icon, Image, Dimmer, Loader } from 'semantic-ui-react';
+import MenuNav from '../menu/menu';
+import Footer from '../menu/footer';
 
 class Category extends PureComponent {
     constructor(props) {
@@ -58,20 +60,22 @@ class Category extends PureComponent {
         })
 
         return (
-            <Card.Group centered style={{marginTop: '80px', marginBottom: '20px'}}>
-            
-
-            {
-                loading ? 
-                    (
-                        <Dimmer active inverted>
-                            <Loader inverted>Loading</Loader>
-                        </Dimmer>
-                    ) 
-                    : 
-                    card
-            }
-          </Card.Group>
+            <div>
+                <MenuNav />
+                <Card.Group centered style={{marginTop: '80px', marginBottom: '20px'}}>
+                    {
+                        loading ? 
+                            (
+                                <Dimmer active inverted>
+                                    <Loader inverted>Loading</Loader>
+                                </Dimmer>
+                            ) 
+                            : 
+                            card
+                    }
+                </Card.Group>
+                <Footer />
+            </div>
         );
     }
 }

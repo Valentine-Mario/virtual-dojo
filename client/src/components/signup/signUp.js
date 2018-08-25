@@ -4,6 +4,8 @@ import { Button, Form, Input, Icon, Responsive, Message } from 'semantic-ui-reac
 import { Link, withRouter } from 'react-router-dom';
 import { REQ_POST } from '../../api';
 import { isLoggedIn } from '../../config';
+import MenuNav from '../menu/menu';
+import Footer from '../menu/footer';
 
 class SignUp extends Component {
 
@@ -179,6 +181,7 @@ class SignUp extends Component {
 
         return (
             <div>
+                <MenuNav />
                 <Responsive minWidth={Responsive.onlyTablet.minWidth} style={container} >
                     {
                       errors && (
@@ -367,6 +370,7 @@ class SignUp extends Component {
                         </Form>
                     </Segment>
                 </Responsive >
+                <Footer />
             </div>
         )
     }

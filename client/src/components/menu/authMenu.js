@@ -107,7 +107,7 @@ class AuthMenu extends Component {
             width: '100%',
             border: 'none',
             position: 'fixed',
-            zIndex: '1',
+            zIndex: '10',
             top: '0',
             borderRadius: '0',
             display: 'flex',
@@ -116,7 +116,7 @@ class AuthMenu extends Component {
         }
         
         return (
-            <div>
+            <div style={{zIndex: '10'}}>
                 <Responsive minWidth={Responsive.onlyTablet.minWidth}>
                     <Menu style={container} >
                         <Menu.Item className="container" as={NavLink} to="/">
@@ -135,6 +135,14 @@ class AuthMenu extends Component {
                                 </Button.Content>
                                 <Button.Content visible>
                                     <Icon name='list alternate outline' />
+                                </Button.Content>
+                            </Button>
+                            <Button basic color='blue' style={btn} animated='vertical' as={NavLink} to="/auth/course" >
+                                <Button.Content hidden>
+                                    Courses
+                                </Button.Content>
+                                <Button.Content visible>
+                                    <Icon name='video play' />
                                 </Button.Content>
                             </Button>
                             <Button basic color='blue' style={btn} animated='vertical' as={NavLink} to="/auth/user">
@@ -161,6 +169,7 @@ class AuthMenu extends Component {
                         <Sidebar as={Menu} animation='slide along' inverted vertical visible={sidebarOpened}>
                             <Menu.Item as={Link} to="/" onClick={this.handleToggle} >Home</Menu.Item>
                             <Menu.Item as={Link} to="/category" onClick={this.handleToggle}>Category</Menu.Item>
+                            <Menu.Item as={Link} to="/auth/course" onClick={this.handleToggle}>Course</Menu.Item>
                             <Menu.Item as={Link} to="/auth/user" onClick={this.handleToggle} >Dashboard</Menu.Item>   
                             <Menu.Item onClick={() => {this.handleLogOut(); this.handleToggle()}} >Log Out</Menu.Item>
                         </Sidebar>
