@@ -6,7 +6,7 @@ var passport= require('passport');
 var session = require('express-session');
 var LocalStrategy = require('passport-local').Strategy;
 var user= require('../model/user');
-passport.use(new LocalStrategy(passport.authenticate()));
+passport.use('admin',new LocalStrategy(passport.authenticate()));
 passport.serializeUser(function(user, done) {
     done(null, user.id); 
 });
@@ -19,19 +19,19 @@ passport.deserializeUser(function(id, done) {
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(session({
-  secret: 'diversify me',
+  secret: 'deliver me',
   resave: false,
   saveUninitialized: true
 }))
 
 
-  router.post('/login', passport.authenticate('local'),
+  router.post('/login', passport.authenticate('admin'),
     function(req, res){
        res.json(req.session)
     }
 )
 
-    passport.use(new LocalStrategy(
+    passport.use('admin', new LocalStrategy(
         function(username, password, done) {
           UserController.getUserByUsername2(username, function(err, user){
               if(err)throw err;

@@ -7,7 +7,7 @@ var session = require('express-session');
 var LocalStrategy = require('passport-local').Strategy;
 var user= require('../model/user');
 const jwt = require('jsonwebtoken');
-passport.use(new LocalStrategy(passport.authenticate()));
+passport.use('user',new LocalStrategy(passport.authenticate()));
 passport.serializeUser(function(user, done) {
     done(null, user.id); 
 });
@@ -41,7 +41,7 @@ var storage = multer.diskStorage({
    
   var upload = multer({ storage: storage })
 
-  router.post('/login', passport.authenticate('local'),
+  router.post('/login', passport.authenticate('user'),
     function(req, res){
        res.json(req.session)
     }
@@ -59,7 +59,7 @@ router.post('/buy', UserController.getVideo)
 router.post('/update-profile/:id', upload.any('profile_pics'),  UserController.editProfilePics);
 router.get('/:id', UserController.getUserByid);
 
-    passport.use(new LocalStrategy(
+    passport.use('user', new LocalStrategy(
         function(username, password, done) {
           UserController.getUserByUsername2(username, function(err, user){
               if(err)throw err;
