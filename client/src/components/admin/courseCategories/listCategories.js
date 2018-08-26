@@ -53,30 +53,29 @@ class ListCategories extends Component {
                 <Loader indeterminate>Preparing Files</Loader>
               </Dimmer>
               {
-                  category &&
-                    category.map((file) => {
-                      return (
-                        <Card key={file._id}>
-                          <Card.Content>
-                            <Image floated='right' size='tiny' src={file.cover_image} />
-                            <Card.Header>{file.name}</Card.Header>
-                            <Card.Description>
-                              {file.description}
-                            </Card.Description>
-                          </Card.Content>
-                          <Card.Content extra>
-                            <div className='ui two buttons'>
-                              <Button basic color='green'>
-                                Edit
-                              </Button>
-                              <Button basic color='red' onClick={() => this.handleDelete(file._id)}>
-                                Delete
-                              </Button>
-                            </div>
-                          </Card.Content>
-                        </Card>
-                      )
-                    })
+                category.map((file) => {
+                  return (
+                    <Card key={file._id}>
+                      <Card.Content>
+                        <Image floated='right' size='tiny' src={file.cover_image} />
+                        <Card.Header>{file.name}</Card.Header>
+                        <Card.Description>
+                          {file.description}
+                        </Card.Description>
+                      </Card.Content>
+                      <Card.Content extra>
+                        <div className='ui two buttons'>
+                          <Button basic color='green'>
+                            Edit
+                          </Button>
+                          <Button basic color='red' onClick={() => this.handleDelete(file._id)}>
+                            Delete
+                          </Button>
+                        </div>
+                      </Card.Content>
+                    </Card>
+                  )
+                })
 
                 }
             </Card.Group>

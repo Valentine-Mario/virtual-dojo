@@ -69,7 +69,7 @@ class CreateCategory extends Component {
 
 
         return (
-          <div style={{marginTop: '90px', marginLeft: '200px'}}>
+          <div style={{marginTop: '120px', marginLeft: '200px'}}>
           	<Form loading={loading} onSubmit={this.handleSubmit} style={{width: '500px', margin: 'auto'}} encType="multipart/form-data">
 			    <Form.Field>
 			      <label htmlFor="name">Category Name</label>
