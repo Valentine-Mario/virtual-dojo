@@ -4,6 +4,8 @@ var app = express();
 var UserController= require('../controller/user')
 var passport= require('passport');
 var session = require('express-session');
+var ObjectID = require('mongoose').Types.ObjectId;
+var mongoose= require('mongoose')
 var LocalStrategy = require('passport-local').Strategy;
 var user= require('../model/user');
 passport.use('admin',new LocalStrategy(passport.authenticate()));
@@ -55,7 +57,8 @@ app.use(session({
         }
       ));
 
-
+router.post('/makeadmin', UserController.makeAdmin)
+router.post('/removeadmin', UserController.removeAdmin)
 
 
 router.get('/logout/:id', function(req, res){

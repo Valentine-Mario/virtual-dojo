@@ -220,6 +220,23 @@ exports.addUser = function(req, res){
         })
     }
 
+    exports.makeAdmin= function(req, res){
+        let user = new ObjectID(req.body.user)
+        model.findByIdAndUpdate(user, {$inc : {isAdmin : 1} }, function(err, user){
+        if(err)throw err
+        res.json({message:`${user.username} is now an admin`})
+    })
+    }
+
+
+    exports.removeAdmin= function(req, res){
+        let user = new ObjectID(req.body.user)
+        model.findByIdAndUpdate(user, {$inc : {isAdmin : -1} }, function(err, user){
+        if(err)throw err
+        res.json({message:`${user.username} is no longer an admin`})
+    }) 
+    }
+
     exports.ensureAuthentication= function(req, res, next){
         if(req.session){
             return next()
