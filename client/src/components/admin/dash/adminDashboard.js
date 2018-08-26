@@ -4,6 +4,8 @@ import MainNav from '../menu/mainNav';
 import SideNav from '../menu/sideNav';
 import CreateCategory from '../courseCategories/createCategory';
 import ListCategories from '../courseCategories/listCategories';
+import ListCourses from '../course/listCourse';
+import CreateCourse from '../course/createCourse';
 
 class AdminDashboard extends Component {
     constructor(props) {
@@ -16,6 +18,8 @@ class AdminDashboard extends Component {
             	<div>
             		<MainNav />
             		<Switch>
+            			<Route path='/admin/dashboard/courses' component={ListCourses} />
+            			<Route path='/admin/dashboard/create_course' component={CreateCourse} />
             			<Route path='/admin/dashboard/create_category' component={CreateCategory} />
             			<Route path='/admin/dashboard/categories' component={ListCategories} />
             		</Switch>
