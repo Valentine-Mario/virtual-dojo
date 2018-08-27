@@ -9,7 +9,7 @@ const SideNav = (props) => {
 	        <Icon name='book' />
 	        Course
 	      </Menu.Item>
-	      <Menu.Item as={NavLink} to="/admin/dashboard/video_upload">
+	      <Menu.Item as={NavLink} to="/admin/dashboard/upload_video">
 	        <Icon name='upload' />
 	        Upload
 	      </Menu.Item>
