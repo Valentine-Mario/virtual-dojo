@@ -5,7 +5,7 @@
 
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Form, Button, Input, TextArea, Select, Progress, Segment, TransitionablePortal, Header } from 'semantic-ui-react';
+import { Form, Button, Input, TextArea, Select, Progress, Segment, TransitionablePortal, Header, Icon } from 'semantic-ui-react';
 import { REQ_GET } from '../../../api';
 import axios from 'axios';
 
@@ -18,7 +18,6 @@ class UploadVideo extends Component {
         	description: '',
         	video: null,
         	course: '',
-        	loading: false,
         	courses: [],
         	progress: 0,
         	disabled: false,
@@ -60,7 +59,6 @@ class UploadVideo extends Component {
     handleSubmit = (e) => {
     	e.preventDefault();
     	this.setState({
-    		loading: true,
     		disabled: true
     	})
 
@@ -90,7 +88,6 @@ class UploadVideo extends Component {
 			})
 			.then(res => {
 				this.setState({
-					loading: false,
 					disabled: false,
 					name: '',
 					description: '',
@@ -105,7 +102,6 @@ class UploadVideo extends Component {
 			.then(err => {
 				console.log(err);
 				this.setState({
-					loading: false,
 					disabled: false,
 					progress: 0
 				})
@@ -114,7 +110,6 @@ class UploadVideo extends Component {
     		// statements
     		console.log(e);
     		this.setState({
-				loading: false,
 				disabled: false,
 				name: '',
 				description: '',
@@ -133,16 +128,16 @@ class UploadVideo extends Component {
     }
 
     render() {
-    	let { name, description, video, loading, course, courses, progress, disabled, transition } = this.state;
+    	let { name, description, video, course, courses, progress, disabled, transition } = this.state;
 
 
         return (
           <div style={{marginTop: '120px', marginLeft: '200px'}}>
 
           	<TransitionablePortal onOpen={this.handleClose} open={transition} transition={{animation: 'fly left', duration: 1000}}>
-	          <Segment style={{ left: '50%', position: 'fixed', top: '0%', zIndex: 1000, background: '#61e261bf' }}>
-	            <Header>Upload Successful</Header>
-	            <p>All the files have been uploaded successfully to the database.</p>
+	          <Segment style={{ right: '2%', position: 'fixed', top: '0%', zIndex: 1000, background: '#61e261bf', width: '40%' }}>
+	            <Header><Icon name="check circle outline" size="big" /></Header>
+	            <p>The video upload was successful.</p>
 	          </Segment>
 	      	</TransitionablePortal>
 
