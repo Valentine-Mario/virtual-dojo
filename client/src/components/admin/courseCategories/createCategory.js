@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Form, Button, Input, TextArea } from 'semantic-ui-react';
+import { Form, Button, Input, TextArea, Progress, Segment, TransitionablePortal, Header, Icon } from 'semantic-ui-react';
 import { REQ_POST } from '../../../api';
 import axios from 'axios';
 
@@ -12,7 +12,9 @@ class CreateCategory extends Component {
         	name: '',
         	description: '',
         	cover_image: null,
-        	loading: false
+            progress: 0,
+            disabled: false,
+            transition: false
         }
     }
 
@@ -33,7 +35,7 @@ class CreateCategory extends Component {
     handleSubmit = (e) => {
     	e.preventDefault();
     	this.setState({
-    		loading: true
+    		disabled: true
     	})
 
     	let { name, description, cover_image } = this.state;
@@ -43,47 +45,86 @@ class CreateCategory extends Component {
     	category.append('description', description);
     	category.append('cover_image', cover_image);
 
-    	console.log(category)
+        try {
+            // statements
+        	axios({
+    		    method: 'post',
+    		    url: 'https://virtualserver.herokuapp.com/supercat/add',
+    		    data: category,
+    		    headers: {
+                    'Content-Type': 'multipart/form-data'
+                },
+                onUploadProgress: (progressEvent) => {
+                    const { loaded, total } = progressEvent;
+                    this.setState({
+                        progress: Math.round((loaded/total) * 100)
+                    }, () => console.log((loaded/total)*100))
+                }
+    		})
+    		.then(res => {
+    			this.setState({
+    				disabled: false,
+                    transition: true,
+    			}, () => this.props.history.push('/admin/dashboard/categories'))
+    		})
+            .then(err => {
+                console.log(err);
+                this.setState({
+                    disabled: false,
+                })
+            })
+        } catch(e) {
+            // statements
+            console.log(e);
+            this.setState({
+                name: '',
+                description: '',
+                cover_image: null,
+                progress: 0,
+                disabled: false,
+                transition: false
+            })
+        }
 
-    	axios({
-		  method: 'post',
-		  url: 'https://virtualserver.herokuapp.com/supercat/add',
-		  data: category,
-
-		  config: {
-		  	headers: {
-		  		'Content-Type': 'multipart/form-data'
-		  	}
-		  }
-		})
-		.then(res => {
-			this.setState({
-				loading: false
-			}, () => this.props.history.push('/admin/dashboard/categories'))
-		})
 
     }
 
+    handleClose = () => {
+        setTimeout(() => this.setState({transition: false}), 5000)
+    }
+
     render() {
-    	let { name, description, cover_image, loading } = this.state;
+    	let { name, description, cover_image, progress, disabled, transition } = this.state;
 
 
         return (
           <div style={{marginTop: '120px', marginLeft: '200px'}}>
-          	<Form loading={loading} onSubmit={this.handleSubmit} style={{width: '500px', margin: 'auto'}} encType="multipart/form-data">
-			    <Form.Field>
+
+            <TransitionablePortal onOpen={this.handleClose} open={transition} transition={{animation: 'fly left', duration: 1000}}>
+              <Segment style={{ right: '2%', position: 'fixed', top: '0%', zIndex: 1000, background: '#61e261bf', width: '40%' }}>
+                <Header><Icon name="check circle outline" size="big" /></Header>
+                <p>Category was created successfully.</p>
+              </Segment>
+            </TransitionablePortal>
+
+          	<Form onSubmit={this.handleSubmit} style={{width: '500px', margin: 'auto'}} encType="multipart/form-data">
+                {
+                    disabled &&
+                        <Progress percent={progress} indicating progress size="small" />
+                }
+			    <Form.Field disabled={disabled}>
 			      <label htmlFor="name">Category Name</label>
 			      <Input id="name" placeholder='name' value={name} onChange={this.handleChange} />
 			    </Form.Field>
-			    <Form.Field>
+			    <Form.Field disabled={disabled}>
 			      <label htmlFor="description">Category Description</label>
 			      <TextArea id="description" placeholder='Tell us more about this category' value={description} onChange={this.handleChange} />
 			    </Form.Field>
-			    <Form.Field>
+			    <Form.Field disabled={disabled}>
 			      <label htmlFor="cover_image">Cover Image</label>
 			      <Input accept=".jpg, .jpeg, .png" id="cover_image" placeholder='upload image only' type="file" onChange={this.handleImageChange}/>
 			    </Form.Field>
-			    <Button type='submit'>Create</Button>
+			    <Button type='submit' disabled={disabled}>Create</Button>
 			</Form>
           </div>  
         );
