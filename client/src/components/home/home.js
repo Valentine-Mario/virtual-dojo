@@ -14,7 +14,7 @@ import {
   Button
 } from 'semantic-ui-react';
 import { REQ_GET } from '../../api';
-import AllCourses from '../course/allCourses';
+import AllCoursesHome from '../course/allCoursesHome';
 import headerImage from '../../images/header.jpg';
 import content from '../../images/content.jpg';
 import job from '../../images/job.jpg';
@@ -153,7 +153,7 @@ export class Home extends PureComponent {
                   </Dimmer>
                 )
                 :
-                <AllCourses />
+                <AllCoursesHome />
             }
             
           </Card.Group>
