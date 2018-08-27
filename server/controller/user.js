@@ -193,8 +193,8 @@ exports.addUser = function(req, res){
             if(err){
                 res.json({message:"could not find user"})
             }else{
-                let video = new ObjectID(req.body.video)
-                model2.findById({_id:video}, function(err, video){
+                let course = new ObjectID(req.body.course)
+                model2.findById({_id:course}, function(err, video){
                     if(err){
                         res.json({message:"could not find video"})
                     }else{

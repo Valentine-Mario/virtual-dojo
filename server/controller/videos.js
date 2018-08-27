@@ -87,7 +87,7 @@ exports.editVideo = function(req, res){
 
 exports.deleteVideo= function(req,res){
     var id = {_id:req.params.id}
-    let course = new ObjectID(req.body.course);
+    //let course = new ObjectID(req.body.course);
     model.findById(id, function(err, value){
       cloudinary.uploader.destroy(value.videoID, function(result){console.log(result)}, {resource_type:"video"}).then(function(result){
         value.video= result.url;
@@ -95,7 +95,7 @@ exports.deleteVideo= function(req,res){
           if(err)res.json({message:"could not delete"})
           res.json({message:"video deleted successfully"});
           
-          model2.findByIdAndUpdate(course, {$inc : {content : -1} }, function(err){})
+          //model2.findByIdAndUpdate(course, {$inc : {content : -1} }, function(err){})
         })
       })
     })
