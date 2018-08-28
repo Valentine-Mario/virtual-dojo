@@ -151,6 +151,7 @@ class CreateCourse extends Component {
 			    <Form.Field disabled={disabled}>
 			      <label htmlFor="category">Category</label>
 			      <select id="category" value={category} onChange={this.handleOptionChange}>
+                     <option>Choose...</option>
 
 			      	{
 			      		categories.map((category) => <option key={category._id} value={category._id}>{category.name}</option>)

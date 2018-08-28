@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import {withRouter} from 'react-router-dom';
 import ReactPlayer from 'react-player';
 import { Responsive, Container, Header, Grid, Divider, Loader } from 'semantic-ui-react';
 import Commenting from './comment';
 import ListVideo from './listVideo';
+import { REQ_GET } from '../../api';
 import './course.css';
+import MenuNav from '../menu/menu';
+import Footer from '../menu/footer';
 
 class Video extends Component {
 
@@ -11,17 +15,12 @@ class Video extends Component {
 		video: []
 	}
 
-	componentWillMount() {
-		fetch(`http://localhost:3004/videos/${this.props.match.params.id}`)
-			.then(res => res.json())
-			.then(data => {
-				console.log(data);
+	componentDidMount() {
+		REQ_GET(`video/get/${this.props.match.params.id_vid}`)
+			.then(res => {
 				this.setState({
-					video: data
+					video: res.data
 				})
-			})
-			.catch(err => {
-				console.log(err);
 			})
 	}
 
@@ -32,16 +31,16 @@ class Video extends Component {
 	}
 
     render () {
-    	console.log(this.props);
     	let { video } = this.state;
 
 	    return (
 	    	<div>
+	    		<MenuNav />
 		    	<Responsive minWidth={Responsive.onlyTablet.minWidth} >
 			      <div className='player-wrapper'>
 			        <ReactPlayer
 			          className='react-player'
-			          url={video.url}
+			          url={video.video}
 			          width='100%'
 			          height='100%'
 			          loop={true}
@@ -55,10 +54,10 @@ class Video extends Component {
 						        <Container  fluid textAlign="justified" style={{width: '95%'}}>
 								    <Header>
 								        <Header.Content>
-									      	Video Title
+									      	{video.name}
 									      	<Divider />
 									      	<Header.Subheader>
-										        {video.title}
+										        {video.description}
 											</Header.Subheader>
 									    </Header.Content>
 								    </Header>
@@ -82,7 +81,7 @@ class Video extends Component {
 				    <div className='player-wrapper'>
 				        <ReactPlayer
 				          className='react-player'
-				          url={video.url}
+				          url={video.video}
 				          width='100%'
 				          height='100%'
 				          loop={true}
@@ -97,10 +96,10 @@ class Video extends Component {
 						        <Container  fluid textAlign="justified" style={{width: '90%'}}>
 								    <Header>
 								        <Header.Content>
-									      	Video Title
+									      	{video.name}
 									      	<Divider />
 									      	<Header.Subheader>
-										        {video.title}
+										        {video.description}
 											</Header.Subheader>
 									    </Header.Content>
 								    </Header>
@@ -127,9 +126,10 @@ class Video extends Component {
 					    </Grid.Row>
 					  </Grid>
 			    </Responsive>
+			    <Footer />
 		    </div>
 	    )
   }
 }
 
-export default Video;
+export default withRouter(Video);

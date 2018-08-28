@@ -1,4 +1,5 @@
 import React, { PureComponent, PropTypes } from 'react';
+import { Link } from 'react-router-dom';
 import { REQ_GET } from '../../api';
 import { Card, Icon, Image, Dimmer, Loader } from 'semantic-ui-react';
 import MenuNav from '../menu/menu';
@@ -9,55 +10,45 @@ class Category extends PureComponent {
         super(props);
 
         this.state = {
-            output: [],
+            categories: [],
             loading: false
         }
+
     }
 
     componentDidMount(){
         this.setState({loading: true});
-        fetch('http://localhost:3004/articles')
-          .then(res => {
-            return res.json();
-          })
-          .then(res => {
-            this.setState({
-              output: res,
-              loading: false
-            })
-          })
 
 
-          /*REQ_GET('cryptocurrencies?page=1&perPage=20')
+          REQ_GET('supercat/get')
             .then(res => {
               console.log(res);
-            })*/
+              this.setState({
+                  loading: false,
+                  categories: res.data
+              })
+            })
 
       }
 
     render() {
-        let { loading, output } = this.state;
+        let { loading, categories } = this.state;
 
-        let card = output.map((user) => {
-        return (
-            <Card raised key={user.id} >
-                <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' />
-                <Card.Content>
-                    <Card.Header>{user.author}</Card.Header>
-                    <Card.Meta>
-                        <span className='date'>{user.date}</span>
-                    </Card.Meta>
-                    <Card.Description>{user.body}</Card.Description>
-                </Card.Content>
-                <Card.Content extra>
-                    <a>
-                        <Icon name='user' />
-                        {user.title}
-                    </a>
-                </Card.Content>
-            </Card>
-            )
-        })
+        let Cards = categories && categories.map((category) => {
+            return (
+                <Card raised key={category._id} as={Link} to={`/category/${category._id}`}>
+                  <Card.Content>
+                    <Image floated='right' size='tiny' src={category.cover_image} />
+                    <Card.Header>{category.name}</Card.Header>
+                    <Card.Meta></Card.Meta>
+                    <Card.Description>
+                      {category.description}
+                    </Card.Description>
+                  </Card.Content>
+                </Card>
+
+                )
+            })
 
         return (
             <div>
@@ -71,7 +62,7 @@ class Category extends PureComponent {
                                 </Dimmer>
                             ) 
                             : 
-                            card
+                            Cards
                     }
                 </Card.Group>
                 <Footer />

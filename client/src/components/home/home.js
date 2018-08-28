@@ -34,22 +34,14 @@ export class Home extends PureComponent {
 
   componentDidMount(){
     this.setState({ loading: true })
-    fetch('http://localhost:3004/articles')
-      .then(res => {
-        return res.json();
-      })
-      .then(res => {
-        console.log(res)
-        this.setState({
-          output: res,
-          loading: false
-        })
-      })
 
 
-      REQ_GET('users/users')
+      REQ_GET('category/get')
         .then(res => {
           console.log(res);
+          this.setState({
+            loading: false
+          })
         })
 
   }
@@ -145,16 +137,7 @@ export class Home extends PureComponent {
 
           <Card.Group centered style={{marginTop: '0px', marginBottom: '20px'}}>
 
-            {
-              loading ? 
-                (
-                  <Dimmer active inverted>
-                    <Loader inverted>Loading</Loader>
-                  </Dimmer>
-                )
-                :
                 <AllCoursesHome />
-            }
             
           </Card.Group>
 
