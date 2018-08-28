@@ -83,7 +83,7 @@ class UploadVideo extends Component {
 			    	const { loaded, total } = progressEvent;
 			    	this.setState({
 			    		progress: Math.round((loaded/total) * 100)
-			    	}, () => console.log((loaded/total)*100))
+			    	})
 			  	}
 			})
 			.then(res => {
@@ -157,6 +157,7 @@ class UploadVideo extends Component {
 			    <Form.Field disabled={disabled}>
 			      <label htmlFor="course">Course</label>
 			      <select id="course" value={course} onChange={this.handleOptionChange}>
+                    <option>Choose...</option>
 
 			      	{
 			      		courses.map((course) => <option key={course._id} value={course._id}>{course.name}</option>)

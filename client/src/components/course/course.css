@@ -8,3 +8,12 @@
   top: 70px;
   left: 0;
 }
+
+.image-wrapper {
+	width: 75%;
+    margin: auto;
+    margin-top: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

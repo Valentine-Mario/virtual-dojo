@@ -13,6 +13,8 @@ import { Responsive } from 'semantic-ui-react';
 import PrivateRoute from './privateRoute';
 import AdminLogin from './admin/adminLogin';
 import AdminDashboard from './admin/dash/adminDashboard';
+import Video from './course/video';
+import CategoryDetail from './category/categoryDetail';
 
 
 const SecureRender = (props) => {
@@ -47,6 +49,11 @@ class Container extends Component {
                     :
                     (<PrivateRoute authed={false} path='/auth/course/:id' component={Course} />)
 
+        let secureCourseDetail = sessionStorage.getItem('user') ? 
+                    (<PrivateRoute authed={true} path='/auth/course/:id/:id_vid' component={Video} />)
+                    :
+                    (<PrivateRoute authed={false} path='/auth/course/:id/:id_vid' component={Video} />)
+
         
         return (
             <div style={{fontFamily: 'Roboto'}}>
@@ -54,9 +61,12 @@ class Container extends Component {
                     <Switch>
                         <Route path="/admin/dashboard" component={AdminDashboard} />
                         <Route path="/admin" component={AdminLogin} />
+                        <Route path="/category/:id" component={CategoryDetail} />
                         <Route path="/category" component={Category} />
                         <Route path="/login" component={SignIn} />
                         <Route path="/signup" component={SignUp} />
+
+                        {secureCourseDetail}
                         {secureCourseVideo}
 
                         {secureCourse}
