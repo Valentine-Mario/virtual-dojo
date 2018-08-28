@@ -35,30 +35,34 @@ class AllCourses extends Component {
             loading: true
         })
 
+
         //handle all user profile here for taking a course
         const user_id = sessionStorage.getItem('user');
-        let regCourse = {
-            user: user_id,
-            course: course_id
-        }
+        if(user_id){
+            let regCourse = {
+                user: user_id,
+                course: course_id
+            }
 
-        try {
-            // statements
-            REQ_POST('users/buy', regCourse)
-                .then(res => {
-                    if(res.data && (res.data.message == "video purchase succesfully")){
-                        this.props.history.push(`/auth/course/${course_id}`);
-                    }
+            try {
+                // statements
+                REQ_POST('users/buy', regCourse)
+                    .then(res => {
+                        if(res.data && (res.data.message == "video purchase succesfully")){
+                            this.props.history.push(`/auth/course/${course_id}`);
+                        }
 
-                    this.setState({
-                        loading: false
+                        this.setState({
+                            loading: false
+                        })
                     })
-                })
-        } catch(e) {
-            // statements
-            console.log(e);
+            } catch(e) {
+                // statements
+                console.log(e);
+            }
+        }else {
+         this.props.history.push(`/login`);   
         }
-
     }
 
     render() {
@@ -68,12 +72,16 @@ class AllCourses extends Component {
             <div>
                 <MenuNav />
                 <Card.Group centered style={{zIndex: '0', width: '90%', margin: 'auto', marginTop: '70px'}}>
-                    { loading && courses ? 
+                    { loading &&
                         <Loader active inline='centered' />
-                        :
-                        courses.map((course) => {
+                        
+                    }
+
+                    {
+                        courses &&
+                            courses.map((course) => {
                             return (
-                                <Card>
+                                <Card key={course._id}>
                                   <Card.Content>
                                     <Image floated='right' size='mini' src={course.image} />
                                     <Card.Header>{course.name}</Card.Header>
@@ -91,7 +99,8 @@ class AllCourses extends Component {
                                   </Card.Content>
                                 </Card>
                             )
-                        })}
+                        })
+                    }
                 </Card.Group>
                 <Footer />
             </div>

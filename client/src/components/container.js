@@ -39,11 +39,6 @@ class Container extends Component {
                     :
                     (<PrivateRoute authed={false} path='/auth/user' component={User} />)
 
-        let secureCourse = sessionStorage.getItem('user') ? 
-                    (<PrivateRoute authed={true} path='/auth/course' component={AllCourses} />)
-                    :
-                    (<PrivateRoute authed={false} path='/auth/course' component={AllCourses} />)
-
         let secureCourseVideo = sessionStorage.getItem('user') ? 
                     (<PrivateRoute authed={true} path='/auth/course/:id' component={Course} />)
                     :
@@ -69,7 +64,7 @@ class Container extends Component {
                         {secureCourseDetail}
                         {secureCourseVideo}
 
-                        {secureCourse}
+                        <Route path="/auth/course" component={AllCourses} />
                         {secureRender}
 
                         <Route exact path="/" component={Home} />

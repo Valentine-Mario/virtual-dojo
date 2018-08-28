@@ -36,18 +36,6 @@ class CategoryDetail extends PureComponent {
     render() {
         let { loading, categories } = this.state;
 
-        /*let card = categories.map((category) => {
-        return (
-            <Card raised key={category._id} as={Link} to={`/category/${category._id}`} >
-                <Image src={category.cover_image} size="big" />
-                <Card.Content>
-                    <Card.Header>{category.name}</Card.Header>
-                    <Card.Description>{category.description}</Card.Description>
-                </Card.Content>
-            </Card>
-            )
-        })*/
-
         return (
             <div>
                 <MenuNav />

@@ -128,6 +128,14 @@ class UnAuthMenu extends Component {
                             { searching && 
                                 <div style={{borderRadius: '5px', position: 'absolute', top: '70px', backgroundColor: '#f0f8fb', overflowY: 'scroll', maxHeight: '100px', width: '53%'}}>{nowOutput}</div>}
 
+                            <Button basic color='blue' style={btn} animated='vertical' as={NavLink} to="/auth/course" >
+                                <Button.Content hidden>
+                                    Courses
+                                </Button.Content>
+                                <Button.Content visible>
+                                    <Icon name='video play' />
+                                </Button.Content>
+                            </Button>
                             <Button basic color='blue' style={btn} animated='vertical' as={NavLink} to="/category" >
                                 <Button.Content hidden>
                                     Categories
@@ -159,6 +167,7 @@ class UnAuthMenu extends Component {
                     <Menu style={container} >
                         <Sidebar as={Menu} animation='slide along' inverted vertical visible={sidebarOpened}>
                             <Menu.Item as={Link} to="/" onClick={this.handleToggle}>Home</Menu.Item>
+                            <Menu.Item as={Link} to="/auth/course" onClick={this.handleToggle}>Courses</Menu.Item>
                             <Menu.Item as={Link} to="/category" onClick={this.handleToggle}>Category</Menu.Item>
                             <Menu.Item as={Link} to="/login" onClick={this.handleToggle} >Log in</Menu.Item>
                             <Menu.Item as={Link} to="/signup" onClick={this.handleToggle} >Sign Up</Menu.Item>
