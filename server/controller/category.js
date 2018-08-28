@@ -63,9 +63,9 @@ exports.getLatest= function(req, res){
 
 exports.searchCourse = function(req, res){
   var value= req.params.value;
-    model.find({"description":{$regex: value, $options: 'i'}}, function(err, course){
+    model.find({"description":{$regex: value, $options: 'gi'}}, function(err, course){
         if (err) res.json({err:err, message:'sorry, could not find video'});
-        res.json(course)
+        res.json(course);
     }).populate('videos')
 }
 

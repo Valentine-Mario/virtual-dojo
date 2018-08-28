@@ -67,7 +67,7 @@ exports.getvideoByid = function(req, res){
 
 exports.searchVideo = function(req, res){
 	var value= req.params.value;
-    model.find({"description":{$regex: value, $options: 'i'}}, function(err, videos){
+    model.find({"description":{$regex: value, $options: 'gi'}}, function(err, videos){
         if (err) res.json({err:err, message:'sorry, could not find video'});
         res.json(videos)
     }).populate('comment')

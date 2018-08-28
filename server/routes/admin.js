@@ -29,7 +29,7 @@ app.use(session({
 
   router.post('/login', passport.authenticate('admin'),
     function(req, res){
-       res.json(req.session)
+        res.json({message:req.session, isAdmin:req.user.isAdmin})
     }
 )
 

@@ -43,7 +43,7 @@ var storage = multer.diskStorage({
 
   router.post('/login', passport.authenticate('user'),
     function(req, res){
-       res.json(req.session)
+       res.json({message:req.session, isAdmin:req.user.isAdmin})
     }
 )
 
