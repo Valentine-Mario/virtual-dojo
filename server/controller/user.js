@@ -99,11 +99,16 @@ exports.addUser = function(req, res){
 }
 
     exports.searchUser = function(req, res){
-	var value= req.params.value;
-    model.find({"username":{$regex: value, $options: 'gi'}}, '-__v -password', function(err, user){
-        if (err) res.json({err:err, message:`could not find user due to error in connection`, code:7});
-        res.json({message:user, code:8})
-    }).populate('library')
+    var value= req.params.value;
+    if(value == null || value == ""){
+        res.json({message:"search field is empty"})
+    }else{
+        model.find({"username":{$regex: value, $options: 'gi'}}, '-__v -password', function(err, user){
+            if (err) res.json({err:err, message:`could not find user due to error in connection`});
+            res.json({message:user})
+        }).populate('library')
+    }
+    
 }
 
     exports.editUser = function(req, res){

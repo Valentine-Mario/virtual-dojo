@@ -11,9 +11,9 @@ const schema= Joi.object().keys({
 exports.addComment= function(req, res){
     var data={
         comment:req.body.comment,
-        time: Date.now()
+        time: Date.now(),
+        user_id: req.body.user_id
     }
-    user_id= req.body.user_id
     Joi.validate({comment:data.comment}, schema, function(err, value){
         if(err){
             res.json(err.message)
@@ -42,7 +42,7 @@ exports.getComments= function(req,res){
     model.find({}, '-_id -__v', function(err, comments){
         if(err)res.json({message:"comment not found"})
         res.json(comments)
-    }).populate('user_id')
+    }).populate('user_id', 'firstName lastName')
 }
 
 exports.editComments = function(req, res){
