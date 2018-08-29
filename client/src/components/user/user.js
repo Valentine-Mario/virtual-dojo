@@ -54,7 +54,7 @@ class User extends Component {
                         loading &&
                             <Dimmer active inverted>
                                 <Loader inverted content='Loading' />
-                              </Dimmer>
+                            </Dimmer>
                     }
 
                     <Grid columns='2' divided inverted padded>

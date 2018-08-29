@@ -37,10 +37,11 @@ class AllCourses extends Component {
 
 
         //handle all user profile here for taking a course
-        const user_id = sessionStorage.getItem('user');
-        if(user_id){
+        const user_id = JSON.parse(sessionStorage.getItem('user'));
+
+        if(user_id[0]){
             let regCourse = {
-                user: user_id,
+                user: user_id[0],
                 course: course_id
             }
 
@@ -50,6 +51,8 @@ class AllCourses extends Component {
                     .then(res => {
                         if(res.data && (res.data.message == "video purchase succesfully")){
                             this.props.history.push(`/auth/course/${course_id}`);
+                        }else {
+                            this.props.history.push(`/auth/course/${course_id}`)
                         }
 
                         this.setState({
@@ -61,7 +64,9 @@ class AllCourses extends Component {
                 console.log(e);
             }
         }else {
-         this.props.history.push(`/login`);   
+
+         this.props.history.push(`/login`);  
+          
         }
     }
 
@@ -71,11 +76,8 @@ class AllCourses extends Component {
         return (
             <div>
                 <MenuNav />
+                <Loader style={{zIndex: '1', width: '90%', margin: 'auto', marginTop: '90px', marginBottom: '0px'}} active={loading} inline='centered' />
                 <Card.Group centered style={{zIndex: '0', width: '90%', margin: 'auto', marginTop: '70px'}}>
-                    { loading &&
-                        <Loader active inline='centered' />
-                        
-                    }
 
                     {
                         courses &&
