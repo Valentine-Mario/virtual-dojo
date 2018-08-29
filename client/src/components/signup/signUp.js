@@ -63,7 +63,9 @@ class SignUp extends Component {
                                 }else {
                                     
                                     /** HANDLE ALL ROUTING WHEN USER REGISERS SUCCESSFULLY*/
+
                                     sessionStorage.setItem('user', res.data.user);
+
                                     this.props.history.push("/auth/user");
                                 }
 

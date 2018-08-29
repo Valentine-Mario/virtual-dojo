@@ -3,6 +3,8 @@ import { withRouter } from 'react-router-dom';
 import { Form, Button, Input, TextArea, Select, Progress, Segment, TransitionablePortal, Header, Icon } from 'semantic-ui-react';
 import { REQ_GET } from '../../../api';
 import axios from 'axios';
+import MainNav from '../menu/mainNav';
+import SideNav from '../menu/sideNav';
 
 class CreateCourse extends Component {
     constructor(props) {
@@ -126,45 +128,49 @@ class CreateCourse extends Component {
 
 
         return (
-          <div style={{marginTop: '120px', marginLeft: '200px'}}>
+            <div>
+                <MainNav />
+              <div style={{marginTop: '120px', marginLeft: '200px'}}>
 
-          	<TransitionablePortal onOpen={this.handleClose} open={transition} transition={{animation: 'fly left', duration: 1000}}>
-	          <Segment style={{ right: '2%', position: 'fixed', top: '0%', zIndex: 1000, background: '#61e261bf', width: '40%' }}>
-	            <Header><Icon name="check circle outline" size="big" /></Header>
-	            <p>Course was created successfully.</p>
-	          </Segment>
-	      	</TransitionablePortal>
+              	<TransitionablePortal onOpen={this.handleClose} open={transition} transition={{animation: 'fly left', duration: 1000}}>
+    	          <Segment style={{ right: '2%', position: 'fixed', top: '0%', zIndex: 1000, background: '#61e261bf', width: '40%' }}>
+    	            <Header><Icon name="check circle outline" size="big" /></Header>
+    	            <p>Course was created successfully.</p>
+    	          </Segment>
+    	      	</TransitionablePortal>
 
-          	<Form onSubmit={this.handleSubmit} style={{width: '500px', margin: 'auto'}} encType="multipart/form-data">
-          		{
-          			disabled &&
-          				<Progress percent={progress} indicating progress size="small" />
-				}
-			    <Form.Field disabled={disabled}>
-			      <label htmlFor="name">Course Name</label>
-			      <Input id="name" placeholder='name' value={name} onChange={this.handleChange} />
-			    </Form.Field>
-			    <Form.Field disabled={disabled}>
-			      <label htmlFor="description">Course Description</label>
-			      <TextArea id="description" placeholder='Tell us more about this category' value={description} onChange={this.handleChange} />
-			    </Form.Field>
-			    <Form.Field disabled={disabled}>
-			      <label htmlFor="category">Category</label>
-			      <select id="category" value={category} onChange={this.handleOptionChange}>
-                     <option>Choose...</option>
+              	<Form onSubmit={this.handleSubmit} style={{width: '500px', margin: 'auto'}} encType="multipart/form-data">
+              		{
+              			disabled &&
+              				<Progress percent={progress} indicating progress size="small" />
+    				}
+    			    <Form.Field disabled={disabled}>
+    			      <label htmlFor="name">Course Name</label>
+    			      <Input id="name" placeholder='name' value={name} onChange={this.handleChange} />
+    			    </Form.Field>
+    			    <Form.Field disabled={disabled}>
+    			      <label htmlFor="description">Course Description</label>
+    			      <TextArea id="description" placeholder='Tell us more about this category' value={description} onChange={this.handleChange} />
+    			    </Form.Field>
+    			    <Form.Field disabled={disabled}>
+    			      <label htmlFor="category">Category</label>
+    			      <select id="category" value={category} onChange={this.handleOptionChange}>
+                         <option>Choose...</option>
 
-			      	{
-			      		categories.map((category) => <option key={category._id} value={category._id}>{category.name}</option>)
-			      	}
+    			      	{
+    			      		categories.map((category) => <option key={category._id} value={category._id}>{category.name}</option>)
+    			      	}
 
-		          </select>
-			    </Form.Field>
-			    <Form.Field disabled={disabled}>
-			      <label htmlFor="image">Cover Image</label>
-			      <Input accept=".jpg, .jpeg, .png" id="image" placeholder='upload image only' type="file" onChange={this.handleImageChange}/>
-			    </Form.Field>
-			    <Button type='submit' disabled={disabled}>Create</Button>
-			</Form>
+    		          </select>
+    			    </Form.Field>
+    			    <Form.Field disabled={disabled}>
+    			      <label htmlFor="image">Cover Image</label>
+    			      <Input accept=".jpg, .jpeg, .png" id="image" placeholder='upload image only' type="file" onChange={this.handleImageChange}/>
+    			    </Form.Field>
+    			    <Button type='submit' disabled={disabled}>Create</Button>
+    			</Form>
+              </div>
+              <SideNav />
           </div>  
         );
     }

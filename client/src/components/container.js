@@ -16,6 +16,15 @@ import AdminDashboard from './admin/dash/adminDashboard';
 import Video from './course/video';
 import CategoryDetail from './category/categoryDetail';
 
+import HandleAuth from './admin/handleAuth';
+
+import ListCategories from './admin/courseCategories/listCategories';
+import ListCourses from './admin/course/listCourse';
+import CreateCategory from './admin/courseCategories/createCategory';
+import CreateCourse from './admin/course/createCourse';
+import UploadVideo from './admin/upload/upload';
+import Users from './admin/user/user';
+
 
 const SecureRender = (props) => {
     return sessionStorage.getItem('user') ? props.truthy : props.falsy
@@ -54,7 +63,16 @@ class Container extends Component {
             <div style={{fontFamily: 'Roboto'}}>
                 <Responsive>
                     <Switch>
-                        <Route path="/admin/dashboard" component={AdminDashboard} />
+
+                        <HandleAuth user={false} path='/admin/dashboard/upload_video' component={UploadVideo} />
+                        <HandleAuth user={false} path='/admin/dashboard/create_course' component={CreateCourse} />
+                        <HandleAuth user={false} path='/admin/dashboard/create_category' component={CreateCategory} />
+                        <HandleAuth user={false} path='/admin/dashboard/user' component={Users} />
+                        <HandleAuth user={false} path='/admin/dashboard/courses' component={ListCourses} />
+                        <HandleAuth user={false} path='/admin/dashboard/categories' component={ListCategories} />
+
+                        <HandleAuth user={false} path="/admin/dashboard" component={AdminDashboard} />
+                        
                         <Route path="/admin" component={AdminLogin} />
                         <Route path="/category/:id" component={CategoryDetail} />
                         <Route path="/category" component={Category} />

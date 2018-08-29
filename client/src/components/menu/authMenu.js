@@ -129,20 +129,20 @@ class AuthMenu extends Component {
                             { searching && 
                                 <div style={{borderRadius: '5px', position: 'absolute', top: '70px', backgroundColor: '#f0f8fb', overflowY: 'scroll', maxHeight: '100px', width: '53%'}}>{nowOutput}</div>}
 
-                            <Button basic color='blue' style={btn} animated='vertical' as={NavLink} to="/category" >
-                                <Button.Content hidden>
-                                    Categories
-                                </Button.Content>
-                                <Button.Content visible>
-                                    <Icon name='list alternate outline' />
-                                </Button.Content>
-                            </Button>
                             <Button basic color='blue' style={btn} animated='vertical' as={NavLink} to="/auth/course" >
                                 <Button.Content hidden>
                                     Courses
                                 </Button.Content>
                                 <Button.Content visible>
                                     <Icon name='video play' />
+                                </Button.Content>
+                            </Button>
+                            <Button basic color='blue' style={btn} animated='vertical' as={NavLink} to="/category" >
+                                <Button.Content hidden>
+                                    Categories
+                                </Button.Content>
+                                <Button.Content visible>
+                                    <Icon name='list alternate outline' />
                                 </Button.Content>
                             </Button>
                             <Button basic color='blue' style={btn} animated='vertical' as={NavLink} to="/auth/user">

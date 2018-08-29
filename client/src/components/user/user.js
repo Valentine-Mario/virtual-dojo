@@ -17,16 +17,21 @@ class User extends Component {
     }
 
     componentDidMount() {
-        let user = sessionStorage.getItem('user');
+        let user = JSON.parse(sessionStorage.getItem('user'));
         this.setState({
             loading: true
         })
 
-        REQ_GET(`users/${user}`)
+        REQ_GET(`users/${user[0]}`)
             .then(res => {
                 if(res.data){
                     this.setState({
                         user: res.data,
+                        loading: false
+                    })
+                    console.log(res.data)
+                }else {
+                    this.setState({
                         loading: false
                     })
                 }
@@ -64,7 +69,7 @@ class User extends Component {
                                     user.library &&
                                         user.library.map(course => {
                                             return (
-                                                <Card key={course._id} textAlign="left" as={Link} to={`/auth/course/${course._id}`}>
+                                                <Card key={course._id} as={Link} to={`/auth/course/${course._id}`}>
                                                   <Card.Content
                                                     header={course.name}
                                                     meta='Friend'
