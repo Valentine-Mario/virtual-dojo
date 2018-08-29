@@ -55,7 +55,13 @@ exports.getvideos= function(req, res){
         model.find({}, function(err, videos){
         if (err) res.json({err:err, message:'sorry, could not return videos'});
         res.json(videos) 
-    }).populate('comment')
+    }).populate({ 
+      path: "comment", // 1st level subdoc (get comments)
+      populate: { // 2nd level subdoc (get users in comments)
+        path: "user_id",
+        select: 'firstName lastName profile_pics'// space separated (selected fields only)
+      }
+    })
 }
 
 exports.getvideoByid = function(req, res){
@@ -63,7 +69,13 @@ exports.getvideoByid = function(req, res){
     model.findById(id, function(err, video){
         if (err) res.json({err:err, message:'sorry, could not get category'});
         res.json(video);
-    }).populate('comment')
+    }).populate({ 
+      path: "comment", // 1st level subdoc (get comments)
+      populate: { // 2nd level subdoc (get users in comments)
+        path: "user_id",
+        select: 'firstName lastName profile_pics'// space separated (selected fields only)
+      }
+    })
 }
 
 exports.searchVideo = function(req, res){
@@ -72,7 +84,13 @@ exports.searchVideo = function(req, res){
     model.find({"description":{$regex: value, $options: 'gi'}}, function(err, videos){
         if (err) res.json({err:err, message:'sorry, could not find video'});
         res.json(videos)
-    }).populate('comment')
+    }).populate({ 
+      path: "comment", // 1st level subdoc (get comments)
+      populate: { // 2nd level subdoc (get users in comments)
+        path: "user_id",
+        select: 'firstName lastName profile_pics'// space separated (selected fields only)
+      }
+    })
 
   }else{
       res.json({message:"field can't be empty"})
