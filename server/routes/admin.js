@@ -4,10 +4,11 @@ var app = express();
 var UserController= require('../controller/user')
 var passport= require('passport');
 var session = require('express-session');
+var ObjectID = require('mongoose').Types.ObjectId;
+var mongoose= require('mongoose')
 var LocalStrategy = require('passport-local').Strategy;
 var user= require('../model/user');
-const jwt = require('jsonwebtoken');
-passport.use('user',new LocalStrategy(passport.authenticate()));
+passport.use('admin',new LocalStrategy(passport.authenticate()));
 passport.serializeUser(function(user, done) {
     done(null, user.id); 
 });
@@ -20,46 +21,19 @@ passport.deserializeUser(function(id, done) {
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(session({
-  secret: 'diversify me',
+  secret: 'deliver me',
   resave: false,
   saveUninitialized: true
 }))
-const multer = require('multer');
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      if (file.mimetype === 'image/jpeg'||file.mimetype === 'image/png'||file.mimetype === 'image/gif') {
-        cb(null, './files/images/')
-      } else {
-        
-      }
-      
-    },
-    filename: function (req, file, cb) {
-      cb(null, file.originalname)
-    }
-  })
-   
-  var upload = multer({ storage: storage })
 
-  router.post('/login', passport.authenticate('user'),
+
+  router.post('/login', passport.authenticate('admin'),
     function(req, res){
-       res.json({message:req.session, isAdmin:req.user.isAdmin})
+        res.json({message:req.session, isAdmin:req.user.isAdmin})
     }
 )
 
-/* GET users listing. */
-
-router.post('/register', UserController.addUser);
-router.get('/users', UserController.getUser);
-router.get('/search/:value', UserController.searchUser);
-router.post('/edit/:id', UserController.editUser);
-router.post('/delete/:id', UserController.deleteUser);
-//router.post('/user', UserController.getUserByUsername);
-router.post('/buy', UserController.getVideo)
-router.post('/update-profile/:id', upload.any('profile_pics'),  UserController.editProfilePics);
-router.get('/:id', UserController.getUserByid);
-
-    passport.use('user', new LocalStrategy(
+    passport.use('admin', new LocalStrategy(
         function(username, password, done) {
           UserController.getUserByUsername2(username, function(err, user){
               if(err)throw err;
@@ -70,7 +44,11 @@ router.get('/:id', UserController.getUserByid);
               UserController.decrypt(password, user.password, function(err, isMatch){
                   if(err)throw err;
                   if(isMatch){
-                      return done(null, user) 
+                      if(user.isAdmin==1){
+                        return done(null, user)
+                      }else{
+                         return done(null, false)
+                      }
                   }else{
                       return done(null, false, {message:"invalid password"})
                   }
@@ -79,7 +57,8 @@ router.get('/:id', UserController.getUserByid);
         }
       ));
 
-
+router.post('/makeadmin', UserController.makeAdmin)
+router.post('/removeadmin', UserController.removeAdmin)
 
 
 router.get('/logout/:id', function(req, res){

@@ -5,11 +5,9 @@ var model= require('../model/videos');
 const multer = require('multer');
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      if (file.mimetype === 'image/jpeg'||file.mimetype === 'image/png'||file.mimetype === 'image/gif') {
-        cb(null, './files/images/')
-      } else if(file.mimetype==='video/mp4'||file.mimetype==='video/avi'||filename==='video/flv'){
+  
         cb(null, './files/videos/')
-      }
+      
       
     },
     filename: function (req, file, cb) {

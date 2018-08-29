@@ -1,5 +1,6 @@
 var model= require('../model/comment')
 var model2= require('../model/videos');
+var model3 = require('../model/user')
 var ObjectID = require('mongoose').Types.ObjectId;
 const Joi = require('joi');
 
@@ -9,11 +10,10 @@ const schema= Joi.object().keys({
 
 exports.addComment= function(req, res){
     var data={
-        name:req.body.name,
         comment:req.body.comment,
-        time: Date.now()
+        time: Date.now(),
+        user_id: req.body.user_id
     }
-
     Joi.validate({comment:data.comment}, schema, function(err, value){
         if(err){
             res.json(err.message)
@@ -42,7 +42,7 @@ exports.getComments= function(req,res){
     model.find({}, '-_id -__v', function(err, comments){
         if(err)res.json({message:"comment not found"})
         res.json(comments)
-    }).populate('name', 'name')
+    }).populate('user_id', 'firstName lastName')
 }
 
 exports.editComments = function(req, res){
@@ -63,10 +63,17 @@ exports.editComments = function(req, res){
     
 }
 
-exports.deleteComment = function(req, res){
-        var id = {_id:req.params.id}
-        model.remove(id, function(err){
-        if (err) res.json({err:err, message:'could not delete comment'});
-        res.json({message:'comment deleted'});
-    });
+exports.deleteComment= function(req,res){
+    var id = {_id:req.params.id}
+    let user = new ObjectID(req.body.user)
+    model3.findById(user, function(err, user){
+        if(user.isAdmin==1){
+            model.remove(id, function(err){
+                if (err) res.json({err:err, message:'could not delete comment'});
+                return res.json({message:'comment deleted'});
+});
+        }else{
+            res.json({message:"only admin can delete comments"})
+        }
+    })
 }
