@@ -11,64 +11,30 @@ class UnAuthMenu extends Component {
         super(props);
         
         this.state = {
-            query: '',
             sidebarOpened: false,
             searching: false,
-            output: []
+            output: [],
+            loading: false
         }
     }
 
 
      /**HANDLE ALL REQUEST FOR THE SEARCH AND PERFORM REDIRECTIONS*/
     handleSearch = (e) => {
-        // e.preventDefault();
-        if(e.target.value == ''){
+        if(e.target.value.trim() == ''){
             this.setState({
                 searching: false
             })
-        }
-
-        this.setState({
-            query: e.target.value
-        }, () => /*REQ_GET(`autocomplete?searchQuery=${this.state.query.trim()}`)
+        }else {
+            axios.get(`https://api.udilia.com/coins/v1/autocomplete?searchQuery=${e.target.value}`)
                 .then(res => {
-                    this.showSearch(res.data)
-                })*/
-
-                  fetch(`https://api.udilia.com/coins/v1/autocomplete?searchQuery=${this.state.query}`)
-                    .then(response => {
-                      return response.json().then(json => {
-                        return response.ok ? json : Promise.reject(json);
-                      });
+                    console.log(res.data);
+                    this.setState({
+                        output: res.data,
+                        searching: true
                     })
-                    .then((data) => {
-                      console.log('Success', data);
-
-
-                      this.showSearch(data);
-                    })
-                    .catch((error) => {
-                      console.log('Error', error);
-                    })
-        )
-    }
-
-     showSearch = (output) => {
-        this.setState({
-            output,
-            searching: true
-        })
-
-        /**USE THIS FOR TOGGLING OF SEARCH RESULT AREA*/
-        if(isEmpty(output)){
-            console.log('empty')
-            this.setState({
-                searching: false,
-                output: []
-            })
+                })
         }
-
-
     }
 
     handleToggle = () => this.setState({ sidebarOpened: !this.state.sidebarOpened })
@@ -79,7 +45,7 @@ class UnAuthMenu extends Component {
     }
 
     render() {
-        let { sidebarOpened, output, searching } = this.state;
+        let { sidebarOpened, output, searching, loading } = this.state;
 
         let nowOutput = !isEmpty(output) ? 
                             this.state.output.map((value) => {
@@ -123,7 +89,7 @@ class UnAuthMenu extends Component {
                         </Menu.Item>
             
                         <Menu.Item className="container" position='right' >
-                            <Input style={{marginRight: '10px', backgroundColor: '#f0f8fb', borderRadius: '6px'}} className='icon' icon='search' placeholder='Search...' onChange={this.handleSearch} />
+                            <Input loading={loading} style={{marginRight: '10px', backgroundColor: '#f0f8fb', borderRadius: '6px'}} className='icon' icon='search' placeholder='Search...' onChange={this.handleSearch} />
                             
                             { searching && 
                                 <div style={{borderRadius: '5px', position: 'absolute', top: '70px', backgroundColor: '#f0f8fb', overflowY: 'scroll', maxHeight: '100px', width: '53%'}}>{nowOutput}</div>}

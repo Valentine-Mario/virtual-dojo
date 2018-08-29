@@ -48,7 +48,7 @@ class Users extends Component {
         this.setState({
             searchLoad: true
         })
-        if(e.target.value == ''){
+        if(e.target.value.trim() == ''){
             this.getUsers();
 
             this.setState({

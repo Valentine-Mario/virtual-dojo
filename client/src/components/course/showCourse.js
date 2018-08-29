@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactPlayer from 'react-player';
-import { Responsive, Container, Header, Grid, Divider, Loader, Image } from 'semantic-ui-react';
+import { Responsive, Container, Header, Grid, Divider, Loader, Image } from 'semantic-ui-react';	
 import ListVideo from './listVideo';
 import { REQ_GET } from '../../api';
 import './course.css';
@@ -18,12 +18,6 @@ class ShowCourse extends Component {
 					course: res.data
 				})
 			})
-	}
-
-	componentDidUpdate(prevProps) {
-		if(prevProps.match.url !== this.props.match.url){
-			window.location.reload();
-		}
 	}
 
     render () {

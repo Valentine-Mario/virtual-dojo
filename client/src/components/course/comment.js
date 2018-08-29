@@ -8,7 +8,8 @@ class Commenting extends Component {
 
     this.state = {
       newComment: '',
-      comments: ''
+      comments: [],
+      loading: false
     }
   }
 
@@ -20,10 +21,14 @@ class Commenting extends Component {
   getVideo = () => {
     REQ_GET(`video/get/${this.props.videoId}`)
       .then(res => {
-        this.setState({
-          comments: res.data.comment,
-          newComment: ''
-        })
+        if(res){
+          this.setState({
+            comments: res.data.comment,
+            newComment: ''
+          })
+        }else {
+          console.log('error')
+        }
       })
 
   }
@@ -37,6 +42,10 @@ class Commenting extends Component {
   //SUBMIT A PARTICULAR COMMENT
   handleSubmit = (e) => {
     e.preventDefault();
+    this.setState({
+      loading: true
+    })
+
     let user = JSON.parse(sessionStorage.getItem('user'));
     let { newComment } = this.state;
     let { videoId } = this.props;
@@ -50,13 +59,15 @@ class Commenting extends Component {
     REQ_POST(`comment/add`, commenting)
       .then(res => {
         if(res.data){
-          this.getVideo();
+          this.setState({
+            loading: false
+          }, () => this.getVideo())
         }
       })
   }
 
   render(){
-    let { comments, newComment } = this.state;
+    let { comments, newComment, loading } = this.state;
 
     return (
         <Comment.Group style={{width: '100%', margin: 'auto', padding: '10px'}}>
@@ -87,7 +98,7 @@ class Commenting extends Component {
 
           <Form reply onSubmit={this.handleSubmit}>
             <Form.TextArea onChange={this.handleChange} value={newComment} />
-            <Button content='Add Comment' labelPosition='left' icon='edit' primary />
+            <Button loading={loading} content='Add Comment' labelPosition='left' icon='edit' primary />
           </Form>
         </Comment.Group>
     )
