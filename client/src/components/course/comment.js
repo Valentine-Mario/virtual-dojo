@@ -1,65 +1,92 @@
 import React, { Component } from 'react';
 import { Button, Comment, Form, Header, Divider } from 'semantic-ui-react';
+import { REQ_POST, REQ_GET } from '../../api';
 
 class Commenting extends Component {
   constructor(props){
     super(props);
 
     this.state = {
-      comments: [
-        "The hours, minutes and seconds stand as visible reminders that your effort put them all there. Preserve until your next run, when the watch lets you see how Impermanent your efforts are.",
-        "wow this is an awesome tutorial, please share more of those",
-        "can you make another video on humans :)"
-      ],
-      currentComment: ''
+      newComment: '',
+      comments: ''
     }
+  }
+
+  componentDidMount() {
+    this.getVideo();
+  }
+
+  //GET A PARTICULAR VIDEO
+  getVideo = () => {
+    REQ_GET(`video/get/${this.props.videoId}`)
+      .then(res => {
+        this.setState({
+          comments: res.data.comment,
+          newComment: ''
+        })
+      })
+
   }
 
   handleChange = (e) => {
     this.setState({
-      currentComment: e.target.value
+      newComment: e.target.value
     })
   }
 
+  //SUBMIT A PARTICULAR COMMENT
   handleSubmit = (e) => {
     e.preventDefault();
-    this.setState({
-      comments: [...this.state.comments, this.state.currentComment],
-      currentComment: ''
-    })
+    let user = JSON.parse(sessionStorage.getItem('user'));
+    let { newComment } = this.state;
+    let { videoId } = this.props;
+
+    let commenting = {
+      video: videoId,
+      user_id: user[0],
+      comment: newComment
+    }
+
+    REQ_POST(`comment/add`, commenting)
+      .then(res => {
+        if(res.data){
+          this.getVideo();
+        }
+      })
   }
 
   render(){
-    let { comments } = this.state;
-
-    let CurrentComment = comments.map((comment, index) => {
-      return(    
-        <Comment key={index} >
-          <Comment.Avatar as='a' src='https://image.flaticon.com/icons/png/128/145/145852.png' />
-          <Comment.Content>
-            <Comment.Author>Joe Henderson</Comment.Author>
-            <Comment.Metadata>
-              <div>1 day ago</div>
-            </Comment.Metadata>
-            <Comment.Text>
-              <p>
-                {comment}
-              </p>
-            </Comment.Text>
-          </Comment.Content>
-        </Comment>
-      )
-    })
+    let { comments, newComment } = this.state;
 
     return (
         <Comment.Group style={{width: '100%', margin: 'auto', padding: '10px'}}>
           <Header>Video Comment</Header>
           <Divider />
-          
-          { CurrentComment }
+
+          {
+            comments &&
+              comments.map((comment) => {
+                return(    
+                  <Comment key={comment.time} >
+                    <Comment.Avatar as='a' src={comment.user_id.profile_pics} />
+                    <Comment.Content>
+                      <Comment.Author>{`${comment.user_id.firstName} ${comment.user_id.lastName}`}</Comment.Author>
+                      <Comment.Metadata>
+                        <div>{comment.time}</div>
+                      </Comment.Metadata>
+                      <Comment.Text>
+                        <p>
+                          {comment.comment}
+                        </p>
+                      </Comment.Text>
+                    </Comment.Content>
+                  </Comment>
+                )
+              })
+          }
 
           <Form reply onSubmit={this.handleSubmit}>
-            <Form.TextArea onChange={this.handleChange} value={this.state.currentComment} />
+            <Form.TextArea onChange={this.handleChange} value={newComment} />
             <Button content='Add Comment' labelPosition='left' icon='edit' primary />
           </Form>
         </Comment.Group>

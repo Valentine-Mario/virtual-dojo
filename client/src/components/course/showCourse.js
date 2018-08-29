@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ReactPlayer from 'react-player';
 import { Responsive, Container, Header, Grid, Divider, Loader, Image } from 'semantic-ui-react';
-import Commenting from './comment';
 import ListVideo from './listVideo';
 import { REQ_GET } from '../../api';
 import './course.css';

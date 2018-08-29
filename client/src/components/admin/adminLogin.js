@@ -74,7 +74,7 @@ class AdminLogin extends Component {
 			      <label>Password</label>
 			      <input name="password" type="password" placeholder='Password' value={this.password} onChange={this.handleChange} />
 			    </Form.Field>
-			    <Button type='submit' invert primary>Login</Button>
+			    <Button type='submit' inverted primary>Login</Button>
 		    </Form>
         );
     }

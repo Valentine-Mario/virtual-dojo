@@ -64,7 +64,7 @@ class Video extends Component {
 							    </Container>
 
 							    <Container>
-							    	<Commenting />
+							    	<Commenting videoId={`${this.props.match.params.id_vid}`} />
 							    </Container>
 
 						    </Grid.Column>
