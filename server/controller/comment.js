@@ -1,5 +1,6 @@
 var model= require('../model/comment')
 var model2= require('../model/videos');
+var model3 = require('../model/user')
 var ObjectID = require('mongoose').Types.ObjectId;
 const Joi = require('joi');
 
@@ -63,10 +64,17 @@ exports.editComments = function(req, res){
     
 }
 
-exports.deleteComment = function(req, res){
-        var id = {_id:req.params.id}
-        model.remove(id, function(err){
-        if (err) res.json({err:err, message:'could not delete comment'});
-        res.json({message:'comment deleted'});
-    });
+exports.deleteComment= function(req,res){
+    var id = {_id:req.params.id}
+    let user = new ObjectID(req.body.user)
+    model3.findById(user, function(err, user){
+        if(user.isAdmin==1){
+            model.remove(id, function(err){
+                if (err) res.json({err:err, message:'could not delete comment'});
+                return res.json({message:'comment deleted'});
+});
+        }else{
+            res.json({message:"only admin can delete comments"})
+        }
+    })
 }

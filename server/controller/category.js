@@ -1,5 +1,6 @@
 var model= require('../model/category');
 var model2= require('../model/superCat');
+var model3= require('../model/user')
 var multer= require('multer');
 var cloudinary = require('cloudinary');
 cloudinary.config({ 
@@ -94,16 +95,19 @@ exports.editCategory = function(req, res){
     })
 }
 
-exports.deleteCategory = function(req, res){
-        var id = {_id:req.params.id}
-        //let Supercategory = new ObjectID(req.body.Supercategory);
-        model.remove(id, function(err){
-        if (err) {
-          res.json({err:err, message:'could not delete category'});
-        }else{
-          res.json({message:'category deleted'});
-          //model2.findByIdAndUpdate(Supercategory, {$inc : {content : -1} }, function(err){})
-        }
-        
-    });
+
+
+exports.deleteCategory= function(req,res){
+  var id = {_id:req.params.id}
+  let user = new ObjectID(req.body.user)
+  model3.findById(user, function(err, user){
+      if(user.isAdmin==1){
+          model.remove(id, function(err){
+              if (err) res.json({err:err, message:'could not delete course'});
+              return res.json({message:'course deleted'});
+});
+      }else{
+          res.json({message:"only admin can delete courses"})
+      }
+  })
 }

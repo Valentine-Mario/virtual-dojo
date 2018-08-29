@@ -22,7 +22,7 @@ router.get('/get', videoController.getvideos);
 router.get('/get/:id', videoController.getvideoByid)
 router.get('/search/:value', videoController.searchVideo)
 router.post('/edit/:id', videoController.editVideo)
-router.get('/delete/:id', videoController.deleteVideo)
+router.post('/delete/:id', videoController.deleteVideo)
 //router.get('/cat/:id', videoController.getall)
 
 module.exports = router;

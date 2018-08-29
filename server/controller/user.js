@@ -71,7 +71,7 @@ exports.addUser = function(req, res){
                     if(err){
                         res.json({message:'user not added', code: 1});
                     }else{
-                        res.json({user:user._id, code:2})
+                        res.json({user:user._id, code:2, isAdmin:user.isAdmin})
                         res.status(200)
                     }
                 })
@@ -84,7 +84,7 @@ exports.addUser = function(req, res){
 }
 
     exports.getUser= function(req, res){
-        model.find({}, '-password -_id -__v', function(err, users){
+        model.find({}, '-password -__v', function(err, users){
         if (err) res.json({err:err, message:'sorry, could not return all users', code:3});
         res.json({message:users, code:4}) 
     }).populate('library')
@@ -100,7 +100,7 @@ exports.addUser = function(req, res){
 
     exports.searchUser = function(req, res){
 	var value= req.params.value;
-    model.find({"username":{$regex: value, $options: 'i'}}, '-__v -password', function(err, user){
+    model.find({"username":{$regex: value, $options: 'gi'}}, '-__v -password', function(err, user){
         if (err) res.json({err:err, message:`could not find user due to error in connection`, code:7});
         res.json({message:user, code:8})
     }).populate('library')
@@ -144,28 +144,20 @@ exports.addUser = function(req, res){
         
     }
 
-    exports.deleteUser = function(req, res){
-        var id = {_id:req.params.id}
-        model.findById(id, function(err, user){
-            if(user.profile_pics!==null){
-                fs.unlink(user.profile_pics, function(err){
-                    if(err){
-                        res.json({message:"could not delete user profile pics"})
-                    }else{
-                       model.remove(id, function(err){
-                        if (err) res.json({err:err, message:'could not delete user'});
-                        return res.json({message:'user deleted'});
-                })  
-                    }
-                })
-               
-            }else{
-                    model.remove(id, function(err){
-                    if (err) res.json({err:err, message:'could not delete user'});
-                    return res.json({message:'user deleted'});
-    });
-            }
-        })
+
+exports.deleteUser= function(req,res){
+    var id = {_id:req.params.id}
+    let user = new ObjectID(req.body.user)
+    model.findById(user, function(err, user){
+        if(user.isAdmin==1){
+            model.remove(id, function(err){
+                if (err) res.json({err:err, message:'could not delete user'});
+                return res.json({message:'user deleted'});
+});
+        }else{
+            res.json({message:"only admin can delete users"})
+        }
+    })
 }
 
 //     exports.getUserByUsername = function(req, res){
@@ -244,3 +236,5 @@ exports.addUser = function(req, res){
             res.json({message:"not logged in yet"})
         }
     }
+
+    

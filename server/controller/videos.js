@@ -1,5 +1,6 @@
 var model= require('../model/videos');
 var model2= require('../model/category');
+var model3= require('../model/user')
 var cloudinary = require('cloudinary');
 var fs= require('fs');
 var ObjectID = require('mongoose').Types.ObjectId;
@@ -85,18 +86,25 @@ exports.editVideo = function(req, res){
     })
 }
 
+
 exports.deleteVideo= function(req,res){
-    var id = {_id:req.params.id}
-    //let course = new ObjectID(req.body.course);
-    model.findById(id, function(err, value){
-      cloudinary.uploader.destroy(value.videoID, function(result){console.log(result)}, {resource_type:"video"}).then(function(result){
-        value.video= result.url;
-        model.remove(id, function(err){
-          if(err)res.json({message:"could not delete"})
-          res.json({message:"video deleted successfully"});
-          
-          //model2.findByIdAndUpdate(course, {$inc : {content : -1} }, function(err){})
+  var id = {_id:req.params.id}
+  let user = new ObjectID(req.body.user)
+  model3.findById(user, function(err, user){
+      if(user.isAdmin==1){
+        model.findById(id, function(err, value){
+          cloudinary.uploader.destroy(value.videoID, function(result){console.log(result)}, {resource_type:"video"}).then(function(result){
+            value.video= result.url;
+            model.remove(id, function(err){
+              if(err)res.json({message:"could not delete"})
+              res.json({message:"video deleted successfully"});
+              
+              //model2.findByIdAndUpdate(course, {$inc : {content : -1} }, function(err){})
+            })
+          })
         })
-      })
-    })
+      }else{
+          res.json({message:"only admin can delete videos"})
+      }
+  })
 }

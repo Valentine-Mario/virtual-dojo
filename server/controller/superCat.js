@@ -1,5 +1,6 @@
 var model= require('../model/superCat');
 var model2= require('../model/category')
+var model3 = require('../model/user')
 var fs= require('fs');
 var cloudinary = require('cloudinary');
 cloudinary.config({ 
@@ -68,12 +69,19 @@ exports.addcategory = function(req, res, next){
     })
     
 }
-    exports.deleteCtegory= function(req, res){
-        var id={_id:req.params.id}
-        
+    
+
+    exports.deleteCtegory= function(req,res){
+        var id = {_id:req.params.id}
+        let user = new ObjectID(req.body.user)
+        model3.findById(user, function(err, user){
+            if(user.isAdmin==1){
                 model.remove(id, function(err){
-                    if(err)res.json({message:"could not delete category"})
-                    res.json({message:"categtgory deleted successfully"})
-                })  
-            
+                    if (err) res.json({err:err, message:'could not delete category'});
+                    return res.json({message:'category deleted'});
+    });
+            }else{
+                res.json({message:"only admin can delete category"})
+            }
+        })
     }

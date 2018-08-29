@@ -22,7 +22,7 @@ router.post('/add', upload.any('image'), CategoryController.addCategory);
 router.get('/get', CategoryController.getCategory);
 router.get('/get/:id', CategoryController.getCategoryByid);
 router.post('/edit/:id', upload.any('image'), CategoryController.editCategory);
-router.get('/delete/:id', CategoryController.deleteCategory);
+router.post('/delete/:id', CategoryController.deleteCategory);
 router.get('/search/:value', CategoryController.searchCourse);
 router.get('/getlatest/:value', CategoryController.getLatest)
 
