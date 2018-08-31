@@ -26,8 +26,8 @@ class ShowCourse extends Component {
 	    return (
 	    	<div>
 		    	<Responsive minWidth={Responsive.onlyTablet.minWidth} >
-			      <div className='image-wrapper'>
-			        <Image src={course.image} size="huge"/>
+			      <div className='image-wrapper' >
+			        <Image src={course.image} style={{width: '80%'}}/>
 			      </div>
 
 			      <Grid centered style={{margin: 0, width: '100%'}} >

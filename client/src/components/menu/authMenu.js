@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Input, Menu, Button, Icon, Responsive, Sidebar } from 'semantic-ui-react';
+import { Input, Menu, Button, Icon, Responsive, Sidebar, List, Image } from 'semantic-ui-react';
 import { NavLink, Link, withRouter } from 'react-router-dom';
 import { isLoggedIn } from '../../config';
 import { REQ_GET } from '../../api';
@@ -22,20 +22,32 @@ class AuthMenu extends Component {
 
     /**HANDLE ALL REQUEST FOR THE SEARCH AND PERFORM REDIRECTIONS*/
     handleSearch = (e) => {
+
+        this.setState({
+            loading: true
+        })
+
         if(e.target.value.trim() == ''){
             this.setState({
-                searching: false
+                searching: false,
+                loading: false,
+                output: []
             })
         }else {
-            axios.get(`https://api.udilia.com/coins/v1/autocomplete?searchQuery=${e.target.value}`)
+            REQ_GET(`category/search/${e.target.value.trim()}`)
                 .then(res => {
-                    console.log(res.data);
                     this.setState({
                         output: res.data,
-                        searching: true
+                        searching: true,
+                        loading: false
                     })
                 })
         }
+    }
+
+    handleClick = (courseID) => {
+        this.props.history.push(courseID);
+        window.location.reload();
     }
 
     handleToggle = () => this.setState({ sidebarOpened: !this.state.sidebarOpened })
@@ -48,16 +60,27 @@ class AuthMenu extends Component {
     render() {
         let { sidebarOpened, loggedIn, searching, output, loading } = this.state;
 
-        let nowOutput = !isEmpty(output) ? 
+        let currentContent = !isEmpty(output) ? 
                             this.state.output.map((value) => {
                             return (
-                                <div key={value.id} style={{padding: '5px', paddingLeft: '15px'}}>
-                                    <p>{value.name}</p>
-                                </div>
+                                <List.Item key={value._id} style={{display: 'flex'}} onClick={() => this.handleClick(`/auth/course/${value._id}`)}>
+                                  <Image avatar src={value.image} />
+                                  <List.Content>
+                                    <List.Header>{value.name}</List.Header>
+                                    {value.description}
+                                  </List.Content>
+                                </List.Item>
                             )
                         })
                         :
-                        (<div>No results found</div>)
+                        (
+                            <List.Item style={{display: 'flex'}}>
+                              <Icon name='help' />
+                              <List.Content>
+                                <List.Header>No result found...</List.Header>
+                              </List.Content>
+                            </List.Item>
+                        )
 
 
         const btn = {
@@ -91,10 +114,11 @@ class AuthMenu extends Component {
                         </Menu.Item>
             
                         <Menu.Item className="container" position='right' >
-                            <Input loading={loading} style={{marginRight: '10px', backgroundColor: '#f0f8fb', borderRadius: '6px'}} className='icon' icon='search' placeholder='Search...' onChange={this.handleSearch} />
+                            <Input loading={loading} style={{marginRight: '10px', backgroundColor: '#f0f8fb', borderRadius: '6px'}} className='icon' icon='search' placeholder='Search course...' onChange={this.handleSearch} />
                             
                             { searching && 
-                                <div style={{borderRadius: '5px', position: 'absolute', top: '70px', backgroundColor: '#f0f8fb', overflowY: 'scroll', maxHeight: '100px', width: '53%'}}>{nowOutput}</div>}
+                                <div style={{borderRadius: '5px', position: 'absolute', top: '53px', backgroundColor: 'rgba(200, 234, 247, 0.94)', overflowY: 'scroll', maxHeight: '180px', width: '51%'}}><List celled animated verticalAlign="top">{currentContent}</List></div>}
+
 
                             <Button basic color='blue' style={btn} animated='vertical' as={NavLink} to="/auth/course" >
                                 <Button.Content hidden>
@@ -146,10 +170,10 @@ class AuthMenu extends Component {
                         </Menu.Item>
             
                         <Menu.Item className="container" style={{position: 'fixed', top: '2px', right: '0', width: '70%', paddingRight: '0'}}>
-                            <Input style={{marginRight: '0', width: '100%', backgroundColor: '#f0f8fb', borderRadius: '6px'}} className='icon' icon='search' placeholder='Search...' onChange={this.handleSearch} />
+                            <Input loading={loading} style={{marginRight: '0', width: '100%', backgroundColor: '#f0f8fb', borderRadius: '6px'}} className='icon' icon='search' placeholder='Search course...' onChange={this.handleSearch} />
                             
                             { searching && 
-                                <div style={{borderRadius: '5px', position: 'absolute', top: '70px', backgroundColor: '#f0f8fb', overflowY: 'scroll', maxHeight: '100px', width: '53%'}}>{nowOutput}</div>}
+                                <div style={{borderRadius: '3px', position: 'absolute', top: '53px', backgroundColor: 'rgba(200, 234, 247, 0.94)', overflowY: 'scroll', maxHeight: '150px', width: '80%'}}><List celled animated verticalAlign="top">{currentContent}</List></div>}
 
                             <Menu.Item onClick={this.handleToggle} style={{marginLeft: '0'}}>
                                 <Icon name='sidebar' style={{margin: '0'}} />

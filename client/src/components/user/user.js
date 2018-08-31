@@ -29,7 +29,6 @@ class User extends Component {
                         user: res.data,
                         loading: false
                     })
-                    console.log(res.data)
                 }else {
                     this.setState({
                         loading: false

@@ -39,7 +39,7 @@ class AllCourses extends Component {
         //handle all user profile here for taking a course
         const user_id = JSON.parse(sessionStorage.getItem('user'));
 
-        if(user_id[0]){
+        if(user_id){
             let regCourse = {
                 user: user_id[0],
                 course: course_id
