@@ -31,7 +31,7 @@ class AdminLogin extends Component {
 
         try {
             // statements
-            REQ_POST('admin/login', { username, password })
+            REQ_POST('admin/login', { username: username.trim(), password })
                 .then(res => {
                     if(res.data){
                         console.log(res);

@@ -51,7 +51,7 @@ class SignUp extends Component {
                     if(password === confirmPassword){
                         /**HANDLE REQUEST TO SIGN UP */
 
-                        let user = { firstName, lastName, email, username, password, confirmPassword };
+                        let user = { firstName: firstName.trim(), lastName: lastName.trim(), email: email.trim(), username: username.trim(), password, confirmPassword };
                         
                         REQ_POST('users/register', user)
                             .then(res => {

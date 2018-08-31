@@ -34,7 +34,9 @@ class SignIn extends Component {
         e.preventDefault();
 
         const { username, password, user } = this.state;
-        
+
+        let trimUsername = username.trim();
+
         this.setState({
           loading: true
         })
@@ -42,13 +44,13 @@ class SignIn extends Component {
 
         /**MAKE A REQUEST TO THE SERVER */
     
-        if(username == '' || password == ''){
+        if(username.trim() == '' || password.trim() == ''){
           console.log('username or password is required');
         }else {
 
             /**REVIEW THIS TO HANDLE EVERY LOGIN REQUEST */
 
-            REQ_POST(`users/login`, {username,password})
+            REQ_POST(`users/login`, {username: username.trim(),password})
             .then(res => {
 
               //ONLY USE RES FOR SUCCESS AND RES.RESPONSE FOR ERROR HANDLING
