@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ReactPlayer from 'react-player';
-import { Responsive, Container, Header, Grid, Divider, Loader, Image } from 'semantic-ui-react';
-import Commenting from './comment';
+import { Responsive, Container, Header, Grid, Divider, Loader, Image } from 'semantic-ui-react';	
 import ListVideo from './listVideo';
 import { REQ_GET } from '../../api';
 import './course.css';
@@ -21,20 +20,14 @@ class ShowCourse extends Component {
 			})
 	}
 
-	componentDidUpdate(prevProps) {
-		if(prevProps.match.url !== this.props.match.url){
-			window.location.reload();
-		}
-	}
-
     render () {
     	let { course } = this.state;
 
 	    return (
 	    	<div>
 		    	<Responsive minWidth={Responsive.onlyTablet.minWidth} >
-			      <div className='image-wrapper'>
-			        <Image src={course.image} size="huge"/>
+			      <div className='image-wrapper' >
+			        <Image src={course.image} style={{width: '80%'}}/>
 			      </div>
 
 			      <Grid centered style={{margin: 0, width: '100%'}} >

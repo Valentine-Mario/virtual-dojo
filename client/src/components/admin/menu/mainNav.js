@@ -1,19 +1,25 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { Menu, Segment } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
+
+const handleLogout = (props) => {
+  sessionStorage.clear('user');
+  props.history.push('/admin');
+}
 
 const MainNav = (props) => {
   return (
     <Segment style={{position: 'fixed', top: '0px', zIndex: '10', width: '100%', borderRadius: '0', height: '80px', background: '#358fb6'}}>
         <Menu inverted secondary >
           <Menu.Item
-            name='Admin'
+            name='Logout'
             position="right"
-            as={NavLink} to="/admin/dashboard"
+            onClick={() => handleLogout(props)}
           />
         </Menu>
 	</Segment>
   )
 }
 
-export default MainNav;
+export default withRouter(MainNav);

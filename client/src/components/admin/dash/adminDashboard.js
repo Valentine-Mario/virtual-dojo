@@ -15,20 +15,14 @@ class AdminDashboard extends Component {
 
     render() {
         return (
-            <BrowserRouter>
-            	<div>
-            		<MainNav />
-            		<Switch>
-            			<Route path='/admin/dashboard/upload_video' component={UploadVideo} />
-            			<Route path='/admin/dashboard/create_course' component={CreateCourse} />
-            			<Route path='/admin/dashboard/create_category' component={CreateCategory} />
-            			<Route path='/admin/dashboard/courses' component={ListCourses} />
-            			<Route path='/admin/dashboard/categories' component={ListCategories} />
-            		</Switch>
-	            	<SideNav />
-            	</div>
-            </BrowserRouter>
-        );
+            <div>
+                <MainNav />
+                <div style={{marginTop: '200px', marginLeft: '200px'}}>
+                    hello this is dashboard
+                </div>
+                <SideNav />
+            </div>
+        )
     }
 }
 

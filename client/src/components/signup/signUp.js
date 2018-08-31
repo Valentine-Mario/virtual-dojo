@@ -55,16 +55,25 @@ class SignUp extends Component {
                         
                         REQ_POST('users/register', user)
                             .then(res => {
-                                if(res.data.code == 1) {
-                                    errors.message = "Email or Username already in use";
-                                    this.setState({
-                                        visible: false
-                                    })
+
+                                if(res.data){
+                                    if(res.data.code == 1) {
+                                        errors.message = "Email or Username already in use";
+                                        this.setState({
+                                            visible: false
+                                        })
+                                    }else {
+                                        
+                                        /** HANDLE ALL ROUTING WHEN USER REGISERS SUCCESSFULLY
+                                        **/
+
+                                        let user = [res.data.user, res.data.isAdmin];
+                                        sessionStorage.setItem('user', JSON.stringify(user));
+
+                                        this.props.history.push("/auth/user");
+                                    }
                                 }else {
-                                    
-                                    /** HANDLE ALL ROUTING WHEN USER REGISERS SUCCESSFULLY*/
-                                    sessionStorage.setItem('user', res.data.user);
-                                    this.props.history.push("/auth/user");
+                                    console.log('Error occured now');
                                 }
 
                                 this.setState({

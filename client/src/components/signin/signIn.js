@@ -54,11 +54,12 @@ class SignIn extends Component {
               //ONLY USE RES FOR SUCCESS AND RES.RESPONSE FOR ERROR HANDLING
                 if(res.response){
                   this.setState({
-                    error: 'Please register an account to login',
+                    error: 'Please register an account or use valid details to login',
                     visible: false
                   })
                 }else if(res.data){
-                  sessionStorage.setItem('user', res.data.passport.user);
+                  let user = [res.data.message.passport.user, res.data.isAdmin];
+                  sessionStorage.setItem('user', JSON.stringify(user));
 
                   this.setState({
                     loggedIn: true
@@ -132,7 +133,7 @@ class SignIn extends Component {
                 {
                   error && (
                     <Message hidden={visible} negative onDismiss={this.handleDismiss}>
-                      <Message.Header>We're sorry you can't log in with this account</Message.Header>
+                      <Message.Header>Sorry, you can't log in with this account</Message.Header>
                       <p>{error}</p>
                     </Message>
                   )

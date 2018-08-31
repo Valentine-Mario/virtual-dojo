@@ -16,12 +16,17 @@ class Video extends Component {
 	}
 
 	componentDidMount() {
+		this.reloadMe()
+	}
+
+	reloadMe = () => {
 		REQ_GET(`video/get/${this.props.match.params.id_vid}`)
 			.then(res => {
 				this.setState({
 					video: res.data
 				})
 			})
+
 	}
 
 	componentDidUpdate(prevProps) {
@@ -64,7 +69,7 @@ class Video extends Component {
 							    </Container>
 
 							    <Container>
-							    	<Commenting />
+							    	<Commenting videoId={`${this.props.match.params.id_vid}`} />
 							    </Container>
 
 						    </Grid.Column>
@@ -110,7 +115,7 @@ class Video extends Component {
 					    <Grid.Row columns={1}>
 					      	<Grid.Column width={16}>
 						        <Container fluid textAlign="justified">
-							    	<Commenting />
+							    	<Commenting videoId={`${this.props.match.params.id_vid}`} />
 							    </Container>
 						    </Grid.Column>
 					    </Grid.Row>

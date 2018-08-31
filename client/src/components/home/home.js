@@ -32,20 +32,6 @@ export class Home extends PureComponent {
     loading: false
   }
 
-  componentDidMount(){
-    this.setState({ loading: true })
-
-
-      REQ_GET('category/get')
-        .then(res => {
-          console.log(res);
-          this.setState({
-            loading: false
-          })
-        })
-
-  }
-
   handleSubmit = () => this.props.history.push('/login')
 
   render() {
