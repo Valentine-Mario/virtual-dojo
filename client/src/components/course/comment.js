@@ -46,7 +46,7 @@ class Commenting extends Component {
       loading: true
     })
 
-    let user = JSON.parse(sessionStorage.getItem('user'));
+    let user = JSON.parse(localStorage.getItem('user'));
     let { newComment } = this.state;
     let { videoId } = this.props;
 

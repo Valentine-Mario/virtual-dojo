@@ -17,7 +17,7 @@ class User extends Component {
     }
 
     componentDidMount() {
-        let user = JSON.parse(sessionStorage.getItem('user'));
+        let user = JSON.parse(localStorage.getItem('user'));
         this.setState({
             loading: true
         })

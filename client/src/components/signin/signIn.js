@@ -61,7 +61,7 @@ class SignIn extends Component {
                   })
                 }else if(res.data){
                   let user = [res.data.message.passport.user, res.data.isAdmin];
-                  sessionStorage.setItem('user', JSON.stringify(user));
+                  localStorage.setItem('user', JSON.stringify(user));
 
                   this.setState({
                     loggedIn: true

@@ -4,7 +4,7 @@ import { withRouter, Route, Redirect } from 'react-router-dom';
 
 function PrivateRoute ({component: Component, user, ...rest}) {
 
-  let isUser = JSON.parse(sessionStorage.getItem('user'));
+  let isUser = JSON.parse(localStorage.getItem('user'));
   if(isUser){
       user = true;
   }

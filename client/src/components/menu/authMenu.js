@@ -53,7 +53,7 @@ class AuthMenu extends Component {
     handleToggle = () => this.setState({ sidebarOpened: !this.state.sidebarOpened })
 
     handleLogOut = () => {
-        sessionStorage.clear('user');
+        localStorage.clear('user');
         this.props.history.push('/login');
     }
 

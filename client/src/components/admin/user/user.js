@@ -67,7 +67,7 @@ class Users extends Component {
     }
 
     handleDelete = (userID) => {
-        let admin = JSON.parse(sessionStorage.getItem('user'));
+        let admin = JSON.parse(localStorage.getItem('user'));
 
         REQ_POST(`users/delete/${userID}`, {user: admin[0]})
             .then(res => {

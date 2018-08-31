@@ -35,7 +35,7 @@ class AllCoursesHome extends Component {
 
 
         //handle all user profile here for taking a course
-        const user_id = JSON.parse(sessionStorage.getItem('user'));
+        const user_id = JSON.parse(localStorage.getItem('user'));
 
         if(user_id){
             let regCourse = {

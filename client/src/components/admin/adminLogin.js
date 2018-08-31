@@ -36,7 +36,7 @@ class AdminLogin extends Component {
                     if(res.data){
                         console.log(res);
                         let user = [res.data.message.passport.user, res.data.isAdmin]
-                        sessionStorage.setItem('user', JSON.stringify(user));
+                        localStorage.setItem('user', JSON.stringify(user));
 
                         this.props.history.push("/admin/dashboard")
 

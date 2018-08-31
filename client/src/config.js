@@ -11,4 +11,4 @@ export const emailRegx = /^([_a-z0-9]+[\._a-z0-9]*)(\+[a-z0-9]+)?@(([a-z0-9-]+\.
 export const validateEmail = /^([a-z0-9-_.]+\@[a-z0-9-.]+\.[a-z]{2,4})$/g;
 
 /**CHECK IF ANY USER IS LOGGED IN INTO THE PLATFORM*/
-export const isLoggedIn = (key) => sessionStorage.getItem(key) ? true : false
+export const isLoggedIn = (key) => localStorage.getItem(key) ? true : false

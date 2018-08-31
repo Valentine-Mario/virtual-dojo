@@ -68,7 +68,7 @@ class SignUp extends Component {
                                         **/
 
                                         let user = [res.data.user, res.data.isAdmin];
-                                        sessionStorage.setItem('user', JSON.stringify(user));
+                                        localStorage.setItem('user', JSON.stringify(user));
 
                                         this.props.history.push("/auth/user");
                                     }
