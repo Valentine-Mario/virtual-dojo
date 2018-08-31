@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Header, Card, Image, Grid, Dimmer, Loader, Responsive } from 'semantic-ui-react';
+import { Header, Card, Image, Grid, Dimmer, Loader, Responsive, Button } from 'semantic-ui-react';
 import MenuNav from '../menu/menu';
 import Footer from '../menu/footer';
 import { REQ_GET } from '../../api';
@@ -29,12 +29,18 @@ class User extends Component {
                         user: res.data,
                         loading: false
                     })
+
+                    console.log(res.data)
                 }else {
                     this.setState({
                         loading: false
                     })
                 }
             })
+    }
+
+    handleClick = (id) => {
+        this.props.history.push(`/auth/user/edit/${id}`)
     }
 
     render() {
@@ -60,7 +66,12 @@ class User extends Component {
                         <Grid.Row>
                           <Grid.Column width='3' style={{display: 'flex', justifyContent: 'flex-start', flexDirection: 'column', alignItems: 'center'}}>
                             <Image src={user.profile_pics} height="150px" width="150px" />
-                            {user.username}
+                            {`${user.firstName} ${user.lastName}`}
+                            <Grid.Row>
+                                <Grid.Column>
+                                    <Button inverted color="blue" onClick={() => this.handleClick(`${user._id}`)}>Edit Account</Button>
+                                </Grid.Column>
+                            </Grid.Row>
                           </Grid.Column>
                           <Grid.Column width='13'>
                             <Card.Group  >
@@ -97,7 +108,12 @@ class User extends Component {
                         <Grid.Row style={{display: 'flex', justifyContent: 'center'}}>
                           <Grid.Column width='3' style={{display: 'flex', justifyContent: 'flex-start', flexDirection: 'column', alignItems: 'center'}}>
                             <Image src={user.profile_pics} height="150px" width="150px" style={{minWidth: '120px'}}/>
-                            {user.username}
+                            {`${user.firstName} ${user.lastName}`}
+                            <Grid.Row>
+                                <Grid.Column>
+                                    <Button inverted color="blue">Edit Account</Button>
+                                </Grid.Column>
+                            </Grid.Row>
                           </Grid.Column>
                         </Grid.Row>
                         <Grid.Row style={{display: 'flex', justifyContent: 'center'}}>

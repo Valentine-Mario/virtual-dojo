@@ -11,7 +11,9 @@ import {
 
 const Footer = (props) => {
   const container = {
-    marginTop: '50px'
+    position: 'absolute',
+    width: '100%',
+    marginTop: '105px'
   }
   return (
     <Responsive style={container}>

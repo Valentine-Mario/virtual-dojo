@@ -6,6 +6,7 @@ import SignUp from './signup/signUp';
 import Home from './home/home';
 import Category from './category/category';
 import User from './user/user';
+import UserEdit from './user/userEdit';
 import Course from './course/course';
 import AllCourses from './course/allCourses';
 import NotFound from './notFound';
@@ -26,37 +27,9 @@ import UploadVideo from './admin/upload/upload';
 import Users from './admin/user/user';
 
 
-const SecureRender = (props) => {
-    return sessionStorage.getItem('user') ? props.truthy : props.falsy
-}
-
 class Container extends Component {
 
-    state = {
-        authed: false
-    }
-
-    componentWillMount() {
-        let storage = sessionStorage.getItem('user');
-        
-    }
-
     render() {
-
-        let secureRender = sessionStorage.getItem('user') ? 
-                    (<PrivateRoute authed={true} path='/auth/user' component={User} />)
-                    :
-                    (<PrivateRoute authed={false} path='/auth/user' component={User} />)
-
-        let secureCourseVideo = sessionStorage.getItem('user') ? 
-                    (<PrivateRoute authed={true} path='/auth/course/:id' component={Course} />)
-                    :
-                    (<PrivateRoute authed={false} path='/auth/course/:id' component={Course} />)
-
-        let secureCourseDetail = sessionStorage.getItem('user') ? 
-                    (<PrivateRoute authed={true} path='/auth/course/:id/:id_vid' component={Video} />)
-                    :
-                    (<PrivateRoute authed={false} path='/auth/course/:id/:id_vid' component={Video} />)
 
         
         return (
@@ -79,11 +52,12 @@ class Container extends Component {
                         <Route path="/login" component={SignIn} />
                         <Route path="/signup" component={SignUp} />
 
-                        {secureCourseDetail}
-                        {secureCourseVideo}
+                        <PrivateRoute user={false} path='/auth/course/:id/:id_vid' component={Video} />
+                        <PrivateRoute user={false} path='/auth/course/:id' component={Course} />
 
                         <Route path="/auth/course" component={AllCourses} />
-                        {secureRender}
+                        <PrivateRoute user={false} path='/auth/user/edit/:id' component={UserEdit} />
+                        <PrivateRoute user={false} path='/auth/user' component={User} />
 
                         <Route exact path="/" component={Home} />
                         <Route component={NotFound} />
