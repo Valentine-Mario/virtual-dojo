@@ -34,7 +34,6 @@ class Users extends Component {
                         users: res.data.message,
                         loading: false
                     })
-                    console.log(res)
                 }else {
                     console.log('error')
                     this.setState({
@@ -82,26 +81,25 @@ class Users extends Component {
         return (
             <div >
             	<MainNav />
-            		<div style={{marginTop: '100px', marginLeft: '150px', marginRight: '150px'}}>
+            		<div style={{marginTop: '100px', marginLeft: '150px'}}>
 
                         <Input loading={searchLoad} fluid onChange={this.handleSearch} icon='users' iconPosition='right' placeholder='Search users...' style={{width: '290px', margin: 'auto', marginBottom: '15px'}}/>
                     
                         <Dimmer active={loading} inverted>
                             <Loader inverted>Loading</Loader>
                         </Dimmer>
-                        <Card.Group centered>
+                        <Card.Group centered stackable style={{zIndex: '0', width: '80%', margin: 'auto', marginTop: '40px'}}>
                             {
                                 users &&
                                     users.map((user) => {
                                         return (
-                                            <Card key={user._id}>
+                                            <Card raised key={user._id} style={{width: '30%'}}>
                                                 <Image src={user.profile_pics} />
                                                 <Card.Content>
                                                   <Card.Header>{`${user.firstName} ${user.lastName}`}</Card.Header>
-                                                  <Card.Meta>
-                                                    <Time time={user.time} />
-                                                  </Card.Meta>
-                                                  <Card.Description>{user.email}</Card.Description>
+                                                  <Card.Description><strong>Email:</strong> {user.email}</Card.Description>
+                                                  <Card.Description><strong>Username:</strong> {user.username}</Card.Description>
+                                                  <Card.Description><strong>Date Joined:</strong> <Time time={user.time} /></Card.Description>
                                                 </Card.Content>
                                                 <Card.Content extra>
                                                   <Button inverted color='red' onClick={() => this.handleDelete(user._id)}>
