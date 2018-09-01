@@ -74,13 +74,13 @@ class AllCoursesHome extends Component {
         return (
             <div>
                 <Loader style={{zIndex: '1', width: '90%', margin: 'auto', marginTop: '90px', marginBottom: '0px'}} active={loading} inline='centered' />
-                <Card.Group centered style={{zIndex: '0', width: '90%', margin: 'auto', marginTop: '70px'}}>
+                <Card.Group centered stackable  style={{zIndex: '0', width: '75%', margin: 'auto', marginTop: '70px'}}>
 
                     {
                         courses &&
                             courses.map((course) => {
                             return (
-                                <Card key={course._id}>
+                                <Card raised key={course._id} style={{width: '31%'}}>
                                   <Card.Content>
                                     <Image floated='right' size='mini' src={course.image} />
                                     <Card.Header>{course.name}</Card.Header>

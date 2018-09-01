@@ -22,7 +22,6 @@ class Category extends PureComponent {
 
           REQ_GET('supercat/get')
             .then(res => {
-              console.log(res);
               this.setState({
                   loading: false,
                   categories: res.data
@@ -36,7 +35,7 @@ class Category extends PureComponent {
 
         let Cards = categories && categories.map((category) => {
             return (
-                <Card raised key={category._id} as={Link} to={`/category/${category._id}`}>
+                <Card raised key={category._id} as={Link} to={`/category/${category._id}`} style={{width: '30%'}}>
                   <Card.Content>
                     <Image floated='right' size='tiny' src={category.cover_image} />
                     <Card.Header>{category.name}</Card.Header>
@@ -53,7 +52,7 @@ class Category extends PureComponent {
         return (
             <div>
                 <MenuNav />
-                <Card.Group centered style={{marginTop: '80px', marginBottom: '20px'}}>
+                <Card.Group centered stackable style={{width: '75%', margin: 'auto', marginTop: '80px', marginBottom: '20px'}}>
                     {
                         loading ? 
                             (

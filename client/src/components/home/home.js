@@ -79,7 +79,7 @@ export class Home extends PureComponent {
                   <Grid.Column >
                     <Header as='h2' style={{color: 'white', marginLeft: '40px', fontSize: '3em', fontWeight: '500', width: '50%'}}>
                       Learn All You Can
-                      <Header.Subheader style={{fontSize: '0.5em', color: 'white', fontWeight: '400'}}>SchoolFlip Offers A Unique Opportunity For You To Learn At Your Own Pace Our Courses are Made For Everyone</Header.Subheader>
+                      <Header.Subheader style={{fontSize: '0.5em', color: 'white', fontWeight: '400'}}>VirtualDojo Offers A Unique Opportunity For You To Learn At Your Own Pace Our Courses are Made For Everyone</Header.Subheader>
                       <Button inverted color='blue' onClick={this.handleSubmit} style={{width: '38%', height: '50px'}} >
                         Get Started
                       </Button>
@@ -95,7 +95,7 @@ export class Home extends PureComponent {
                   <Grid.Column >
                     <Header as='h2' style={{color: 'white', marginLeft: '40px', fontSize: '2em', fontWeight: '500', width: '70%'}}>
                       Learn All You Can
-                      <Header.Subheader style={{fontSize: '0.5em', color: 'white', fontWeight: '400'}}>SchoolFlip Offers A Unique Opportunity For You To Learn At Your Own Pace Our Courses are Made For Everyone</Header.Subheader>
+                      <Header.Subheader style={{fontSize: '0.5em', color: 'white', fontWeight: '400'}}>VirtualDojo Offers A Unique Opportunity For You To Learn At Your Own Pace Our Courses are Made For Everyone</Header.Subheader>
                       <Button color='blue' onClick={this.handleSubmit} style={{width: '38%', height: '50px', marginTop: '10px'}} >
                         Get Started
                       </Button>
