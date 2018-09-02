@@ -63,7 +63,7 @@ class AuthMenu extends Component {
         let currentContent = !isEmpty(output) ? 
                             this.state.output.map((value) => {
                             return (
-                                <List.Item key={value._id} style={{display: 'flex'}} onClick={() => this.handleClick(`/auth/course/${value._id}`)}>
+                                <List.Item key={value._id} style={{display: 'flex', cursor: 'pointer'}} onClick={() => this.handleClick(`/auth/course/${value._id}`)}>
                                   <Image avatar src={value.image} />
                                   <List.Content>
                                     <List.Header>{value.name}</List.Header>

@@ -13,11 +13,16 @@ const Footer = (props) => {
   const container = {
     position: 'absolute',
     width: '100%',
-    marginTop: '105px'
+    marginTop: '150px',
+    backgroundColor: 'rgba(185, 178, 178, 0.91)',
+    height: '420px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
   return (
     <Responsive style={container}>
-    	<Segment vertical style={{ padding: '5em 0em', backgroundColor: "rgba(185, 178, 178, 0.91)" }}>
+    	<Segment vertical style={{ padding: '0px' }}>
             <Container>
               <Grid divided inverted stackable style={{width: '100%'}}>
                 <Grid.Row>
@@ -60,7 +65,7 @@ const Footer = (props) => {
                 </Grid.Row>
 
                 <Grid.Row >
-                	<Grid.Column width={16} style={{display: 'flex', justifyContent: 'center'}}>
+                	<Grid.Column width={16} style={{display: 'flex', justifyContent: 'center', marginTop: '20px'}}>
 	                    <Header inverted as='h4' content={`© ${new Date().getFullYear()} All Rights Reserved`} />
 	                </Grid.Column>
                 </Grid.Row>

@@ -65,7 +65,7 @@ class User extends Component {
                     <Grid columns='2' divided inverted padded>
                         <Grid.Row>
                           <Grid.Column width='3' style={{display: 'flex', justifyContent: 'flex-start', flexDirection: 'column', alignItems: 'center'}}>
-                            <Image src={user.profile_pics} height="150px" width="150px" />
+                            <Image src={user.profile_pics} height="170px" width="200px" />
                             {`${user.firstName} ${user.lastName}`}
                             <Grid.Row>
                                 <Grid.Column>

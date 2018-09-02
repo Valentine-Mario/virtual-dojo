@@ -76,35 +76,39 @@ class CategoryDetail extends PureComponent {
             <div>
                 <MenuNav />
                 <div style={{width: '75%', margin: 'auto', marginTop: '100px'}}>
-    					    <div style={{fontSize: '25px', fontWeight: '500'}}>{categories.name}</div>
+    					    <div style={{fontSize: '25px', fontWeight: '500', textAlign: 'center'}}>{categories.name}</div>
 
-
-                    <Loader style={{zIndex: '1', width: '90%', margin: 'auto', marginTop: '90px', marginBottom: '0px'}} active={loading} inline='centered' />
+                    <Dimmer inverted active={loading} >        
+                        <Loader style={{zIndex: '1', width: '90%', margin: 'auto', marginTop: '90px', marginBottom: '0px'}} inline='centered' />
+                    </Dimmer>
                     <Card.Group centered stackable style={{zIndex: '0', width: '100%', margin: 'auto', marginTop: '40px'}}>
 
                         {
                             categories.courses &&
-                                categories.courses.map((course) => {
-                                return (
-                                    <Card raised key={course._id} style={{width: '31%'}}>
-                                      <Card.Content>
-                                        <Image floated='right' size='mini' src={course.image} />
-                                        <Card.Header>{course.name}</Card.Header>
-                                        <Card.Meta></Card.Meta>
-                                        <Card.Description>
-                                          {course.description}
-                                        </Card.Description>
-                                      </Card.Content>
-                                      <Card.Content extra>
-                                        <div className='ui two buttons'>
-                                          <Button basic color='green' onClick={() => this.handleClick(course._id)}>
-                                            Take Course
-                                          </Button>
-                                        </div>
-                                      </Card.Content>
-                                    </Card>
-                                )
-                            })
+                                categories.courses.length > 0 ?
+                                    categories.courses.map((course) => {
+                                        return (
+                                            <Card raised key={course._id} style={{width: '31%'}}>
+                                              <Card.Content>
+                                                <Image floated='right' size='mini' src={course.image} />
+                                                <Card.Header>{course.name}</Card.Header>
+                                                <Card.Meta></Card.Meta>
+                                                <Card.Description>
+                                                  {course.description}
+                                                </Card.Description>
+                                              </Card.Content>
+                                              <Card.Content extra>
+                                                <div className='ui two buttons'>
+                                                  <Button basic color='green' onClick={() => this.handleClick(course._id)}>
+                                                    Take Course
+                                                  </Button>
+                                                </div>
+                                              </Card.Content>
+                                            </Card>
+                                        )
+                                    })
+                                    :
+                                    (<div>No course yet, check back later</div>)
                         }
                     </Card.Group>
                 </div>
