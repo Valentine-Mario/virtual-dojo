@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { Button, Table, Loader, Dimmer, Card, Image } from 'semantic-ui-react';
-import { REQ_GET } from '../../../api';
+import { REQ_GET, REQ_POST } from '../../../api';
 import MainNav from '../menu/mainNav';
 import SideNav from '../menu/sideNav';
 
@@ -11,7 +11,8 @@ class ListCategories extends Component {
 
         this.state = {
           category: [],
-          loading: false
+          loading: false,
+          deleting: false
         }
     }
 
@@ -20,27 +21,36 @@ class ListCategories extends Component {
         loading: true
       })
 
+      this.getAllCategories();
+    }
+
+    getAllCategories = () => {
       REQ_GET('supercat/get')
         .then(res => {
           this.setState({
             category: res.data,
-            loading: false
+            loading: false,
+            deleting: false
           })
-
-          console.log(res.data);
         });
     }
 
     handleDelete = (id) => {
-      REQ_GET(`supercat/delete/${id}`)
+      let userid = JSON.parse(localStorage.getItem('user'));
+      
+      this.setState({
+        deleting: true
+      })
+
+      REQ_POST(`supercat/delete/${id}`, {user: userid[0]})
         .then(res => {
-          console.log(res)
-          window.location.reload();
+          console.log(res);
+          this.getAllCategories();
         });
     }
 
     render() {
-      let { category, loading } = this.state;
+      let { category, loading, deleting } = this.state;
         return (
           <div>
             <MainNav />
@@ -55,6 +65,9 @@ class ListCategories extends Component {
               <Card.Group style={{marginTop: '20px'}}>
                 <Dimmer active={loading} inverted>
                   <Loader indeterminate>Preparing Files</Loader>
+                </Dimmer>
+                <Dimmer active={deleting} inverted>
+                  <Loader indeterminate>Deleting Category</Loader>
                 </Dimmer>
                 {
                   category &&
