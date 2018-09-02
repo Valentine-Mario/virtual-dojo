@@ -83,7 +83,7 @@ class Users extends Component {
             	<MainNav />
             		<div style={{marginTop: '100px', marginLeft: '150px'}}>
 
-                        <Input loading={searchLoad} fluid onChange={this.handleSearch} icon='users' iconPosition='right' placeholder='Search users...' style={{width: '290px', margin: 'auto', marginBottom: '15px'}}/>
+                        <Input loading={searchLoad} fluid onChange={this.handleSearch} icon='users' iconPosition='left' placeholder='Search users...' style={{width: '290px', margin: 'auto', marginBottom: '15px'}}/>
                     
                         <Dimmer active={loading} inverted>
                             <Loader inverted>Loading</Loader>
