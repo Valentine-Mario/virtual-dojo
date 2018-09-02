@@ -19,7 +19,7 @@ class AllCoursesHome extends Component {
             loading: true
         })
 
-        REQ_GET('category/get')
+        REQ_GET('category/getlatest/6')
         .then(res => {
           this.setState({
             loading: false,
