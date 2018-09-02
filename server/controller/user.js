@@ -218,20 +218,35 @@ exports.deleteUser= function(req,res){
     }
 
     exports.makeAdmin= function(req, res){
-        let user = new ObjectID(req.body.user)
-        model.findByIdAndUpdate(user, {$inc : {isAdmin : 1} }, function(err, user){
-        if(err)throw err
-        res.json({message:`${user.username} is now an admin`})
-    })
+        let admin = new ObjectID(req.body.admin)
+        let user= new ObjectID(req.body.user)
+        model.findById(admin, function(err, admin){
+            if(admin.isAdmin==1){
+                model.findByIdAndUpdate(user, {$inc : {isAdmin : 1} }, function(err, user){
+                    if(err)throw err
+                    res.json({message:`${user.username} is now an admin`})
+                })
+            }else{
+                res.json({message:"you don't have access to this function"})
+            }
+        })
+       
     }
 
 
     exports.removeAdmin= function(req, res){
-        let user = new ObjectID(req.body.user)
-        model.findByIdAndUpdate(user, {$inc : {isAdmin : -1} }, function(err, user){
-        if(err)throw err
-        res.json({message:`${user.username} is no longer an admin`})
-    }) 
+        let admin = new ObjectID(req.body.admin)
+        let user= new ObjectID(req.body.user)
+        model.findById(admin, function(err, admin){
+            if(admin.isAdmin==1){
+                model.findByIdAndUpdate(user, {$inc : {isAdmin : -1} }, function(err, user){
+                    if(err)throw err
+                    res.json({message:`${user.username} is now an admin`})
+                })
+            }else{
+                res.json({message:"you don't have access to this function"})
+            }
+        })
     }
 
     exports.ensureAuthentication= function(req, res, next){
