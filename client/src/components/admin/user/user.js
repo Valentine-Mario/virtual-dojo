@@ -29,16 +29,20 @@ class Users extends Component {
     getUsers = () => {
         REQ_GET('users/users')
             .then(res => {
-                if(res.data){
-                    this.setState({
-                        users: res.data.message,
-                        loading: false
-                    })
+                if(res){
+                    if(res.data){
+                        this.setState({
+                            users: res.data.message,
+                            loading: false
+                        })
+                    }else {
+                        alert('Error in network connection, try again');
+                        this.setState({
+                            loading: false
+                        })
+                    }
                 }else {
-                    console.log('error')
-                    this.setState({
-                        loading: false
-                    })
+                    alert('Error in network connection, try again');
                 }
             })   
     }
@@ -56,10 +60,14 @@ class Users extends Component {
         }else {
             REQ_GET(`users/search/${e.target.value}`)
                 .then(res => {
-                    this.setState({
-                        users: res.data.message,
-                        searchLoad: false
-                    })
+                    if(res.data){
+                        this.setState({
+                            users: res.data.message,
+                            searchLoad: false
+                        })
+                    }else {
+                        alert('Error in network connection, try again');
+                    }
                 })
         }
 
@@ -70,8 +78,11 @@ class Users extends Component {
 
         REQ_POST(`users/delete/${userID}`, {user: admin[0]})
             .then(res => {
-                console.log(res);
-                window.location.reload();
+                if(res.data){
+                    this.getUsers();
+                }else {
+                    alert('Error in network connection, try again');
+                }
             })
     }
 

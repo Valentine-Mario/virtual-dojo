@@ -31,10 +31,17 @@ class ListCourses extends Component {
     		// statements
 	    	REQ_GET('category/get')
 	    		.then(res => {
-	    			this.setState({
-	    				courses: res.data,
-	    				loading: false
-	    			})
+	    			if(res.data){
+		    			this.setState({
+		    				courses: res.data,
+		    				loading: false
+		    			})
+	    			}else {
+	    				alert('Error in network connection, try again');
+	    				this.setState({
+	    					loading: false
+	    				})
+	    			}
 	    		})
     	} catch(e) {
     		// statements
@@ -56,10 +63,17 @@ class ListCourses extends Component {
     		// statements
 	    	REQ_GET(`category/get/${id}`)
 	        .then(res => {
-	          this.setState({
-	          	courseVideo: res.data.videos,
-	          	loadVideo: false
-	          })
+	        	if(res.data){
+		          this.setState({
+		          	courseVideo: res.data.videos,
+		          	loadVideo: false
+		          })
+	        	}else {
+	        		alert('Error in network connection, try again');
+	        		this.setState({
+	        			loadVideo: false
+	        		})
+	        	}
 	        });
     	} catch(e) {
     		// statements
@@ -78,13 +92,15 @@ class ListCourses extends Component {
     		// statements
 	    	REQ_POST(`category/delete/${id}`, {user: userid[0]})
 	        .then(res => {
-	          // window.location.reload();
-	          this.getAllCourses();
+	        	if(res.data){
+		          this.getAllCourses();
 
-	          this.setState({
-	          	deleting: false
-	          })
-
+		          this.setState({
+		          	deleting: false
+		          })
+	        	}else {
+	        		alert('Error in network connection, try again');
+	        	}
 	        });
     	} catch(e) {
     		// statements
@@ -100,7 +116,11 @@ class ListCourses extends Component {
     		// statements
 	    	REQ_POST(`video/delete/${id}`, {user: userid[0]})
 	    		.then(res => {
-	    			this.handleCourseVideo(id);
+	    			if(res.data){
+		    			this.handleCourseVideo(id);
+	    			}else {
+	    				alert('Error in network connection, try again');
+	    			}
 	    		})
     	} catch(e) {
     		// statements
@@ -166,23 +186,26 @@ class ListCourses extends Component {
 				        
 				      </Grid.Column>
 				      <Grid.Column width={6}>
-				      	<Dimmer active={loadVideo} inverted>
+				      	<Dimmer active={loadVideo} inverted style={{zIndex: '0'}}>
 				      		<Loader indeterminate >Getting Videos</Loader>
 				      	</Dimmer>
 				        <List divided verticalAlign='middle'>
 						    {
 						    	courseVideo &&
-						    		courseVideo.map((video) => {
-						    			return (
-						    				<List.Item key={video._id}>
-										      <List.Content floated='right'>
-										        <Icon style={{cursor: 'pointer'}} name="trash" color="red" onClick={() => this.handleVideoDelete(video._id)} />
-										      </List.Content>
-										      <Icon name='video play' size="big" />
-										      <List.Content>{video.name}</List.Content>
-										    </List.Item>
-						    			)
-						    		})
+						    		courseVideo.length > 0 ?
+							    		courseVideo.map((video) => {
+							    			return (
+							    				<List.Item key={video._id}>
+											      <List.Content floated='right'>
+											        <Icon style={{cursor: 'pointer'}} name="trash" color="red" onClick={() => this.handleVideoDelete(video._id)} />
+											      </List.Content>
+											      <Icon name='video play' size="big" />
+											      <List.Content>{video.name}</List.Content>
+											    </List.Item>
+							    			)
+							    		})
+							    		:
+							    		(<div>No videos yet for this course</div>)
 						    }
 						</List>
 				      </Grid.Column>

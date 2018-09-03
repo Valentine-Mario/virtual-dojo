@@ -16,15 +16,19 @@ class Video extends Component {
 	}
 
 	componentDidMount() {
-		this.reloadMe()
+		this.getVideo()
 	}
 
-	reloadMe = () => {
+	getVideo = () => {
 		REQ_GET(`video/get/${this.props.match.params.id_vid}`)
 			.then(res => {
-				this.setState({
-					video: res.data
-				})
+				if(res.data){
+					this.setState({
+						video: res.data
+					})
+				}else {
+					alert('Error in network connection, try again');
+				}
 			})
 
 	}

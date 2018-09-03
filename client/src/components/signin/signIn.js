@@ -53,23 +53,26 @@ class SignIn extends Component {
             REQ_POST(`users/login`, {username: username.trim(),password})
             .then(res => {
 
-              //ONLY USE RES FOR SUCCESS AND RES.RESPONSE FOR ERROR HANDLING
-                if(res.response){
-                  this.setState({
-                    error: 'Please register an account or use valid details to login',
-                    visible: false
-                  })
-                }else if(res.data){
-                  let user = [res.data.message.passport.user, res.data.isAdmin];
-                  localStorage.setItem('user', JSON.stringify(user));
+                if(res.data){
+                  //ONLY USE RES FOR SUCCESS AND RES.RESPONSE FOR ERROR HANDLING
+                  if(res.response){
+                    this.setState({
+                      error: 'Please register an account or use valid details to login',
+                      visible: false
+                    })
+                  }else if(res.data){
+                    let user = [res.data.message.passport.user, res.data.isAdmin];
+                    localStorage.setItem('user', JSON.stringify(user));
 
-                  this.setState({
-                    loggedIn: true
-                  });
+                    this.setState({
+                      loggedIn: true
+                    });
 
-                  this.props.history.push("/auth/user");
+                    this.props.history.push("/auth/user");
+                  }
+                }else {
+                  alert('Error in network connection, try again');
                 }
-
 
                 this.setState({
                   username: '',

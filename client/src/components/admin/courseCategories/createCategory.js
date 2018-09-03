@@ -64,13 +64,17 @@ class CreateCategory extends Component {
                 }
     		})
     		.then(res => {
-    			this.setState({
-    				disabled: false,
-                    transition: true,
-    			}, () => this.props.history.push('/admin/dashboard/categories'))
+                if(res.data){
+        			this.setState({
+        				disabled: false,
+                        transition: true,
+        			}, () => this.props.history.push('/admin/dashboard/categories'))
+                }else {
+                    alert('Error in network connection, try again');
+                }
     		})
             .then(err => {
-                console.log(err);
+                alert('Error in network connection, try again');
                 this.setState({
                     disabled: false,
                 })
@@ -118,15 +122,15 @@ class CreateCategory extends Component {
                     }
     			    <Form.Field disabled={disabled}>
     			      <label htmlFor="name">Category Name</label>
-    			      <Input id="name" placeholder='name' value={name} onChange={this.handleChange} />
+    			      <Input id="name" placeholder='name' value={name} onChange={this.handleChange} required />
     			    </Form.Field>
     			    <Form.Field disabled={disabled}>
     			      <label htmlFor="description">Category Description</label>
-    			      <TextArea id="description" placeholder='Tell us more about this category' value={description} onChange={this.handleChange} />
+    			      <TextArea id="description" placeholder='Tell us more about this category' value={description} onChange={this.handleChange} required />
     			    </Form.Field>
     			    <Form.Field disabled={disabled}>
     			      <label htmlFor="cover_image">Cover Image</label>
-    			      <Input accept=".jpg, .jpeg, .png" id="cover_image" placeholder='upload image only' type="file" onChange={this.handleImageChange}/>
+    			      <Input accept=".jpg, .jpeg, .png" id="cover_image" placeholder='upload image only' type="file" onChange={this.handleImageChange} required />
     			    </Form.Field>
     			    <Button type='submit' disabled={disabled}>Create</Button>
     			</Form>

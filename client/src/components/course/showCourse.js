@@ -14,9 +14,13 @@ class ShowCourse extends Component {
 	componentDidMount() {
 		REQ_GET(`category/get/${this.props.match.params.id}`)
 			.then(res => {
-				this.setState({
-					course: res.data
-				})
+				if(res.data){
+					this.setState({
+						course: res.data
+					})
+				}else {
+					alert('Error in network connection, try again');
+				}
 			})
 	}
 

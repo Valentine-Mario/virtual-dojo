@@ -24,14 +24,20 @@ class User extends Component {
 
         REQ_GET(`users/${user[0]}`)
             .then(res => {
-                if(res.data){
-                    this.setState({
-                        user: res.data,
-                        loading: false
-                    })
-
-                    console.log(res.data)
+                if(res){
+                    if(res.data){
+                        this.setState({
+                            user: res.data,
+                            loading: false
+                        })
+                    }else {
+                        alert('Error in network connection, try again');
+                        this.setState({
+                            loading: false
+                        })
+                    }
                 }else {
+                    alert('Error in network connection, try again');
                     this.setState({
                         loading: false
                     })
@@ -65,7 +71,7 @@ class User extends Component {
                     <Grid columns='2' divided inverted padded>
                         <Grid.Row>
                           <Grid.Column width='3' style={{display: 'flex', justifyContent: 'flex-start', flexDirection: 'column', alignItems: 'center'}}>
-                            <Image src={user.profile_pics} height="170px" width="200px" />
+                            <Image src={user.profile_pics} height="145px" width="200px" />
                             {`${user.firstName} ${user.lastName}`}
                             <Grid.Row>
                                 <Grid.Column>
@@ -74,7 +80,7 @@ class User extends Component {
                             </Grid.Row>
                           </Grid.Column>
                           <Grid.Column width='13'>
-                            <Card.Group  >
+                            <Card.Group centered >
                                 {
                                     user.library &&
                                         user.library.map(course => {
@@ -105,19 +111,19 @@ class User extends Component {
 
                     <Grid columns='1' inverted padded>
                         <Grid.Row style={{display: 'flex', justifyContent: 'center'}}>
-                          <Grid.Column width='3' style={{display: 'flex', justifyContent: 'flex-start', flexDirection: 'column', alignItems: 'center'}}>
-                            <Image src={user.profile_pics} height="150px" width="150px" style={{minWidth: '120px'}}/>
-                            {`${user.firstName} ${user.lastName}`}
-                            <Grid.Row>
-                                <Grid.Column>
-                                    <Button inverted color="blue" onClick={() => this.handleClick(`${user._id}`)}>Edit Account</Button>
-                                </Grid.Column>
-                            </Grid.Row>
-                          </Grid.Column>
+                            <Grid.Column width='16' style={{display: 'flex', justifyContent: 'flex-start', flexDirection: 'column', alignItems: 'center'}}>
+                                <Image src={user.profile_pics} height="120px" width="150px" style={{minWidth: '120px'}}/>
+                                {`${user.firstName} ${user.lastName}`}
+                                <Grid.Row>
+                                    <Grid.Column>
+                                        <Button inverted color="blue" onClick={() => this.handleClick(`${user._id}`)}>Edit Account</Button>
+                                    </Grid.Column>
+                                </Grid.Row>
+                            </Grid.Column>
                         </Grid.Row>
                         <Grid.Row style={{display: 'flex', justifyContent: 'center'}}>
-                          <Grid.Column width='13'>
-                            <Card.Group  >
+                          <Grid.Column width='16'>
+                            <Card.Group  centered>
                                 {
                                     user.library &&
                                         user.library.map(course => {

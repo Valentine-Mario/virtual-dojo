@@ -23,10 +23,14 @@ class AllCourses extends Component {
 
         REQ_GET('category/get')
         .then(res => {
-          this.setState({
-            loading: false,
-            courses: res.data
-          })
+            if(res.data){
+              this.setState({
+                loading: false,
+                courses: res.data
+              })
+            }else {
+                alert('Error in network connection, try again');
+            }
         })
     }
 
@@ -49,10 +53,14 @@ class AllCourses extends Component {
                 // statements
                 REQ_POST('users/buy', regCourse)
                     .then(res => {
-                        if(res.data && (res.data.message == "video purchase succesfully")){
-                            this.props.history.push(`/auth/course/${course_id}`);
+                        if(res){
+                            if(res.data && (res.data.message == "video purchase succesfully")){
+                                this.props.history.push(`/auth/course/${course_id}`);
+                            }else {
+                                this.props.history.push(`/auth/course/${course_id}`)
+                            }
                         }else {
-                            this.props.history.push(`/auth/course/${course_id}`)
+                            alert('Error in network connection, try again');
                         }
 
                         this.setState({

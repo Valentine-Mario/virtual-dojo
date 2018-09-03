@@ -32,7 +32,7 @@ class UserEdit extends Component {
     getUser = () => {
         REQ_GET(`users/${this.props.match.params.id}`)
             .then(res => {
-                if(res){
+                if(res.data){
                     this.setState({
                         user: res.data,
                         loading: false,
@@ -40,6 +40,11 @@ class UserEdit extends Component {
                         lastName: res.data.lastName,
                         email: res.data.email
                     }) 
+                }else {
+                    alert('Error in Network Connection');
+                    this.setState({
+                        loading: false
+                    })
                 }
             })
     }
@@ -67,11 +72,16 @@ class UserEdit extends Component {
 
         REQ_POST(`users/edit/${this.props.match.params.id}`, user)
             .then(res => {
-                if(res) {
+                if(res.data) {
                     this.setState({
                         loading: false
                     })
                     this.getUser();
+                }else {
+                    alert('Error in network connection, try again');
+                    this.setState({
+                        loading: false
+                    })
                 }
             })
     }
@@ -102,8 +112,11 @@ class UserEdit extends Component {
                 }
             })
             .then(res => {
-                console.log(res);
-                this.getUser();
+                if(res.data){
+                    this.getUser();
+                }else {
+                    alert('Error in network connection, try again');
+                }
 
                 this.setState({
                     image: null,

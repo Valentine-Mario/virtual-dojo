@@ -22,10 +22,14 @@ class Category extends PureComponent {
 
           REQ_GET('supercat/get')
             .then(res => {
-              this.setState({
-                  loading: false,
-                  categories: res.data
-              })
+                if(res.data) {
+                  this.setState({
+                      loading: false,
+                      categories: res.data
+                  })
+                }else {
+                    alert('Error in network connection, try again');
+                }
             })
 
       }

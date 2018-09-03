@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Comment, Form, Header, Divider } from 'semantic-ui-react';
 import { REQ_POST, REQ_GET } from '../../api';
+import Time from '../time';
 
 class Commenting extends Component {
   constructor(props){
@@ -21,13 +22,13 @@ class Commenting extends Component {
   getVideo = () => {
     REQ_GET(`video/get/${this.props.videoId}`)
       .then(res => {
-        if(res){
+        if(res.data){
           this.setState({
             comments: res.data.comment,
             newComment: ''
           })
         }else {
-          console.log('error')
+          alert('Error in network connection, try again');
         }
       })
 
@@ -58,10 +59,16 @@ class Commenting extends Component {
 
     REQ_POST(`comment/add`, commenting)
       .then(res => {
-        if(res.data){
-          this.setState({
-            loading: false
-          }, () => this.getVideo())
+        if(res) {
+          if(res.data){
+            this.setState({
+              loading: false
+            }, () => this.getVideo())
+          }else {
+            alert('Error in network connection, try again');
+          }
+        }else {
+          alert('Error in network connection, try again');
         }
       })
   }
@@ -83,7 +90,7 @@ class Commenting extends Component {
                     <Comment.Content>
                       <Comment.Author>{`${comment.user_id.firstName} ${comment.user_id.lastName}`}</Comment.Author>
                       <Comment.Metadata>
-                        <div>{comment.time}</div>
+                        <Time time={comment.time}/>
                       </Comment.Metadata>
                       <Comment.Text>
                         <p>

@@ -20,11 +20,15 @@ class CategoryDetail extends PureComponent {
         this.setState({loading: true});
 
           REQ_GET(`supercat/get/${this.props.match.params.id}`)
-            .then(res => {  
-              this.setState({
-                  loading: false,
-                  categories: res.data
-              })
+            .then(res => {
+                if(res.data){
+                  this.setState({
+                      loading: false,
+                      categories: res.data
+                  })
+                }else {
+                    alert('Error in network connection, try again');
+                }
             })
 
       }
@@ -48,10 +52,14 @@ class CategoryDetail extends PureComponent {
                 // statements
                 REQ_POST('users/buy', regCourse)
                     .then(res => {
-                        if(res.data && (res.data.message == "video purchase succesfully")){
-                            this.props.history.push(`/auth/course/${course_id}`);
+                        if(res){
+                            if(res.data && (res.data.message == "video purchase succesfully")){
+                                this.props.history.push(`/auth/course/${course_id}`);
+                            }else {
+                                this.props.history.push(`/auth/course/${course_id}`)
+                            }
                         }else {
-                            this.props.history.push(`/auth/course/${course_id}`)
+                            alert('Error in network connection, try again');
                         }
 
                         this.setState({

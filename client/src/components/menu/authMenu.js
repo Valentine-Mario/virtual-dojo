@@ -37,11 +37,15 @@ class AuthMenu extends Component {
         }else {
             REQ_GET(`category/search/${e.target.value.trim()}`)
                 .then(res => {
-                    this.setState({
-                        output: res.data,
-                        searching: true,
-                        loading: false
-                    })
+                    if(res.data){
+                        this.setState({
+                            output: res.data,
+                            searching: true,
+                            loading: false
+                        })
+                    }else {
+                        alert('Error in network connection, try again');
+                    }
                 })
         }
     }

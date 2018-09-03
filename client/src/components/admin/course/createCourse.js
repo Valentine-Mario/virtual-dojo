@@ -25,9 +25,13 @@ class CreateCourse extends Component {
     componentDidMount() {
     	REQ_GET('supercat/get')
     		.then(res => {
-    			this.setState({
-    				categories: res.data
-    			})
+                if(res.data){
+        			this.setState({
+        				categories: res.data
+        			})
+                }else {
+                    alert('Error in network connection, try again');
+                }
     		})
     }
 
@@ -83,14 +87,18 @@ class CreateCourse extends Component {
 				}
 			})
 			.then(res => {
-				this.setState({
-					disabled: false,
-					transition: true,
-					name: '',
-		        	description: '',
-		        	image: null,
-		        	category: '',
-				}, () => this.props.history.push('/admin/dashboard/courses'))
+                if(res){
+    				this.setState({
+    					disabled: false,
+    					transition: true,
+    					name: '',
+    		        	description: '',
+    		        	image: null,
+    		        	category: '',
+    				}, () => this.props.history.push('/admin/dashboard/courses'))
+                }else {
+                    alert('Error in network connection, try again');
+                }
 			})
 			.then(err => {
 				console.log(err);
