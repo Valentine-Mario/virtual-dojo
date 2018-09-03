@@ -6,5 +6,6 @@ router.post('/add', commentController.addComment);
 router.get('/get', commentController.getComments)
 router.post('/edit/:id', commentController.editComments)
 router.post('/delete/:id', commentController.deleteComment)
+router.get('/getlatest/:value', commentController.getLatest)
 
 module.exports = router;

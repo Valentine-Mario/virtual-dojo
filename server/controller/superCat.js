@@ -54,6 +54,15 @@ exports.addcategory = function(req, res, next){
     }).populate('courses')
  }
 
+ exports.getLatest= function(req, res){
+    value=parseInt(req.params.value)
+    model.find({}, function(err, data){
+      if(err)res.json({message:"an error occured sorting categories"})
+      res.json(data)
+    }).populate('courses').sort({'_id':-1}).limit(value).exec()
+  }
+
+
  exports.editCategory= function(req,res){
     var id={_id:req.params.id}
     var data = {

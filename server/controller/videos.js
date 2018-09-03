@@ -78,6 +78,14 @@ exports.getvideoByid = function(req, res){
     })
 }
 
+exports.getLatest= function(req, res){
+  value=parseInt(req.params.value)
+  model.find({}, function(err, data){
+    if(err)res.json({message:"an error occured sorting videos"})
+    res.json(data)
+  }).populate('comment').sort({'_id':-1}).limit(value).exec()
+}
+
 exports.searchVideo = function(req, res){
   var value= req.params.value;
   if(value !== null || value !== ""){

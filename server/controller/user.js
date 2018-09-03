@@ -111,6 +111,14 @@ exports.addUser = function(req, res){
     
 }
 
+exports.getLatest= function(req, res){
+    value=parseInt(req.params.value)
+    model.find({}, function(err, data){
+      if(err)res.json({message:"an error occured sorting users"})
+      res.json(data)
+    }).populate('library').sort({'_id':-1}).limit(value).exec()
+  }
+
     exports.editUser = function(req, res){
          var id = {_id:req.params.id}
         var data = {
