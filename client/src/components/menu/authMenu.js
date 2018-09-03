@@ -4,7 +4,8 @@ import { NavLink, Link, withRouter } from 'react-router-dom';
 import { isLoggedIn } from '../../config';
 import { REQ_GET } from '../../api';
 import { isEmpty } from 'lodash';
-import axios from 'axios'
+import axios from 'axios';
+import logo from '../../images/logo.png';
 
 class AuthMenu extends Component {
     constructor(props){
@@ -110,7 +111,7 @@ class AuthMenu extends Component {
                 <Responsive minWidth={Responsive.onlyTablet.minWidth}>
                     <Menu style={container} >
                         <Menu.Item className="container" as={NavLink} to="/">
-                            <h2>Logo</h2>
+                            <Image src={logo} size="tiny" />
                         </Menu.Item>
             
                         <Menu.Item className="container" position='right' >
@@ -166,7 +167,7 @@ class AuthMenu extends Component {
                         </Sidebar>
 
                         <Menu.Item className="container" as={NavLink} to="/">
-                            <h2>Logo</h2>
+                            <Image src={logo} size="tiny"/>
                         </Menu.Item>
             
                         <Menu.Item className="container" style={{position: 'fixed', top: '2px', right: '0', width: '70%', paddingRight: '0'}}>

@@ -5,6 +5,7 @@ import axios from 'axios';
 import { isLoggedIn } from '../../config';
 import { REQ_GET } from '../../api';
 import { isEmpty } from 'lodash';
+import logo from '../../images/logo.png';
 
 class UnAuthMenu extends Component {
     constructor(props){
@@ -103,7 +104,7 @@ class UnAuthMenu extends Component {
                 <Responsive minWidth={Responsive.onlyTablet.minWidth}>
                     <Menu style={container} >
                         <Menu.Item className="container" as={NavLink} to="/">
-                            <h2>Logo</h2>
+                            <Image src={logo} size="tiny" />
                         </Menu.Item>
             
                         <Menu.Item className="container" position='right' >
@@ -158,7 +159,7 @@ class UnAuthMenu extends Component {
                         </Sidebar>
 
                         <Menu.Item className="container" as={NavLink} to="/">
-                            <h2>Logo</h2>
+                            <Image src={logo} size="tiny" />
                         </Menu.Item>
             
                         <Menu.Item className="container" style={{position: 'fixed', top: '2px', right: '0', width: '70%', paddingRight: '0'}}>
