@@ -70,7 +70,7 @@ class AdminLogin extends Component {
     	 	margin: '200px auto'
     	 }
 
-         const Render = admin[1] == 1 ?
+         const Render = admin && admin[1] == 1 ?
                             (<Redirect to="/admin/dashboard" />)
                             :
                             (
