@@ -107,14 +107,14 @@ class AuthMenu extends Component {
             borderRadius: '0',
             display: 'flex',
             justifyContent: 'space-between',
-            backgroundColor: 'rgb(173, 215, 232)'
+            backgroundColor: 'rgb(143, 201, 224)'
         }
         
         return (
             <div style={{zIndex: '10'}}>
                 <Responsive minWidth={Responsive.onlyTablet.minWidth}>
                     <Menu style={container} >
-                        <Menu.Item className="container" as={NavLink} to="/">
+                        <Menu.Item className="container" as={NavLink} to="/" style={{background: 'none'}}>
                             <Image src={logo} size="tiny" style={{width: '60px'}}/>
                         </Menu.Item>
             
@@ -170,7 +170,7 @@ class AuthMenu extends Component {
                             <Menu.Item onClick={() => {this.handleLogOut(); this.handleToggle()}} >Log Out</Menu.Item>
                         </Sidebar>
 
-                        <Menu.Item className="container" as={NavLink} to="/">
+                        <Menu.Item className="container" as={NavLink} to="/" style={{background: 'none'}}>
                             <Image src={logo} size="tiny" style={{width: '50px'}}/>
                         </Menu.Item>
             

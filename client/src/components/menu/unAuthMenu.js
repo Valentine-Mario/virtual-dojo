@@ -100,14 +100,14 @@ class UnAuthMenu extends Component {
             borderRadius: '0',
             display: 'flex',
             justifyContent: 'space-between',
-            backgroundColor: 'rgb(173, 215, 232)'
+            backgroundColor: 'rgb(143, 201, 224)'
         }
         
         return (
             <div>
                 <Responsive minWidth={Responsive.onlyTablet.minWidth}>
                     <Menu style={container} >
-                        <Menu.Item className="container" as={NavLink} to="/">
+                        <Menu.Item className="container" as={NavLink} to="/" style={{background: 'none'}}>
                             <Image src={logo} size="tiny" style={{width: '60px'}} />
                         </Menu.Item>
             
@@ -162,7 +162,7 @@ class UnAuthMenu extends Component {
                             <Menu.Item as={Link} to="/signup" onClick={this.handleToggle} >Sign Up</Menu.Item>
                         </Sidebar>
 
-                        <Menu.Item className="container" as={NavLink} to="/">
+                        <Menu.Item className="container" as={NavLink} to="/" style={{background: 'none'}}>
                             <Image src={logo} size="tiny" style={{width: '50px'}} />
                         </Menu.Item>
             

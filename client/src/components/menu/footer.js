@@ -14,7 +14,7 @@ const Footer = (props) => {
     position: 'absolute',
     width: '100%',
     marginTop: '150px',
-    backgroundColor: 'rgba(185, 178, 178, 0.91)',
+    backgroundColor: 'rgb(46, 70, 80)',
     height: '500px',
     display: 'flex',
     justifyContent: 'center',
@@ -28,14 +28,7 @@ const Footer = (props) => {
                 <Grid.Row>
 
                   <Grid.Column width={4}>
-                    <Header inverted as='h4' content='Who we are' />
-                    <List link inverted>
-                      <List.Item as='a'>About Us</List.Item>
-                    </List>
-                  </Grid.Column>
-
-                  <Grid.Column width={4}>
-                    <Header inverted as='h4' content='Categories' />
+                    <Header inverted as='h4' content='Popular Categories' />
                     <List link inverted>
                       <List.Item as="a" href="/category/5b816980b61f390014118f73">Front-end Development</List.Item>
                       <List.Item as="a" href="/category/5b83767e722fe5001422052f">Back-end Development</List.Item>
@@ -51,6 +44,13 @@ const Footer = (props) => {
                       <List.Item as="a" href="/auth/course/5b8ce5a9dd28020014ca72cf">Photoshop</List.Item>
                       <List.Item as="a" href="/auth/course/5b89932922333100145c06c3">Intro to Github</List.Item>
                       <List.Item as="a" href="/auth/course/5b83b9a0775ec90014416940">Getting Started with Javascript</List.Item>
+                    </List>
+                  </Grid.Column>
+
+                  <Grid.Column width={4}>
+                    <Header inverted as='h4' content='Who we are' />
+                    <List link inverted>
+                      <List.Item as='a'>About Us</List.Item>
                     </List>
                   </Grid.Column>
 
