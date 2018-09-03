@@ -40,7 +40,7 @@ const Footer = (props) => {
                       <List.Item as="a" href="/category/5b816980b61f390014118f73">Front-end Development</List.Item>
                       <List.Item as="a" href="/category/5b83767e722fe5001422052f">Back-end Development</List.Item>
                       <List.Item as="a" href="/category/5b8992d822333100145c06c2">Github</List.Item>
-                      <List.Item as="a" href="/category/5b8185f2b61f390014118f76">Business</List.Item>
+                      <List.Item as="a" href="/category/5b8ab071aa1b920014a764dd">Product Design</List.Item>
                     </List>
                   </Grid.Column>
 
@@ -48,7 +48,7 @@ const Footer = (props) => {
                     <Header inverted as='h4' content='Popular Courses' />
                     <List link inverted>
                       <List.Item as="a" href="/auth/course/5b8418366a30a700148dcfa5">Learn React</List.Item>
-                      <List.Item as="a" href="/auth/course/5b838db39e81d00014a38c84">Building Real World API</List.Item>
+                      <List.Item as="a" href="/auth/course/5b8ce5a9dd28020014ca72cf">Photoshop</List.Item>
                       <List.Item as="a" href="/auth/course/5b89932922333100145c06c3">Intro to Github</List.Item>
                       <List.Item as="a" href="/auth/course/5b83b9a0775ec90014416940">Getting Started with Javascript</List.Item>
                     </List>

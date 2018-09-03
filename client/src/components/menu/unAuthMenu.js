@@ -153,7 +153,7 @@ class UnAuthMenu extends Component {
                         <Sidebar as={Menu} animation='slide along' inverted vertical visible={sidebarOpened}>
                             <Menu.Item as={Link} to="/" onClick={this.handleToggle}>Home</Menu.Item>
                             <Menu.Item as={Link} to="/auth/course" onClick={this.handleToggle}>Courses</Menu.Item>
-                            <Menu.Item as={Link} to="/category" onClick={this.handleToggle}>Category</Menu.Item>
+                            <Menu.Item as={Link} to="/category" onClick={this.handleToggle}>Categories</Menu.Item>
                             <Menu.Item as={Link} to="/login" onClick={this.handleToggle} >Log in</Menu.Item>
                             <Menu.Item as={Link} to="/signup" onClick={this.handleToggle} >Sign Up</Menu.Item>
                         </Sidebar>

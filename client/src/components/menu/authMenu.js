@@ -160,8 +160,8 @@ class AuthMenu extends Component {
                     <Menu style={container} >
                         <Sidebar as={Menu} animation='slide along' inverted vertical visible={sidebarOpened}>
                             <Menu.Item as={Link} to="/" onClick={this.handleToggle} >Home</Menu.Item>
-                            <Menu.Item as={Link} to="/category" onClick={this.handleToggle}>Category</Menu.Item>
-                            <Menu.Item as={Link} to="/auth/course" onClick={this.handleToggle}>Course</Menu.Item>
+                            <Menu.Item as={Link} to="/category" onClick={this.handleToggle}>Categories</Menu.Item>
+                            <Menu.Item as={Link} to="/auth/course" onClick={this.handleToggle}>Courses</Menu.Item>
                             <Menu.Item as={Link} to="/auth/user" onClick={this.handleToggle} >Dashboard</Menu.Item>   
                             <Menu.Item onClick={() => {this.handleLogOut(); this.handleToggle()}} >Log Out</Menu.Item>
                         </Sidebar>
