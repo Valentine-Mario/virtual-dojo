@@ -94,7 +94,7 @@ export class Home extends PureComponent {
               <Grid.Column >
                 <Grid.Row>
                   <Grid.Column >
-                    <Header as='h2' style={{color: 'white', marginLeft: '40px', fontSize: '2em', fontWeight: '500', width: '70%'}}>
+                    <Header as='h2' style={{color: 'white', marginLeft: '30px', fontSize: '2em', fontWeight: '500', width: '70%'}}>
                       Learn All You Can
                       <Header.Subheader style={{fontSize: '0.5em', color: 'white', fontWeight: '400'}}>VirtualDojo Offers A Unique Opportunity For You To Learn At Your Own Pace, Our Courses are Made For Everyone</Header.Subheader>
                       <Button color='blue' onClick={this.handleSubmit} style={{width: '49%', height: '40px', marginTop: '10px'}} >
