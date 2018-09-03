@@ -70,10 +70,10 @@ class User extends Component {
 
                     <Grid columns='2' divided inverted padded>
                         <Grid.Row>
-                          <Grid.Column width='3' style={{display: 'flex', justifyContent: 'flex-start', flexDirection: 'column', alignItems: 'center'}}>
-                            <Image src={user.profile_pics} height="145px" width="200px" />
+                          <Grid.Column width='3' style={{display: 'flex', justifyContent: 'flex-start', flexDirection: 'column', alignItems: 'center', fontSize: '20px', fontWeight: '500'}}>
+                            <Image src={user.profile_pics} height="145px" width="200px" style={{width: '200px', height: '200px', border: '5px solid lightblue', padding: '5px'}} circular/>
                             {`${user.firstName} ${user.lastName}`}
-                            <Grid.Row>
+                            <Grid.Row style={{marginTop: '5px'}}>
                                 <Grid.Column>
                                     <Button inverted color="blue" onClick={() => this.handleClick(`${user._id}`)}>Edit Account</Button>
                                 </Grid.Column>
@@ -111,10 +111,10 @@ class User extends Component {
 
                     <Grid columns='1' inverted padded>
                         <Grid.Row style={{display: 'flex', justifyContent: 'center'}}>
-                            <Grid.Column width='16' style={{display: 'flex', justifyContent: 'flex-start', flexDirection: 'column', alignItems: 'center'}}>
-                                <Image src={user.profile_pics} height="120px" width="150px" style={{minWidth: '120px'}}/>
+                            <Grid.Column width='16' style={{display: 'flex', justifyContent: 'flex-start', flexDirection: 'column', alignItems: 'center', fontSize: '17px', fontWeight: '500'}}>
+                                <Image src={user.profile_pics} style={{width: '150px', height: '150px', border: '3px solid lightblue', padding: '3px'}} circular/>
                                 {`${user.firstName} ${user.lastName}`}
-                                <Grid.Row>
+                                <Grid.Row style={{marginTop: '5px'}}>
                                     <Grid.Column>
                                         <Button inverted color="blue" onClick={() => this.handleClick(`${user._id}`)}>Edit Account</Button>
                                     </Grid.Column>
