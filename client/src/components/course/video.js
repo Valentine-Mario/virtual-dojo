@@ -47,13 +47,13 @@ class Video extends Component {
 			          className='react-player'
 			          url={video.video}
 			          width='100%'
-			          height='100%'
+			          height='80%'
 			          loop={true}
 			          controls={true}
 			          onError={() => alert('error while playing video')}
 			        />
 			      </div>
-			      <Grid celled='internally' style={{marginTop: '70px', width: '100%'}} >
+			      <Grid celled='internally' style={{marginTop: '0px', width: '100%'}} >
 					    <Grid.Row>
 						    <Grid.Column width={11}>
 						        <Container  fluid textAlign="justified" style={{width: '95%'}}>

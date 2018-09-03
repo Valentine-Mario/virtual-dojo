@@ -33,7 +33,7 @@ class ListVideo extends Component {
     	let { videoListing, loading, videos } = this.state;
 
         return (
-            <List animated style={{width: '65%', margin: 'auto'}}>
+            <List animated style={{width: '90%', margin: 'auto'}}>
 			    { 
                     loading &&
 			    	    <Loader active inline='centered' />

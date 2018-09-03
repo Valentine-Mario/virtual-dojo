@@ -82,7 +82,6 @@ class User extends Component {
                                                 <Card key={course._id} as={Link} to={`/auth/course/${course._id}`}>
                                                   <Card.Content
                                                     header={course.name}
-                                                    meta='Friend'
                                                     description={course.description}
                                                   />
                                                 </Card>
@@ -111,7 +110,7 @@ class User extends Component {
                             {`${user.firstName} ${user.lastName}`}
                             <Grid.Row>
                                 <Grid.Column>
-                                    <Button inverted color="blue">Edit Account</Button>
+                                    <Button inverted color="blue" onClick={() => this.handleClick(`${user._id}`)}>Edit Account</Button>
                                 </Grid.Column>
                             </Grid.Row>
                           </Grid.Column>
@@ -126,7 +125,6 @@ class User extends Component {
                                                 <Card key={course._id} textAlign="left" as={Link} to={`/auth/course/${course._id}`}>
                                                   <Card.Content
                                                     header={course.name}
-                                                    meta='Friend'
                                                     description={course.description}
                                                   />
                                                 </Card>
