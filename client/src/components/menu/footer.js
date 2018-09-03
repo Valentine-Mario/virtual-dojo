@@ -15,7 +15,7 @@ const Footer = (props) => {
     width: '100%',
     marginTop: '150px',
     backgroundColor: 'rgba(185, 178, 178, 0.91)',
-    height: '420px',
+    height: '500px',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
@@ -24,7 +24,7 @@ const Footer = (props) => {
     <Responsive style={container}>
     	<Segment vertical style={{ padding: '0px' }}>
             <Container>
-              <Grid divided inverted stackable style={{width: '100%'}}>
+              <Grid inverted stackable style={{width: '100%'}}>
                 <Grid.Row>
 
                   <Grid.Column width={4}>

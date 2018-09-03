@@ -104,7 +104,7 @@ class UnAuthMenu extends Component {
                 <Responsive minWidth={Responsive.onlyTablet.minWidth}>
                     <Menu style={container} >
                         <Menu.Item className="container" as={NavLink} to="/">
-                            <Image src={logo} size="tiny" />
+                            <Image src={logo} size="tiny" style={{width: '60px'}} />
                         </Menu.Item>
             
                         <Menu.Item className="container" position='right' >
@@ -159,7 +159,7 @@ class UnAuthMenu extends Component {
                         </Sidebar>
 
                         <Menu.Item className="container" as={NavLink} to="/">
-                            <Image src={logo} size="tiny" />
+                            <Image src={logo} size="tiny" style={{width: '50px'}} />
                         </Menu.Item>
             
                         <Menu.Item className="container" style={{position: 'fixed', top: '2px', right: '0', width: '70%', paddingRight: '0'}}>
