@@ -23,7 +23,8 @@ class ListCourses extends Component {
         	image: null,
         	courseId: '',
         	transition: false,
-        	showForm: false
+        	showForm: false,
+        	showVideo: false
         }
     }
 
@@ -81,7 +82,8 @@ class ListCourses extends Component {
     	console.log('clicked');
     	this.setState({
     		loadVideo: true,
-    		showForm: false
+    		showForm: false,
+    		showVideo: true
     	})
 
     	try {
@@ -111,7 +113,8 @@ class ListCourses extends Component {
     	console.log(id)
     	this.setState({
     		courseId: id,
-    		showForm: true
+    		showForm: true,
+    		showVideo: false
     	})
 
     	REQ_GET(`category/get/${id}`)
@@ -249,7 +252,7 @@ class ListCourses extends Component {
     }
 
     render() {
-    	let { courses, loading, deleting, courseVideo, loadVideo, name, description, showForm, disabled, progress, transition } = this.state;
+    	let { courses, loading, deleting, courseVideo, loadVideo, name, description, showForm, disabled, progress, transition, showVideo } = this.state;
 
         return (
         	<div>
@@ -315,6 +318,7 @@ class ListCourses extends Component {
 				      	<Grid.Row>
 					        <List divided verticalAlign='middle'>
 							    {
+							    	showVideo &&
 							    	courseVideo &&
 							    		courseVideo.length > 0 ?
 								    		courseVideo.map((video) => {
@@ -329,7 +333,7 @@ class ListCourses extends Component {
 								    			)
 								    		})
 								    		:
-								    		(<div>No videos yet for this course</div>)
+								    		(<div>{showVideo && 'No videos yet for this course'}</div>)
 							    }
 							</List>
 				      	</Grid.Row>
