@@ -44,22 +44,22 @@ class Container extends Component {
                         <HandleAuth user={false} path='/admin/dashboard/user' component={Users} />
                         <HandleAuth user={false} path='/admin/dashboard/courses' component={ListCourses} />
                         <HandleAuth user={false} path='/admin/dashboard/categories' component={ListCategories} />
-
                         <HandleAuth user={false} path="/admin/dashboard" component={AdminDashboard} />
+                        <Route exact path="/admin" component={AdminLogin} />
+
                         
+
+                        <PrivateRoute user={false} path='/auth/course/:id/:id_vid' component={Video} />
+                        <PrivateRoute user={false} path='/auth/course/:id' component={Course} />
+                        <PrivateRoute user={false} path='/auth/user/edit/:id' component={UserEdit} />
+                        <Route path="/auth/course" component={AllCourses} />
+                        <PrivateRoute user={false} path='/auth/user' component={User} />
+
                         <Route path="/review" component={Review} />
-                        <Route path="/admin" component={AdminLogin} />
                         <Route path="/category/:id" component={CategoryDetail} />
                         <Route path="/category" component={Category} />
                         <Route path="/login" component={SignIn} />
                         <Route path="/signup" component={SignUp} />
-
-                        <PrivateRoute user={false} path='/auth/course/:id/:id_vid' component={Video} />
-                        <PrivateRoute user={false} path='/auth/course/:id' component={Course} />
-
-                        <Route path="/auth/course" component={AllCourses} />
-                        <PrivateRoute user={false} path='/auth/user/edit/:id' component={UserEdit} />
-                        <PrivateRoute user={false} path='/auth/user' component={User} />
 
                         <Route exact path="/" component={Home} />
                         <Route component={NotFound} />

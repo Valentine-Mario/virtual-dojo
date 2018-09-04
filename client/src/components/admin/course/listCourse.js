@@ -80,7 +80,8 @@ class ListCourses extends Component {
     handleCourseVideo = (id) => {
     	console.log('clicked');
     	this.setState({
-    		loadVideo: true
+    		loadVideo: true,
+    		showForm: false
     	})
 
     	try {
