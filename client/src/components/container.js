@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './container.css';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import SignIn from './signin/signIn';
 import SignUp from './signup/signUp';
 import Home from './home/home';
@@ -16,6 +16,7 @@ import AdminLogin from './admin/adminLogin';
 import AdminDashboard from './admin/dash/adminDashboard';
 import Video from './course/video';
 import CategoryDetail from './category/categoryDetail';
+import Review from './review/review'
 
 import HandleAuth from './admin/handleAuth';
 
@@ -46,6 +47,7 @@ class Container extends Component {
 
                         <HandleAuth user={false} path="/admin/dashboard" component={AdminDashboard} />
                         
+                        <Route path="/review" component={Review} />
                         <Route path="/admin" component={AdminLogin} />
                         <Route path="/category/:id" component={CategoryDetail} />
                         <Route path="/category" component={Category} />
