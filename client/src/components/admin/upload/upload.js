@@ -28,12 +28,18 @@ class UploadVideo extends Component {
     }
 
     componentDidMount() {
+        window.scrollTo(0, 0);
+        
     	//GET ALL THE COURSES
     	REQ_GET('category/get')
     		.then(res => {
-    			this.setState({
-    				courses: res.data
-    			})
+                if(res.data){
+        			this.setState({
+        				courses: res.data
+        			})
+                }else {
+                    alert('Error in network connection, try again');
+                }
     		})
     }
 
@@ -89,17 +95,19 @@ class UploadVideo extends Component {
 			  	}
 			})
 			.then(res => {
-				this.setState({
-					disabled: false,
-					name: '',
-					description: '',
-					video: null,
-					course: '',
-					progress: 0,
-					transition: true
-				})
-
-				console.log(res);
+                if(res.data){
+    				this.setState({
+    					disabled: false,
+    					name: '',
+    					description: '',
+    					video: null,
+    					course: '',
+    					progress: 0,
+    					transition: true
+    				})
+                }else {
+                    alert('Error in network connection, try again');
+                }
 			})
 			.then(err => {
 				console.log(err);

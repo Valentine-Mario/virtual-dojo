@@ -32,6 +32,10 @@ export class Home extends PureComponent {
     loading: false
   }
 
+  componentDidMount(){
+    window.scrollTo(0, 0);
+  }
+
   handleSubmit = () => this.props.history.push('/login')
 
   render() {
@@ -45,7 +49,8 @@ export class Home extends PureComponent {
     }
 
     const container = {
-      marginTop: '70px'
+      marginTop: '70px',
+      width: '100%'
     }
 
     const headerBackgrd = {
@@ -69,7 +74,7 @@ export class Home extends PureComponent {
     return (
       <div>
       <MenuNav />
-      <Responsive style={{fontFamily: 'Roboto'}}>
+      <Responsive style={{fontFamily: 'Roboto', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
         <Grid columns={1} divided style={container}>
           <Grid.Row style={headerBackgrd}>
 
@@ -79,7 +84,7 @@ export class Home extends PureComponent {
                   <Grid.Column >
                     <Header as='h2' style={{color: 'white', marginLeft: '40px', fontSize: '3em', fontWeight: '500', width: '50%'}}>
                       Learn All You Can
-                      <Header.Subheader style={{fontSize: '0.5em', color: 'white', fontWeight: '400'}}>SchoolFlip Offers A Unique Opportunity For You To Learn At Your Own Pace Our Courses are Made For Everyone</Header.Subheader>
+                      <Header.Subheader style={{fontSize: '0.5em', color: 'white', fontWeight: '400'}}>VirtualDojo Offers A Unique Opportunity For You To Learn At Your Own Pace, Our Courses are Made For Everyone</Header.Subheader>
                       <Button inverted color='blue' onClick={this.handleSubmit} style={{width: '38%', height: '50px'}} >
                         Get Started
                       </Button>
@@ -93,10 +98,10 @@ export class Home extends PureComponent {
               <Grid.Column >
                 <Grid.Row>
                   <Grid.Column >
-                    <Header as='h2' style={{color: 'white', marginLeft: '40px', fontSize: '2em', fontWeight: '500', width: '70%'}}>
+                    <Header as='h2' style={{color: 'white', marginLeft: '30px', fontSize: '2em', fontWeight: '500', width: '70%'}}>
                       Learn All You Can
-                      <Header.Subheader style={{fontSize: '0.5em', color: 'white', fontWeight: '400'}}>SchoolFlip Offers A Unique Opportunity For You To Learn At Your Own Pace Our Courses are Made For Everyone</Header.Subheader>
-                      <Button color='blue' onClick={this.handleSubmit} style={{width: '38%', height: '50px', marginTop: '10px'}} >
+                      <Header.Subheader style={{fontSize: '0.5em', color: 'white', fontWeight: '400'}}>VirtualDojo Offers A Unique Opportunity For You To Learn At Your Own Pace, Our Courses are Made For Everyone</Header.Subheader>
+                      <Button color='blue' onClick={this.handleSubmit} style={{width: '49%', height: '40px', marginTop: '10px'}} >
                         Get Started
                       </Button>
                     </Header>
@@ -121,7 +126,7 @@ export class Home extends PureComponent {
           </Grid.Column>
         </div>
 
-          <Card.Group centered style={{marginTop: '0px', marginBottom: '20px'}}>
+          <Card.Group centered style={{marginTop: '0px', marginBottom: '20px', width: '100%'}}>
 
                 <AllCoursesHome />
             
@@ -162,7 +167,7 @@ export class Home extends PureComponent {
                       <Icon name='users' circular />
                       <Header.Content>Personal Mentorship</Header.Content>
                     </Header>
-                    We help ensure your success. You have access to tutors to aid your learning process
+                    We help ensure your success. You have access to tutors who aid your learning process
                   </div>
                 </Grid.Column>
               </Grid.Row>
@@ -207,7 +212,7 @@ export class Home extends PureComponent {
                         <Icon name='users' circular />
                         <Header.Content>Personal Mentorship</Header.Content>
                       </Header>
-                      We help ensure your success. You have access to tutors to aid your learning process
+                      We help ensure your success. You have access to tutors who aid your learning process
                     </div>
                   </Grid.Column>
                 </Grid.Row>

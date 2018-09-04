@@ -19,12 +19,16 @@ class AllCoursesHome extends Component {
             loading: true
         })
 
-        REQ_GET('category/get')
+        REQ_GET('category/getlatest/6')
         .then(res => {
-          this.setState({
-            loading: false,
-            courses: res.data
-          })
+            if(res.data){
+              this.setState({
+                loading: false,
+                courses: res.data
+              })
+            }else {
+                alert('Error in network connection, try again');
+            }
         })
     }
 
@@ -35,7 +39,7 @@ class AllCoursesHome extends Component {
 
 
         //handle all user profile here for taking a course
-        const user_id = JSON.parse(sessionStorage.getItem('user'));
+        const user_id = JSON.parse(localStorage.getItem('user'));
 
         if(user_id){
             let regCourse = {
@@ -47,10 +51,14 @@ class AllCoursesHome extends Component {
                 // statements
                 REQ_POST('users/buy', regCourse)
                     .then(res => {
-                        if(res.data && (res.data.message == "video purchase succesfully")){
-                            this.props.history.push(`/auth/course/${course_id}`);
+                        if(res) {
+                            if(res.data && (res.data.message == "video purchase succesfully")){
+                                this.props.history.push(`/auth/course/${course_id}`);
+                            }else {
+                                this.props.history.push(`/auth/course/${course_id}`);
+                            }    
                         }else {
-                            this.props.history.push(`/auth/course/${course_id}`)
+                            alert('Error in network connection, try again');
                         }
 
                         this.setState({
@@ -74,13 +82,13 @@ class AllCoursesHome extends Component {
         return (
             <div>
                 <Loader style={{zIndex: '1', width: '90%', margin: 'auto', marginTop: '90px', marginBottom: '0px'}} active={loading} inline='centered' />
-                <Card.Group centered style={{zIndex: '0', width: '90%', margin: 'auto', marginTop: '70px'}}>
+                <Card.Group centered stackable  style={{zIndex: '0', width: '75%', margin: 'auto', marginTop: '70px'}}>
 
                     {
                         courses &&
                             courses.map((course) => {
                             return (
-                                <Card key={course._id}>
+                                <Card raised key={course._id} style={{width: '31%'}}>
                                   <Card.Content>
                                     <Image floated='right' size='mini' src={course.image} />
                                     <Card.Header>{course.name}</Card.Header>

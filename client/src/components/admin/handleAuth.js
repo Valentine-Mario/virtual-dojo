@@ -5,7 +5,7 @@ import { REQ_GET } from '../../api';
 
 function HandleAuth ({component: Component, user, ...rest}) {
 
-	let isAdmin = JSON.parse(sessionStorage.getItem('user'));
+	let isAdmin = JSON.parse(localStorage.getItem('user'));
 	if(isAdmin){
 		if(isAdmin[1] == 1){
 			user = true;

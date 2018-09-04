@@ -5,6 +5,8 @@ import axios from 'axios';
 import { isLoggedIn } from '../../config';
 import { REQ_GET } from '../../api';
 import { isEmpty } from 'lodash';
+import logo from '../../images/logo.png';
+import full_logo from '../../images/full-logo.png';
 
 class UnAuthMenu extends Component {
     constructor(props){
@@ -30,11 +32,15 @@ class UnAuthMenu extends Component {
         }else {
              REQ_GET(`category/search/${e.target.value.trim()}`)
                 .then(res => {
-                    this.setState({
-                        output: res.data,
-                        searching: true,
-                        loading: false
-                    })
+                    if(res.data){
+                        this.setState({
+                            output: res.data,
+                            searching: true,
+                            loading: false
+                        })
+                    }else {
+                        alert('Error in network connection, try again');
+                    }
                 })
         }
     }
@@ -47,7 +53,7 @@ class UnAuthMenu extends Component {
     handleToggle = () => this.setState({ sidebarOpened: !this.state.sidebarOpened })
 
     handleLogOut = () => {
-        sessionStorage.clear('user');
+        localStorage.clear('user');
         this.props.history.push('/login');
     }
 
@@ -57,7 +63,7 @@ class UnAuthMenu extends Component {
         let currentContent = !isEmpty(output) ? 
                             this.state.output.map((value) => {
                             return (
-                                <List.Item key={value._id} style={{display: 'flex'}} onClick={() => this.handleClick(`/auth/course/${value._id}`)}>
+                                <List.Item key={value._id} style={{display: 'flex', cursor: 'pointer'}} onClick={() => this.handleClick(`/auth/course/${value._id}`)}>
                                   <Image avatar src={value.image} />
                                   <List.Content>
                                     <List.Header>{value.name}</List.Header>
@@ -95,23 +101,31 @@ class UnAuthMenu extends Component {
             borderRadius: '0',
             display: 'flex',
             justifyContent: 'space-between',
-            backgroundColor: 'rgb(173, 215, 232)'
+            backgroundColor: 'rgb(143, 201, 224)'
         }
         
         return (
             <div>
                 <Responsive minWidth={Responsive.onlyTablet.minWidth}>
                     <Menu style={container} >
-                        <Menu.Item className="container" as={NavLink} to="/">
-                            <h2>Logo</h2>
+                        <Menu.Item className="container" as={NavLink} to="/" style={{background: 'none', position: 'initial'}}>
+                            <Image src={full_logo} size="tiny" style={{width: '150px'}} />
                         </Menu.Item>
             
-                        <Menu.Item className="container" position='right' >
+                        <Menu.Item className="container" position='right' style={{position: 'initial'}}>
                             <Input loading={loading} style={{marginRight: '10px', backgroundColor: '#f0f8fb', borderRadius: '6px'}} className='icon' icon='search' placeholder='Search course...' onChange={this.handleSearch} />
                             
                             { searching && 
                                 <div style={{borderRadius: '5px', position: 'absolute', top: '53px', backgroundColor: 'rgba(200, 234, 247, 0.94)', overflowY: 'scroll', maxHeight: '180px', width: '51%'}}><List celled animated verticalAlign="top">{currentContent}</List></div>}
 
+                            <Button basic color='blue' style={btn} animated='vertical' as={NavLink} to="/review" >
+                                <Button.Content hidden>
+                                    Review
+                                </Button.Content>
+                                <Button.Content visible>
+                                    <Icon name='bullhorn' />
+                                </Button.Content>
+                            </Button>
                             <Button basic color='blue' style={btn} animated='vertical' as={NavLink} to="/auth/course" >
                                 <Button.Content hidden>
                                     Courses
@@ -149,25 +163,26 @@ class UnAuthMenu extends Component {
                 </Responsive>
                 <Responsive maxWidth={Responsive.onlyMobile.maxWidth}>
                     <Menu style={container} >
-                        <Sidebar as={Menu} animation='slide along' inverted vertical visible={sidebarOpened}>
+                        <Sidebar as={Menu} animation='slide along' inverted vertical visible={sidebarOpened} style={{background: 'rgb(46, 70, 80)'}}>
                             <Menu.Item as={Link} to="/" onClick={this.handleToggle}>Home</Menu.Item>
                             <Menu.Item as={Link} to="/auth/course" onClick={this.handleToggle}>Courses</Menu.Item>
-                            <Menu.Item as={Link} to="/category" onClick={this.handleToggle}>Category</Menu.Item>
+                            <Menu.Item as={Link} to="/category" onClick={this.handleToggle}>Categories</Menu.Item>
                             <Menu.Item as={Link} to="/login" onClick={this.handleToggle} >Log in</Menu.Item>
                             <Menu.Item as={Link} to="/signup" onClick={this.handleToggle} >Sign Up</Menu.Item>
+                            <Menu.Item as={Link} to="/review" onClick={this.handleToggle} >Review</Menu.Item>
                         </Sidebar>
 
-                        <Menu.Item className="container" as={NavLink} to="/">
-                            <h2>Logo</h2>
+                        <Menu.Item className="container" as={NavLink} to="/" style={{background: 'none', position: 'initial'}}>
+                            <Image src={logo} size="tiny" style={{width: '50px'}} />
                         </Menu.Item>
             
-                        <Menu.Item className="container" style={{position: 'fixed', top: '2px', right: '0', width: '70%', paddingRight: '0'}}>
+                        <Menu.Item className="container" style={{position: 'fixed', top: '2px', right: '0', width: '70%', paddingRight: '0', position: 'initial'}}>
                             <Input loading={loading} style={{marginRight: '0', width: '100%', backgroundColor: '#f0f8fb', borderRadius: '6px'}} className='icon' icon='search' placeholder='Search course...' onChange={this.handleSearch} />
 
                             { searching && 
                                 <div style={{borderRadius: '3px', position: 'absolute', top: '53px', backgroundColor: 'rgba(200, 234, 247, 0.94)', overflowY: 'scroll', maxHeight: '150px', width: '80%'}}><List celled animated verticalAlign="top">{currentContent}</List></div>}
                             
-                            <Menu.Item onClick={this.handleToggle} style={{marginLeft: '0'}}>
+                            <Menu.Item onClick={this.handleToggle} style={{marginLeft: '0', position: 'initial'}}>
                                 <Icon name='sidebar' style={{margin: '0'}} />
                             </Menu.Item>
                         </Menu.Item>

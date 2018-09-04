@@ -11,40 +11,63 @@ import {
 
 const Footer = (props) => {
   const container = {
-    marginTop: '50px'
+    position: 'absolute',
+    width: '100%',
+    marginTop: '150px',
+    backgroundColor: 'rgb(46, 70, 80)',
+    height: '500px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
   return (
     <Responsive style={container}>
-    	<Segment vertical style={{ padding: '5em 0em', backgroundColor: "rgba(185, 178, 178, 0.91)" }}>
+    	<Segment vertical style={{ padding: '0px' }}>
             <Container>
-              <Grid divided inverted stackable>
+              <Grid inverted stackable style={{width: '100%'}}>
                 <Grid.Row>
-                  <Grid.Column width={3}>
-                    <Header inverted as='h4' content='About' />
+
+                  <Grid.Column width={4}>
+                    <Header inverted as='h4' content='Popular Categories' />
                     <List link inverted>
-                      <List.Item as='a'>Sitemap</List.Item>
-                      <List.Item as='a'>Contact Us</List.Item>
-                      <List.Item as='a'>Religious Ceremonies</List.Item>
-                      <List.Item as='a'>Gazebo Plans</List.Item>
+                      <List.Item as="a" href="/category/5b816980b61f390014118f73">Front-end Development</List.Item>
+                      <List.Item as="a" href="/category/5b83767e722fe5001422052f">Back-end Development</List.Item>
+                      <List.Item as="a" href="/category/5b8992d822333100145c06c2">Github</List.Item>
+                      <List.Item as="a" href="/category/5b8ab071aa1b920014a764dd">Product Design</List.Item>
                     </List>
                   </Grid.Column>
-                  <Grid.Column width={3}>
-                    <Header inverted as='h4' content='Services' />
+
+                  <Grid.Column width={4}>
+                    <Header inverted as='h4' content='Popular Courses' />
                     <List link inverted>
-                      <List.Item as='a'>Banana Pre-Order</List.Item>
-                      <List.Item as='a'>DNA FAQ</List.Item>
-                      <List.Item as='a'>How To Access</List.Item>
-                      <List.Item as='a'>Favorite X-Men</List.Item>
+                      <List.Item as="a" href="/auth/course/5b8418366a30a700148dcfa5">Learn React</List.Item>
+                      <List.Item as="a" href="/auth/course/5b8ce5a9dd28020014ca72cf">Photoshop</List.Item>
+                      <List.Item as="a" href="/auth/course/5b89932922333100145c06c3">Intro to Github</List.Item>
+                      <List.Item as="a" href="/auth/course/5b83b9a0775ec90014416940">Getting Started with Javascript</List.Item>
                     </List>
                   </Grid.Column>
-                  <Grid.Column width={7}>
-                    <Header as='h4' inverted>
-                      Footer Header
-                    </Header>
-                    <p>
-                      Extra space for a call to action inside the footer that could help re-engage users.
-                    </p>
+
+                  <Grid.Column width={4}>
+                    <Header inverted as='h4' content='Who we are' />
+                    <List link inverted>
+                      <List.Item as='a'>About Us</List.Item>
+                    </List>
                   </Grid.Column>
+
+                  <Grid.Column width={4}>
+                    <Header inverted as='h4' content='Contact Us' />
+                    <List link inverted>
+                      <List.Item as='a'>+2348103221543</List.Item>
+                      <List.Item as='a' href="mailto:info@virtualdojo.com">info@virtualdojo.com</List.Item>
+                    </List>
+                  </Grid.Column>
+
+                </Grid.Row>
+
+                <Grid.Row >
+                	<Grid.Column width={16} style={{display: 'flex', justifyContent: 'center', marginTop: '20px'}}>
+	                    <Header inverted as='h4' content={`© ${new Date().getFullYear()} All Rights Reserved`} />
+	                </Grid.Column>
                 </Grid.Row>
               </Grid>
             </Container>

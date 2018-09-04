@@ -5,6 +5,8 @@ import Footer from '../menu/footer';
 import ShowCourse from './showCourse';
 
 const Course = (props) => {
+
+	window.scrollTo(0, 0);
 	
 	return (
         <div>

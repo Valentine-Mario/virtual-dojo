@@ -22,10 +22,14 @@ class ListVideo extends Component {
 
         REQ_GET(`category/get/${this.props.match.params.id}`)
             .then(res => {
-                this.setState({
-                    videos: res.data.videos,
-                    loading: false
-                })
+                if(res.data){
+                    this.setState({
+                        videos: res.data.videos,
+                        loading: false
+                    })
+                }else {
+                    alert('Error in network connection, try again');
+                }
             })
     }
 
@@ -33,7 +37,7 @@ class ListVideo extends Component {
     	let { videoListing, loading, videos } = this.state;
 
         return (
-            <List animated style={{width: '65%', margin: 'auto'}}>
+            <List animated style={{width: '90%', margin: 'auto'}}>
 			    { 
                     loading &&
 			    	    <Loader active inline='centered' />

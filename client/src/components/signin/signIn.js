@@ -22,6 +22,10 @@ class SignIn extends Component {
         loggedIn: false
       }
     }
+
+    componentDidMount(){
+      window.scrollTo(0, 0);
+    }
     
       handleChange = event => {
         this.setState({
@@ -34,7 +38,9 @@ class SignIn extends Component {
         e.preventDefault();
 
         const { username, password, user } = this.state;
-        
+
+        let trimUsername = username.trim();
+
         this.setState({
           loading: true
         })
@@ -42,32 +48,35 @@ class SignIn extends Component {
 
         /**MAKE A REQUEST TO THE SERVER */
     
-        if(username == '' || password == ''){
+        if(username.trim() == '' || password.trim() == ''){
           console.log('username or password is required');
         }else {
 
             /**REVIEW THIS TO HANDLE EVERY LOGIN REQUEST */
 
-            REQ_POST(`users/login`, {username,password})
+            REQ_POST(`users/login`, {username: username.trim(),password})
             .then(res => {
 
-              //ONLY USE RES FOR SUCCESS AND RES.RESPONSE FOR ERROR HANDLING
-                if(res.response){
-                  this.setState({
-                    error: 'Please register an account or use valid details to login',
-                    visible: false
-                  })
-                }else if(res.data){
-                  let user = [res.data.message.passport.user, res.data.isAdmin];
-                  sessionStorage.setItem('user', JSON.stringify(user));
+                if(res.data){
+                  //ONLY USE RES FOR SUCCESS AND RES.RESPONSE FOR ERROR HANDLING
+                  if(res.response){
+                    this.setState({
+                      error: 'Please register an account or use valid details to login',
+                      visible: false
+                    })
+                  }else if(res.data){
+                    let user = [res.data.message.passport.user, res.data.isAdmin];
+                    localStorage.setItem('user', JSON.stringify(user));
 
-                  this.setState({
-                    loggedIn: true
-                  });
+                    this.setState({
+                      loggedIn: true
+                    });
 
-                  this.props.history.push("/auth/user");
+                    this.props.history.push("/auth/user");
+                  }
+                }else {
+                  alert('Error in network connection, try again');
                 }
-
 
                 this.setState({
                   username: '',

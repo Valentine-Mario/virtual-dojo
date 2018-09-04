@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import './container.css';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import SignIn from './signin/signIn';
 import SignUp from './signup/signUp';
 import Home from './home/home';
 import Category from './category/category';
 import User from './user/user';
+import UserEdit from './user/userEdit';
 import Course from './course/course';
 import AllCourses from './course/allCourses';
 import NotFound from './notFound';
@@ -15,6 +16,7 @@ import AdminLogin from './admin/adminLogin';
 import AdminDashboard from './admin/dash/adminDashboard';
 import Video from './course/video';
 import CategoryDetail from './category/categoryDetail';
+import Review from './review/review'
 
 import HandleAuth from './admin/handleAuth';
 
@@ -26,37 +28,9 @@ import UploadVideo from './admin/upload/upload';
 import Users from './admin/user/user';
 
 
-const SecureRender = (props) => {
-    return sessionStorage.getItem('user') ? props.truthy : props.falsy
-}
-
 class Container extends Component {
 
-    state = {
-        authed: false
-    }
-
-    componentWillMount() {
-        let storage = sessionStorage.getItem('user');
-        
-    }
-
     render() {
-
-        let secureRender = sessionStorage.getItem('user') ? 
-                    (<PrivateRoute authed={true} path='/auth/user' component={User} />)
-                    :
-                    (<PrivateRoute authed={false} path='/auth/user' component={User} />)
-
-        let secureCourseVideo = sessionStorage.getItem('user') ? 
-                    (<PrivateRoute authed={true} path='/auth/course/:id' component={Course} />)
-                    :
-                    (<PrivateRoute authed={false} path='/auth/course/:id' component={Course} />)
-
-        let secureCourseDetail = sessionStorage.getItem('user') ? 
-                    (<PrivateRoute authed={true} path='/auth/course/:id/:id_vid' component={Video} />)
-                    :
-                    (<PrivateRoute authed={false} path='/auth/course/:id/:id_vid' component={Video} />)
 
         
         return (
@@ -70,20 +44,22 @@ class Container extends Component {
                         <HandleAuth user={false} path='/admin/dashboard/user' component={Users} />
                         <HandleAuth user={false} path='/admin/dashboard/courses' component={ListCourses} />
                         <HandleAuth user={false} path='/admin/dashboard/categories' component={ListCategories} />
-
                         <HandleAuth user={false} path="/admin/dashboard" component={AdminDashboard} />
+                        <Route exact path="/admin" component={AdminLogin} />
+
                         
-                        <Route path="/admin" component={AdminLogin} />
+
+                        <PrivateRoute user={false} path='/auth/course/:id/:id_vid' component={Video} />
+                        <PrivateRoute user={false} path='/auth/course/:id' component={Course} />
+                        <PrivateRoute user={false} path='/auth/user/edit/:id' component={UserEdit} />
+                        <Route path="/auth/course" component={AllCourses} />
+                        <PrivateRoute user={false} path='/auth/user' component={User} />
+
+                        <Route path="/review" component={Review} />
                         <Route path="/category/:id" component={CategoryDetail} />
                         <Route path="/category" component={Category} />
                         <Route path="/login" component={SignIn} />
                         <Route path="/signup" component={SignUp} />
-
-                        {secureCourseDetail}
-                        {secureCourseVideo}
-
-                        <Route path="/auth/course" component={AllCourses} />
-                        {secureRender}
 
                         <Route exact path="/" component={Home} />
                         <Route component={NotFound} />
