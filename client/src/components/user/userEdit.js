@@ -26,6 +26,8 @@ class UserEdit extends Component {
             loading: true
         })
 
+        window.scrollTo(0, 0);
+
         this.getUser()
     }
 

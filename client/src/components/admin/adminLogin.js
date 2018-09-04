@@ -15,6 +15,10 @@ class AdminLogin extends Component {
         }
     }
 
+    componentDidMount(){
+        window.scrollTo(0, 0);
+    }
+
     handleChange = (e) => {
     	this.setState({
     		[e.target.name]: e.target.value

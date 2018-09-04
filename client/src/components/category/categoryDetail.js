@@ -19,6 +19,8 @@ class CategoryDetail extends PureComponent {
     componentDidMount(){
         this.setState({loading: true});
 
+        window.scrollTo(0, 0);
+
           REQ_GET(`supercat/get/${this.props.match.params.id}`)
             .then(res => {
                 if(res.data){

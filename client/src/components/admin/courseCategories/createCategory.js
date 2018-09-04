@@ -20,6 +20,10 @@ class CreateCategory extends Component {
         }
     }
 
+    componentDidMount(){
+        window.scrollTo(0, 0);
+    }
+
     handleChange = (e) => {
     	this.setState({
     		[e.target.id]: e.target.value

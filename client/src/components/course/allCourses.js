@@ -32,6 +32,8 @@ class AllCourses extends Component {
                 alert('Error in network connection, try again');
             }
         })
+
+        window.scrollTo(0, 0);
     }
 
     handleClick = (course_id) => {

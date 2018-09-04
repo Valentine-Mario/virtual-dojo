@@ -24,6 +24,8 @@ class Users extends Component {
 
         this.getUsers();
 
+        window.scrollTo(0, 0);
+
     }
 
     getUsers = () => {

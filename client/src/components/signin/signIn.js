@@ -22,6 +22,10 @@ class SignIn extends Component {
         loggedIn: false
       }
     }
+
+    componentDidMount(){
+      window.scrollTo(0, 0);
+    }
     
       handleChange = event => {
         this.setState({

@@ -28,6 +28,8 @@ class UploadVideo extends Component {
     }
 
     componentDidMount() {
+        window.scrollTo(0, 0);
+        
     	//GET ALL THE COURSES
     	REQ_GET('category/get')
     		.then(res => {

@@ -31,6 +31,8 @@ class ListCategories extends Component {
       })
 
       this.getAllCategories();
+
+      window.scrollTo(0, 0);
     }
 
     getAllCategories = () => {

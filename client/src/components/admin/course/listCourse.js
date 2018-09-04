@@ -33,6 +33,8 @@ class ListCourses extends Component {
     	})
 
     	this.getAllCourses();
+
+    	window.scrollTo(0, 0);
     }
 
     handleChange = (e) => {

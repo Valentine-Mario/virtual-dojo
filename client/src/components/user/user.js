@@ -20,7 +20,9 @@ class User extends Component {
         let user = JSON.parse(localStorage.getItem('user'));
         this.setState({
             loading: true
-        })
+        });
+
+        window.scrollTo(0, 0);
 
         REQ_GET(`users/${user[0]}`)
             .then(res => {

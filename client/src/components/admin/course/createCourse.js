@@ -23,6 +23,8 @@ class CreateCourse extends Component {
     }
 
     componentDidMount() {
+        window.scrollTo(0, 0);
+        
     	REQ_GET('supercat/get')
     		.then(res => {
                 if(res.data){

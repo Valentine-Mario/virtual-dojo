@@ -32,6 +32,10 @@ export class Home extends PureComponent {
     loading: false
   }
 
+  componentDidMount(){
+    window.scrollTo(0, 0);
+  }
+
   handleSubmit = () => this.props.history.push('/login')
 
   render() {
