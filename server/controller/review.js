@@ -2,7 +2,9 @@ var model= require('../model/reviews')
 
 exports.addReview= function(req, res){
     var data={
-        comment:req.body.comment
+        comment:req.body.comment,
+        name:req.body.name,
+        email:req.body.email
     }
     model.create(data, function(err){
         if(err)res.json({message:"could not add review"})
