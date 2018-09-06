@@ -47,7 +47,7 @@ app.use(session({
                       if(user.isAdmin==1){
                         return done(null, user)
                       }else{
-                         return done(null, false)
+                        return done({message:"only admin allowed"})
                       }
                   }else{
                       return done(null, false, {message:"invalid password"})
