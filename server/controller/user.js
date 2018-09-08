@@ -8,6 +8,14 @@ const Joi = require('joi');
 var express = require('express');
 var app = express();
 var bcrypt = require('bcryptjs');
+var nodemailer = require('nodemailer');
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'genesysintern@gmail.com',
+        pass: 'intern007'
+    }
+  });
 cloudinary.config({ 
     cloud_name: 'school-fleep', 
     api_key: '913188349489292', 
@@ -39,7 +47,7 @@ var storage = multer.diskStorage({
   const schema= Joi.object().keys({
       firstName:Joi.string().required(),
       lastName:Joi.string().required(),
-      username:Joi.string().alphanum().min(3).max(15).required(),
+      username:Joi.string().min(3).max(15).required(),
       email:Joi.string().email().required(),
       password:Joi.string().regex(/^[a-zA-Z0-9]{6,30}$/),
   })
@@ -71,8 +79,32 @@ exports.addUser = function(req, res){
                     if(err){
                         res.json({message:'user not added', code: 1});
                     }else{
-                        res.json({user:user._id, code:2, isAdmin:user.isAdmin})
-                        res.status(200)
+                        
+                        var mailOptions = {
+                            from: '"Virtual Dojo"',
+                            to: user.email,
+                            subject: 'Welcome to Virtual Dojo',
+                            html: `<div align="center">
+                            <div style="width:70%;">
+                            <div style="height:80px; border-radius:10px 10px 0px 0px; font-size:170%; margin-top:10px; color:white; background-color:white"><div style="padding-top:18px;"><img src="https://res.cloudinary.com/school-fleep/image/upload/v1536224820/Dojo4.png"></div></div>
+                            <div align="center" style="font-size:110%; color:black;"><p style="color:black;">Thank you ${user.firstName+ ''+ user.lastName} for joining Virtual Dojo</p>
+                            <p style="color:black;">Remember that everything is learnable and we are here to help you achieve that</p>
+                            
+                            <small style="color:grey;">Visit us here more often at <a href="http://testingvirtual.herokuapp.com">here</a></small><br/>
+                            
+                            </div>
+                            </div>
+                            </div>`
+                          };
+                          transporter.sendMail(mailOptions, function(error, info){
+                            if (error) {
+                              console.log(error);
+                              return false;
+                            } else {
+                                res.json({user:user._id, code:2, isAdmin:user.isAdmin});
+                              return true;
+                            }
+                          });
                     }
                 })
                 })
@@ -110,6 +142,14 @@ exports.addUser = function(req, res){
     }
     
 }
+
+exports.getLatest= function(req, res){
+    value=parseInt(req.params.value)
+    model.find({}, function(err, data){
+      if(err)res.json({message:"an error occured sorting users"})
+      res.json(data)
+    }).populate('library').sort({'_id':-1}).limit(value).exec()
+  }
 
     exports.editUser = function(req, res){
          var id = {_id:req.params.id}
@@ -205,7 +245,32 @@ exports.deleteUser= function(req,res){
                                 }else{
                                     user.library.push(video._id);
                                     user.save();
-                                    res.json({message:"video purchase succesfully"})
+                                    var mailOptions = {
+                                        from: '"Virtual Dojo"',
+                                        to: user.email,
+                                        subject: 'Subscription success',
+                                        html: `<div align="center">
+                                        <div style="width:70%;">
+                                        <div style="height:80px; border-radius:10px 10px 0px 0px; font-size:170%; margin-top:10px; color:white; background-color:white"><div style="padding-top:18px;"><img src="https://res.cloudinary.com/school-fleep/image/upload/v1536224820/Dojo4.png"></div></div>
+                                        <div align="center" style="font-size:110%; color:black;"><p style="color:black;">Thank you ${user.firstName+ ''+ user.lastName} for subscribing to ${video.name} Virtual Dojo</p>
+                                        <p style="color:black;">Remember that everything is learnable and we are here to help you achieve that</p>
+                                        
+                                        <small style="color:grey;">Visit us here more often at <a href="http://testingvirtual.herokuapp.com">here</a></small><br/>
+                                        
+                                        </div>
+                                        </div>
+                                        </div>`
+                                      };
+                                      transporter.sendMail(mailOptions, function(error, info){
+                                        if (error) {
+                                          console.log(error);
+                                          return false;
+                                        } else {
+                                            res.json({message:"video subscribed succesfully"})
+                                          return true;
+                                        }
+                                      });
+                                    
                                     model2.findByIdAndUpdate(video, {$inc : {purchase : 1} }, function(err){})
                                 }
                        
@@ -218,20 +283,35 @@ exports.deleteUser= function(req,res){
     }
 
     exports.makeAdmin= function(req, res){
-        let user = new ObjectID(req.body.user)
-        model.findByIdAndUpdate(user, {$inc : {isAdmin : 1} }, function(err, user){
-        if(err)throw err
-        res.json({message:`${user.username} is now an admin`})
-    })
+        let admin = new ObjectID(req.body.admin)
+        let user= new ObjectID(req.body.user)
+        model.findById(admin, function(err, admin){
+            if(admin.isAdmin==1){
+                model.findByIdAndUpdate(user, {$inc : {isAdmin : 1} }, function(err, user){
+                    if(err)throw err
+                    res.json({message:`${user.username} is now an admin`})
+                })
+            }else{
+                res.json({message:"you don't have access to this function"})
+            }
+        })
+       
     }
 
 
     exports.removeAdmin= function(req, res){
-        let user = new ObjectID(req.body.user)
-        model.findByIdAndUpdate(user, {$inc : {isAdmin : -1} }, function(err, user){
-        if(err)throw err
-        res.json({message:`${user.username} is no longer an admin`})
-    }) 
+        let admin = new ObjectID(req.body.admin)
+        let user= new ObjectID(req.body.user)
+        model.findById(admin, function(err, admin){
+            if(admin.isAdmin==1){
+                model.findByIdAndUpdate(user, {$inc : {isAdmin : -1} }, function(err, user){
+                    if(err)throw err
+                    res.json({message:`${user.username} is now an admin`})
+                })
+            }else{
+                res.json({message:"you don't have access to this function"})
+            }
+        })
     }
 
     exports.ensureAuthentication= function(req, res, next){

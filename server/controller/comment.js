@@ -45,6 +45,14 @@ exports.getComments= function(req,res){
     }).populate('user_id', 'firstName lastName')
 }
 
+exports.getLatest= function(req, res){
+    value=parseInt(req.params.value)
+    model.find({}, function(err, data){
+      if(err)res.json({message:"an error occured sorting comments"})
+      res.json(data)
+    }).populate('user_id', 'firstName lastName').sort({'_id':-1}).limit(value).exec()
+  }
+
 exports.editComments = function(req, res){
          var id = {_id:req.params.id}
         var data = {

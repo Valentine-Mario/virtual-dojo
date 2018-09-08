@@ -58,6 +58,7 @@ router.post('/delete/:id', UserController.deleteUser);
 router.post('/buy', UserController.getVideo)
 router.post('/update-profile/:id', upload.any('profile_pics'),  UserController.editProfilePics);
 router.get('/:id', UserController.getUserByid);
+router.get('/getlatest/:value', UserController.getLatest)
 
     passport.use('user', new LocalStrategy(
         function(username, password, done) {

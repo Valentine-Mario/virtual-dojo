@@ -23,6 +23,7 @@ var commentRouter = require('./routes/comment')
 var videoRouter = require('./routes/videos')
 var SuperCatRouter = require('./routes/superCat')
 var adminRouter = require('./routes/admin')
+var reviewRouter= require('./routes/review')
 
 
 
@@ -55,6 +56,7 @@ app.use('/comment', commentRouter)
 app.use('/video', videoRouter)
 app.use('/supercat', SuperCatRouter)
 app.use('/admin', adminRouter)
+app.use('/review', reviewRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -23,6 +23,7 @@ router.get('/get', CategoryController.getCategory)
 router.get('/get/:id', CategoryController.getCategoryById)
 router.post('/edit/:id', upload.any('cover_image'), CategoryController.editCategory)
 router.post('/delete/:id', CategoryController.deleteCtegory)
+router.get('/getlatest/:value', CategoryController.getLatest)
 
 
 module.exports = router;

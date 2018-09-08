@@ -1,6 +1,7 @@
 var model= require('../model/superCat');
 var model2= require('../model/category')
 var model3 = require('../model/user')
+var ObjectID = require('mongoose').Types.ObjectId
 var fs= require('fs');
 var cloudinary = require('cloudinary');
 cloudinary.config({ 
@@ -52,6 +53,15 @@ exports.addcategory = function(req, res, next){
         res.json(data)
     }).populate('courses')
  }
+
+ exports.getLatest= function(req, res){
+    value=parseInt(req.params.value)
+    model.find({}, function(err, data){
+      if(err)res.json({message:"an error occured sorting categories"})
+      res.json(data)
+    }).populate('courses').sort({'_id':-1}).limit(value).exec()
+  }
+
 
  exports.editCategory= function(req,res){
     var id={_id:req.params.id}
